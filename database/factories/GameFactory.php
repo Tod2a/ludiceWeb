@@ -18,11 +18,7 @@ class GameFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'img_path' => function () {
-                $absolutePath = fake()->image(storage_path('app/public/images'), 640, 480, 'cats', true);
-
-                return str_replace(storage_path('app/public/'), '', $absolutePath);
-            },
+            'img_path' => "storage/images/test.jpg",
             'numberofplayers' => fake()->numberBetween(1, 10),
             'barcode' => fake()->unique()->numberBetween(1000, 9999),
             'duration' => fake()->numberBetween(15, 180),
