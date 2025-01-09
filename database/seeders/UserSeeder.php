@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Game;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,22 +14,30 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
+        $masterUser = User::factory()->create([
             'name' => 'master User',
             'email' => 'master@example.com',
             'role_id' => 1,
         ]);
 
-        \App\Models\User::factory()->create([
+        $adminUser = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'role_id' => 2,
         ]);
 
-        \App\Models\User::factory()->create([
+        $regularUser = User::factory()->create([
             'name' => 'User',
             'email' => 'user@example.com',
             'role_id' => 3,
         ]);
+
+        $game = Game::first();
+
+        if ($game) {
+            $regularUser->libraryGames()->attach($game->id, ['added_at' => now()]);
+        } else {
+            $this->command->warn('no games in database');
+        }
     }
 }

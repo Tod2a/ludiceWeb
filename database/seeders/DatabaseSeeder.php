@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Creator;
 use App\Models\Game;
+use App\Models\Guest;
 use App\Models\Publisher;
 use App\Models\TemplateSection;
 use App\Models\User;
@@ -46,5 +47,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class
         ]);
+
+        Guest::factory(5)->create();
     }
 }
