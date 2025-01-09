@@ -45,4 +45,9 @@ class Game extends Model
     {
         return $this->belongsToMany(User::class, 'library');
     }
+
+    public function scoreSheets()
+    {
+        return $this->hasMany(ScoreSheet::class);
+    }
 }

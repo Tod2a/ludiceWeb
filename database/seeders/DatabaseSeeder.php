@@ -7,6 +7,8 @@ use App\Models\Creator;
 use App\Models\Game;
 use App\Models\Guest;
 use App\Models\Publisher;
+use App\Models\ScoreSheet;
+use App\Models\Section;
 use App\Models\TemplateSection;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,6 +28,7 @@ class DatabaseSeeder extends Seeder
         Publisher::factory(10)->create();
         Game::factory(10)->create();
         TemplateSection::factory(10)->create();
+        ScoreSheet::factory(2)->create();
 
         Game::all()->each(
             function ($game) {
@@ -49,5 +52,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Guest::factory(5)->create();
+        Section::factory(20)->create();
     }
 }
