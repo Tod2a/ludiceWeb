@@ -25,11 +25,6 @@ class DatabaseSeeder extends Seeder
         Game::factory(10)->create();
         TemplateSection::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-
         Game::all()->each(
             function ($game) {
                 $game->categories()->attach(
@@ -45,5 +40,10 @@ class DatabaseSeeder extends Seeder
                 );
             }
         );
+
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class
+        ]);
     }
 }
