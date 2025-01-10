@@ -19,13 +19,17 @@ export default {
                 primary: "#161622",
                 secondary: "#ffeec6",
                 green: {
-                    DEFAULT: "#54cd71",
+                    DEFAULT: "#caf8c5",
                     100: "#4dca5e",
                     200: "#0d6938",
                 },
                 gray: {
                     100: "#CDCDE0",
                 },
+                white: {
+                    DEFAULT: "#FFFFFF",
+                    100: "#fafaf0 ",
+                }
             },
             fontFamily: {
                 pthin: ["Poppins-Thin", "sans-serif"],

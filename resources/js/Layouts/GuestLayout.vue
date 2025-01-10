@@ -1,63 +1,123 @@
 <script setup>
+import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Footer from '../Components/Footer.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+
+const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
     <Head>
         <link rel="icon" href="/favicon.ico" />
     </Head>
-    <div class="bg-green-200 min-h-screen flex flex-col">
+    <div class="bg-white-100 min-h-screen flex flex-col">
         <!-- Header -->
-        <div class="bg-primary flex items-center">
-            <Link href="/">
-                <ApplicationLogo class="h-20 w-20 fill-current transform scale-75" />
-            </Link>
-            <div class="flex-grow">
-
-            </div>
-            <div>
-                <nav>
-                    <Link v-if="$page.props.auth.user" :href="route('dashboard')" >
-                        <PrimaryButton>Dashboard</PrimaryButton>
-                    </Link>
-
-                    <div v-else class="flex justify-center items-center">
-                        <Link :href="route('login')" >
-                            <PrimaryButton>Log In</PrimaryButton>
-                        </Link>>
-
-                        <Link :href="route('register')" >
-                            <PrimaryButton>Register</PrimaryButton>
+        <nav class="bg-primary shadow-md border-b border-gray-100">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 justify-between">
+                    <div class="flex items-center">
+                        <!-- Logo -->
+                        <Link href="/">
+                            <ApplicationLogo class="h-16 w-16 scale-75" />
                         </Link>
                     </div>
-                </nav>
+
+                    <!-- Navigation Links -->
+                    <div class="hidden sm:flex sm:items-center sm:space-x-4">
+                        <Link v-if="$page.props.auth.user" :href="route('dashboard')">
+                            <PrimaryButton>Dashboard</PrimaryButton>
+                        </Link>
+                        <div v-else class="flex space-x-4">
+                            <Link :href="route('login')">
+                                <PrimaryButton>Connexion</PrimaryButton>
+                            </Link>
+                            <Link :href="route('register')">
+                                <PrimaryButton>Inscription</PrimaryButton>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <!-- Hamburger Menu -->
+                    <div class="-me-2 flex items-center sm:hidden">
+                        <button
+                            @click="showingNavigationDropdown = !showingNavigationDropdown"
+                            class="inline-flex items-center justify-center rounded-md p-2 text-white focus:outline-none hover:bg-gray-200 hover:text-gray-500"
+                        >
+                            <svg
+                                class="h-6 w-6"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    :class="{
+                                        hidden: showingNavigationDropdown,
+                                        'inline-flex': !showingNavigationDropdown,
+                                    }"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16m-7 6h7"
+                                />
+                                <path
+                                    :class="{
+                                        hidden: !showingNavigationDropdown,
+                                        'inline-flex': showingNavigationDropdown,
+                                    }"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-        </div>
+            <!-- Responsive Navigation Menu -->
+            <div
+                :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
+                class="sm:hidden"
+            >
+                <div class="space-y-1 pb-3 pt-2">
+                    <ResponsiveNavLink
+                        v-if="$page.props.auth.user"
+                        :href="route('dashboard')"
+                    >
+                        Dashboard
+                    </ResponsiveNavLink>
+                    <div v-else class="space-y-1">
+                        <ResponsiveNavLink :href="route('login')">
+                            Connexion
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('register')">
+                            Inscription
+                        </ResponsiveNavLink>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-        <header v-if="$slots.header">
-            <div class="bg-secondary flex justify-center items-center mx-auto max-w-7xl
-                my-2 py-4 text-lg h-16 border border-black
-                sm:my-1 sm:py-2 sm:text-base sm:h-12
-                lg:my-3 lg:py-6 lg:text-xl lg:h-20 rounded">
+        <header v-if="$slots.header" class="py-4">
+            <div class="text-center text-lg font-semibold text-gray-700">
                 <slot name="header" />
             </div>
         </header>
 
-        <div class="flex-grow flex flex-col">
-            <main class="flex-grow flex items-center justify-center">
+        <main class="flex-grow">
+            <div class="container mx-auto p-6">
                 <slot />
-            </main>
+            </div>
+        </main>
 
-            <footer class="bg-primary py-2 text-center">
-                <div class="text-secondary">
-                    <Footer />
-                </div>
-            </footer>
-        </div>
+        <footer class="bg-primary py-4 text-center text-secondary">
+            <Footer />
+        </footer>
     </div>
 </template>
