@@ -24,7 +24,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="bg-secondary p-8 rounded">
             <div>
                 <InputLabel for="name" value="Name" />
 

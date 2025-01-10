@@ -12,6 +12,9 @@ export default {
 
     theme: {
         extend: {
+            scale: {
+                '25': "0.25",
+            },
             colors: {
                 primary: "#161622",
                 secondary: "#ffeec6",
