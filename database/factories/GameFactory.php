@@ -18,6 +18,7 @@ class GameFactory extends Factory
     {
         return [
             'name' => fake()->word(),
+            'published_at' => fake()->date(),
             'img_path' => "storage/images/test.jpg",
             'numberofplayers' => fake()->numberBetween(1, 10),
             'barcode' => fake()->unique()->numberBetween(1000, 9999),

@@ -19,15 +19,15 @@ const showingNavigationDropdown = ref(false);
                 <div class="flex h-16 justify-between">
                     <div class="flex items-center">
                         <!-- Logo -->
-                        <Link :href="route('dashboard')">
+                        <Link :href="route('connected.homepage')">
                             <ApplicationLogo class="h-16 w-16 scale-75" />
                         </Link>
                     </div>
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:space-x-4">
-                        <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <NavLink :href="route('connected.homepage')" :active="route().current('connected.homepage')">
+                            Accueil
                         </NavLink>
                         <div class="relative ms-3">
                             <!-- Settings Dropdown -->
@@ -101,8 +101,8 @@ const showingNavigationDropdown = ref(false);
                 class="sm:hidden"
             >
                 <div class="space-y-1 pb-3 pt-2">
-                    <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                        Dashboard
+                    <ResponsiveNavLink :href="route('connected.homepage')" :active="route().current('connected.homepage')">
+                        Accueil
                     </ResponsiveNavLink>
                 </div>
 

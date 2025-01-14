@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->date('published_at');
             $table->string('name');
             $table->string('img_path');
             $table->integer('numberofplayers');

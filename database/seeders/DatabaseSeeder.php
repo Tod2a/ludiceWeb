@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
         Creator::factory(10)->create();
         Publisher::factory(10)->create();
-        Game::factory(10)->create();
+        Game::factory(20)->create();
         TemplateSection::factory(10)->create();
         ScoreSheet::factory(2)->create();
 
