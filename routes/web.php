@@ -3,13 +3,18 @@
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProfileController;
+use GuzzleHttp\Middleware;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
-Route::get('/homepage', [GameController::class, 'index'])->middleware(['auth', 'verified'])->name('connected.homepage');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/homepage', [GameController::class, 'index'])->name('connected.homepage');
+    Route::get('/homepage/search', [GameController::class, 'search'])->name('games.search');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
