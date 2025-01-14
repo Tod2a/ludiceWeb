@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Footer from '../Components/Footer.vue';
+import NavLink from '@/Components/NavLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
@@ -32,12 +33,12 @@ const showingNavigationDropdown = ref(false);
                             <PrimaryButton>Dashboard</PrimaryButton>
                         </Link>
                         <div v-else class="flex space-x-4">
-                            <Link :href="route('login')">
-                                <PrimaryButton>Connexion</PrimaryButton>
-                            </Link>
-                            <Link :href="route('register')">
-                                <PrimaryButton>Inscription</PrimaryButton>
-                            </Link>
+                            <NavLink :href="route('login')" :active="route().current('login')">
+                                Connexion
+                            </NavLink>
+                            <NavLink :href="route('register')" :active="route().current('register')">
+                                Inscription
+                            </NavLink>
                         </div>
                     </div>
 
