@@ -26,7 +26,7 @@ const submit = () => {
 
         <form @submit.prevent="submit" class="bg-white shadow-md rounded-lg p-6 mx-auto max-w-sm mt-12">
             <div>
-                <InputLabel for="name" value="Nom" />
+                <InputLabel for="name" value="Pseudo" />
 
                 <TextInput
                     id="name"
@@ -74,7 +74,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password_confirmation"
-                    value="Confirmer le mot de passe"
+                    value="Confirmez le mot de passe"
                 />
 
                 <TextInput

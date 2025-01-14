@@ -5,6 +5,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import Footer from '@/Components/Footer.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
@@ -52,9 +53,9 @@ const showingNavigationDropdown = ref(false);
                                     </button>
                                 </template>
                                 <template #content>
-                                    <DropdownLink :href="route('profile.edit')">Profile</DropdownLink>
+                                    <DropdownLink :href="route('profile.edit')">Profil</DropdownLink>
                                     <DropdownLink :href="route('logout')" method="post" as="button">
-                                        Log Out
+                                        Déconnexion
                                     </DropdownLink>
                                 </template>
                             </Dropdown>
