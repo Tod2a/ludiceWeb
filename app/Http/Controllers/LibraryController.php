@@ -42,8 +42,21 @@ class LibraryController extends Controller
         return redirect()->route('connected.homepage')->with('success', 'Game added to library');
     }
 
-    public function destroy()
+    public function destroy(int $game)
     {
-        //
+        $id = Auth::user()->id;
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('library')->with('error', 'User not found');
+        }
+
+        if (!$user->library()->where('game_id', $game)->exists()) {
+            return redirect()->route('library')->with('error', 'Game not found in the library');
+        }
+
+        $user->library()->detach($game);
+
+        return redirect()->route('library')->with('success', 'Game removed from library')->with('reload', true);
     }
 }

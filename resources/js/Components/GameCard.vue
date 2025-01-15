@@ -39,11 +39,11 @@ const props = defineProps({
             <div class="w-full">
                 <div v-if="props.inLibrary">
                     <div v-if="props.isLibrary">
-                        <Link :href="route('connected.homepage')">
+                        <form @submit.prevent="form.delete(route('library.destroy', { game: game.id }))">
                             <DangerButton class="w-full text-center">
                                 Retirer de la ludothèque
                             </DangerButton>
-                        </Link>
+                        </form>
                     </div>
                     <div v-else>
                         <DisabledButton class="w-full text-center">
@@ -52,11 +52,11 @@ const props = defineProps({
                     </div>
                 </div>
                 <div v-else>
-                        <form @submit.prevent="form.post(route('library.store', { game: game.id }))" method="POST">
-                            <SecondaryButton type="submit" class="w-full text-center">
-                                Ajouter à la ludothèque
-                            </SecondaryButton>
-                        </form>
+                    <form @submit.prevent="form.post(route('library.store', { game: game.id }))">
+                        <SecondaryButton type="submit" class="w-full text-center">
+                            Ajouter à la ludothèque
+                        </SecondaryButton>
+                    </form>
                 </div>
             </div>
         </div>

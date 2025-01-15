@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/homepage/search', [GameController::class, 'search'])->name('games.search');
     Route::get('/library', [LibraryController::class, 'index'])->name('library');
     Route::post('/library/{game}', [LibraryController::class, 'store'])->name('library.store');
+    Route::delete('/library/{game}', [LibraryController::class, 'destroy'])->name('library.destroy');
 });
 
 Route::middleware('auth')->group(function () {
