@@ -18,7 +18,6 @@ const games = ref([]);
 const isLoading = ref(true);
 
 const fetchGames = async (url) => {
-    isLoading.value = true;
     try {
         const response = await axios.get(url, {
             params: {
@@ -31,8 +30,6 @@ const fetchGames = async (url) => {
         games.value = response.data;
     } catch (error) {
         console.error('Error fetching games:', error);
-    } finally {
-        isLoading.value = false;
     }
 };
 
@@ -47,8 +44,9 @@ const debouncedSearch = (() => {
     };
 })();
 
-onMounted(() => {
-    debouncedSearch();
+onMounted(async () => {
+    await fetchGames(route('games.search'));
+    isLoading.value = false;
 });
 </script>
 
@@ -71,7 +69,7 @@ onMounted(() => {
 
                 <!-- Loading Indicator -->
                 <div v-if="isLoading" class="text-center text-gray-500 py-6">
-                    Loading...
+                    Chargement...
                 </div>
 
                 <!-- Game Cards -->
