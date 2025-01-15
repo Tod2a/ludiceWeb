@@ -1,5 +1,5 @@
 <template>
     <div>
-        Ludice - Tous droits réservés
+        Version - 0.0.0.1
     </div>
 </template>

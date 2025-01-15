@@ -1,6 +1,5 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
 import GameCard from '@/Components/GameCard.vue';
 
@@ -53,9 +52,15 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="Accueil" />
+    <Head title="Votre Ludothèque"/>
 
-    <AuthenticatedLayout>
+    <authenticated-layout>
+        <template #header>
+            <h2 class="text-2xl font-semibold">
+                Votre ludothèque
+            </h2>
+        </template>
+
         <div class="py-3">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="py-2 text-center">
@@ -101,5 +106,5 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </authenticated-layout>
 </template>
