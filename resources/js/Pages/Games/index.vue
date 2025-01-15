@@ -48,41 +48,44 @@ console.log()
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Accueil" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Dashboard
-            </h2>
-        </template>
+        <div class="py-3">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="py-2 text-center">
+                    <input
+                        type="text"
+                        id="namesearch"
+                        v-model="searchQuery"
+                        @input="debouncedSearch"
+                        placeholder="Recherchez par nom"
+                    />
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <GameCard v-for="game in games.data" :key="game.id" :game="game" :in-library="false" />
+                </div>
 
-        <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <GameCard v-for="game in games.data" :key="game.id" :game="game" />
-            </div>
-
-            <div class="mt-6 flex justify-center items-center space-x-4">
-                <button
-                    id="fetchprev"
-                    @click="fetchGames(games.prev_page_url)"
-                    v-if="games.prev_page_url"
-                    class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-                >
-                    &lt; Previous
-                </button>
-                <span>Page {{ games.current_page }} of {{ games.last_page }}</span>
-                <button
-                    id="fetchnext"
-                    @click="fetchGames(games.next_page_url)"
-                    v-if="games.next_page_url"
-                    class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-                >
-                    Next &gt;
-                </button>
+                <div class="mt-6 flex justify-center items-center space-x-4">
+                    <button
+                        id="fetchprev"
+                        @click="fetchGames(games.prev_page_url)"
+                        v-if="games.prev_page_url"
+                        class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+                    >
+                        &lt; Previous
+                    </button>
+                    <span>Page {{ games.current_page }} of {{ games.last_page }}</span>
+                    <button
+                        id="fetchnext"
+                        @click="fetchGames(games.next_page_url)"
+                        v-if="games.next_page_url"
+                        class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+                    >
+                        Next &gt;
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
     </AuthenticatedLayout>
 </template>
