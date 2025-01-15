@@ -16,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/homepage', [GameController::class, 'index'])->name('connected.homepage');
     Route::get('/homepage/search', [GameController::class, 'search'])->name('games.search');
     Route::get('/library', [LibraryController::class, 'index'])->name('library');
+    Route::post('/library/{game}', [LibraryController::class, 'store'])->name('library.store');
 });
 
 Route::middleware('auth')->group(function () {

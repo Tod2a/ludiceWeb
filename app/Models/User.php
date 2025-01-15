@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class);
     }
 
-    public function libraryGames()
+    public function library()
     {
         return $this->belongsToMany(Game::class, 'library');
     }

@@ -53,10 +53,8 @@ onMounted(async () => {
 });
 
 const containsGameById = (id) => {
-    return props.user.library_games.some((game) => game.id === id);
+    return props.user.library.some((game) => game.id === id);
 };
-
-console.log(userId.value)
 </script>
 
 <template>

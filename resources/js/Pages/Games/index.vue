@@ -51,7 +51,7 @@ onMounted(async () => {
 });
 
 const containsGameById = (id) => {
-    return props.user.library_games.some((game) => game.id === id);
+    return props.user.library.some((game) => game.id === id);
 };
 </script>
 
@@ -71,7 +71,6 @@ const containsGameById = (id) => {
                         class="border rounded p-2 w-full max-w-md"
                     />
                 </div>
-
                 <!-- Loading Indicator -->
                 <div v-if="isLoading" class="text-center text-gray-500 py-6">
                     Chargement...

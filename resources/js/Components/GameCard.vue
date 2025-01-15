@@ -1,9 +1,13 @@
 <script setup>
 import NavLink from './NavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import SecondaryButton from './SecondaryButton.vue';
 import DisabledButton from './DisabledButton.vue';
 import DangerButton from './DangerButton.vue';
+
+const form=useForm({
+
+});
 
 const props = defineProps({
     game: Object,
@@ -25,7 +29,6 @@ const props = defineProps({
             />
         </div>
         <div class="flex flex-wrap flex-col my-2 gap-2 items-center w-full">
-            <!-- Bouton Détails -->
             <NavLink
                 :href="route('connected.homepage')"
                 class="w-full inline-flex items-center justify-center text-xs font-semibold text-indigo-600 hover:underline"
@@ -33,7 +36,6 @@ const props = defineProps({
                 Détails
             </NavLink>
 
-            <!-- Gestion dynamique des boutons -->
             <div class="w-full">
                 <div v-if="props.inLibrary">
                     <div v-if="props.isLibrary">
@@ -44,18 +46,17 @@ const props = defineProps({
                         </Link>
                     </div>
                     <div v-else>
-                        <!-- Bouton grisé et non cliquable -->
                         <DisabledButton class="w-full text-center">
                             Déjà dans la ludothèque
                         </DisabledButton>
                     </div>
                 </div>
                 <div v-else>
-                    <Link :href="route('connected.homepage')">
-                        <SecondaryButton class="w-full text-center">
-                            Ajouter à la ludothèque
-                        </SecondaryButton>
-                    </Link>
+                        <form @submit.prevent="form.post(route('library.store', { game: game.id }))" method="POST">
+                            <SecondaryButton type="submit" class="w-full text-center">
+                                Ajouter à la ludothèque
+                            </SecondaryButton>
+                        </form>
                 </div>
             </div>
         </div>

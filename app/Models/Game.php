@@ -41,7 +41,7 @@ class Game extends Model
         return $this->hasMany(TemplateSection::class);
     }
 
-    public function libraryUsers()
+    public function library()
     {
         return $this->belongsToMany(User::class, 'library');
     }
