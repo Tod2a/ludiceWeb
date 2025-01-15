@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProfileController;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Verified;
@@ -14,6 +15,7 @@ Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/homepage', [GameController::class, 'index'])->name('connected.homepage');
     Route::get('/homepage/search', [GameController::class, 'search'])->name('games.search');
+    Route::get('/library', [LibraryController::class, 'index'])->name('library');
 });
 
 Route::middleware('auth')->group(function () {

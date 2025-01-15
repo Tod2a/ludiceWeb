@@ -29,6 +29,9 @@ const showingNavigationDropdown = ref(false);
                         <NavLink :href="route('connected.homepage')" :active="route().current('connected.homepage')">
                             Accueil
                         </NavLink>
+                        <NavLink :href="route('library')" :active="route().current('library')">
+                            Votre Ludothèque
+                        </NavLink>
                         <div class="relative ms-3">
                             <!-- Settings Dropdown -->
                             <Dropdown align="right" width="48">
@@ -103,6 +106,12 @@ const showingNavigationDropdown = ref(false);
                 <div class="space-y-1 pb-3 pt-2">
                     <ResponsiveNavLink :href="route('connected.homepage')" :active="route().current('connected.homepage')">
                         Accueil
+                    </ResponsiveNavLink>
+                </div>
+
+                <div class="space-y-1 pb-3 pt-2">
+                    <ResponsiveNavLink :href="route('library')" :active="route().current('library')">
+                        Votre Ludothèque
                     </ResponsiveNavLink>
                 </div>
 

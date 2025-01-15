@@ -8,6 +8,7 @@ const props = defineProps({
     publishers: Array,
     categories: Array,
     creators: Array,
+    user: Object,
 });
 
 const searchQuery = ref('');
@@ -48,6 +49,10 @@ onMounted(async () => {
     await fetchGames(route('games.search'));
     isLoading.value = false;
 });
+
+const containsGameById = (id) => {
+    return props.user.library_games.some((game) => game.id === id);
+};
 </script>
 
 <template>
@@ -74,7 +79,13 @@ onMounted(async () => {
 
                 <!-- Game Cards -->
                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <GameCard v-for="game in games.data" :key="game.id" :game="game" :in-library="false" />
+                    <GameCard
+                        v-for="game in games.data"
+                        :key="game.id"
+                        :game="game"
+                        :isLibrary="false"
+                        :inLibrary="containsGameById(game.id)"
+                    />
                 </div>
 
                 <!-- Pagination -->

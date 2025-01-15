@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
 import GameCard from '@/Components/GameCard.vue';
 
@@ -7,12 +8,14 @@ const props = defineProps({
     publishers: Array,
     categories: Array,
     creators: Array,
+    user: Object,
 });
 
 const searchQuery = ref('');
 const publisherQuery = ref('');
 const categoryQuery = ref('');
 const creatorQuery = ref('');
+const userId = ref(props.user.id);
 const games = ref([]);
 const isLoading = ref(true);
 
@@ -23,7 +26,8 @@ const fetchGames = async (url) => {
                 query: searchQuery.value,
                 category: categoryQuery.value,
                 publisher: publisherQuery.value,
-                creator: creatorQuery.value
+                creator: creatorQuery.value,
+                userId: userId.value,
             }
         });
         games.value = response.data;
@@ -47,15 +51,21 @@ onMounted(async () => {
     await fetchGames(route('games.search'));
     isLoading.value = false;
 });
+
+const containsGameById = (id) => {
+    return props.user.library_games.some((game) => game.id === id);
+};
+
+console.log(userId.value)
 </script>
 
 <template>
-    <Head title="Votre Ludothèque"/>
+    <Head title="Votre ludothèque" />
 
     <authenticated-layout>
         <template #header>
             <h2 class="text-2xl font-semibold">
-                Votre ludothèque
+                Votre Ludothèque
             </h2>
         </template>
 
@@ -79,7 +89,13 @@ onMounted(async () => {
 
                 <!-- Game Cards -->
                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <GameCard v-for="game in games.data" :key="game.id" :game="game" :in-library="false" />
+                    <GameCard
+                        v-for="game in games.data"
+                        :key="game.id"
+                        :game="game"
+                        :isLibrary="true"
+                        :inLibrary="containsGameById(game.id)"
+                    />
                 </div>
 
                 <!-- Pagination -->
