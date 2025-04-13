@@ -1,64 +1,77 @@
 <script setup>
+import { ref } from 'vue'
 import NavLink from './NavLink.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import SecondaryButton from './SecondaryButton.vue';
 import DisabledButton from './DisabledButton.vue';
 import DangerButton from './DangerButton.vue';
 
-const form=useForm({
-
-});
+const form = useForm({});
 
 const props = defineProps({
     game: Object,
     isLibrary: Boolean,
     inLibrary: Boolean
 });
+
+const menuOpen = ref(false);
 </script>
 
 <template>
     <div class="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-shadow flex flex-col overflow-hidden items-center">
-        <div class="mb-2 flex flex-col">
-            <h3 class="text-lg font-semibold truncate">{{ props.game.name }}</h3>
+        <div class="mb-2 flex flex-col w-full">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold truncate">{{ props.game.name }}</h3>
+
+                <div class="relative inline-block text-left">
+                    <button @click="menuOpen = !menuOpen" type="button" class="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <svg class="h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v.01M12 12v.01M12 18v.01" />
+                        </svg>
+                    </button>
+
+                    <div v-if="menuOpen" class="absolute right-0 mt-2 w-48 origin-top-right rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                        <div class="py-1">
+                            <Link :href="route('connected.homepage')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                Détails
+                            </Link>
+
+                            <div class="border-t border-gray-200"></div>
+
+                            <template v-if="props.inLibrary">
+                                <template v-if="props.isLibrary">
+                                    <form @submit.prevent="form.delete(route('library.destroy', { game: props.game.id }))">
+                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                            Retirer de la ludothèque
+                                        </button>
+                                    </form>
+                                </template>
+                                <template v-else>
+                                    <button disabled class="block w-full text-left px-4 py-2 text-sm text-gray-400">
+                                        Déjà dans la ludothèque
+                                    </button>
+                                </template>
+                            </template>
+
+                            <template v-else>
+                                <form @submit.prevent="form.post(route('library.store', { game: props.game.id }))">
+                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100">
+                                        Ajouter à la ludothèque
+                                    </button>
+                                </form>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="relative pb-2/3">
+
+        <div class="relative pb-2/3 w-full">
             <img
                 :src="props.game.img_path"
                 :alt="'Image ' + props.game.name"
-                class="rounded-lg bg-gray-100"
+                class="rounded-lg bg-gray-100 w-full"
             />
-        </div>
-        <div class="flex flex-wrap flex-col my-2 gap-2 items-center w-full">
-            <NavLink
-                :href="route('connected.homepage')"
-                class="w-full inline-flex items-center justify-center text-xs font-semibold text-indigo-600 hover:underline"
-            >
-                Détails
-            </NavLink>
-
-            <div class="w-full">
-                <div v-if="props.inLibrary">
-                    <div v-if="props.isLibrary">
-                        <form @submit.prevent="form.delete(route('library.destroy', { game: game.id }))">
-                            <DangerButton class="w-full text-center">
-                                Retirer de la ludothèque
-                            </DangerButton>
-                        </form>
-                    </div>
-                    <div v-else>
-                        <DisabledButton class="w-full text-center">
-                            Déjà dans la ludothèque
-                        </DisabledButton>
-                    </div>
-                </div>
-                <div v-else>
-                    <form @submit.prevent="form.post(route('library.store', { game: game.id }))">
-                        <SecondaryButton type="submit" class="w-full text-center">
-                            Ajouter à la ludothèque
-                        </SecondaryButton>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </template>

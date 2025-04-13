@@ -55,6 +55,11 @@ onMounted(async () => {
 const containsGameById = (id) => {
     return props.user.library.some((game) => game.id === id);
 };
+
+const clearInput = () => {
+    searchQuery.value = '';
+    debouncedSearch();
+};
 </script>
 
 <template>
@@ -69,15 +74,24 @@ const containsGameById = (id) => {
 
         <div class="py-3">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="py-2 text-center">
+                <div class="relative w-full max-w-md mx-auto">
                     <input
-                        type="text"
-                        id="namesearch"
-                        v-model="searchQuery"
-                        @input="debouncedSearch"
-                        placeholder="Recherchez par nom"
-                        class="border rounded p-2 w-full max-w-md"
+                    type="text"
+                    v-model="searchQuery"
+                    @input="debouncedSearch"
+                    placeholder="Recherchez par nom"
+                    class="border rounded p-2 w-full pr-10"
                     />
+                    <!-- Icône de suppression -->
+                    <button
+                    v-if="searchQuery"
+                    @click="clearInput"
+                    class="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    </button>
                 </div>
 
                 <!-- Loading Indicator for the first load -->
