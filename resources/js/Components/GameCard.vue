@@ -1,10 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import NavLink from './NavLink.vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Link, useForm } from '@inertiajs/vue3';
-import SecondaryButton from './SecondaryButton.vue';
-import DisabledButton from './DisabledButton.vue';
-import DangerButton from './DangerButton.vue';
 
 const form = useForm({});
 
@@ -15,6 +11,21 @@ const props = defineProps({
 });
 
 const menuOpen = ref(false);
+const menuRef = ref(null);
+
+const handleClickOutside = (event) => {
+    if (menuRef.value && !menuRef.value.contains(event.target)) {
+        menuOpen.value = false;
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <template>
@@ -23,7 +34,7 @@ const menuOpen = ref(false);
             <div class="flex justify-between items-center">
                 <h3 class="text-lg font-semibold truncate">{{ props.game.name }}</h3>
 
-                <div class="relative inline-block text-left">
+                <div class="relative inline-block text-left" ref="menuRef">
                     <button @click="menuOpen = !menuOpen" type="button" class="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         <svg class="h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v.01M12 12v.01M12 18v.01" />

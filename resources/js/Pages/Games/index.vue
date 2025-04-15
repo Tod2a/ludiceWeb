@@ -74,7 +74,6 @@ const clearInput = () => {
                     placeholder="Recherchez par nom"
                     class="border rounded p-2 w-full pr-10"
                     />
-                    <!-- Icône de suppression -->
                     <button
                     v-if="searchQuery"
                     @click="clearInput"
