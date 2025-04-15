@@ -23,6 +23,11 @@ class GameController extends Controller
         return inertia('Games/index', ['publishers' => $publishers, 'categories' => $categories, 'creators' => $creators, 'user' => $user]);
     }
 
+    public function show()
+    {
+        return inertia('Games/show');
+    }
+
     public function search(Request $request)
     {
         $request->validate([
