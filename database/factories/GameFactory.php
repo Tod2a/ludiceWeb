@@ -19,10 +19,12 @@ class GameFactory extends Factory
         return [
             'name' => fake()->word(),
             'published_at' => fake()->date(),
+            'description' => fake()->text(200),
             'img_path' => "storage/images/test.jpg",
-            'numberofplayers' => fake()->numberBetween(1, 10),
             'barcode' => fake()->unique()->numberBetween(1000, 9999),
-            'duration' => fake()->numberBetween(15, 180),
+            'min_players' => fake()->numberBetween(1, 5),
+            'max_players' => fake()->numberBetween(5, 10),
+            'average_duration' => fake()->numberBetween(15, 180),
             'suggestedage' => fake()->numberBetween(6, 99),
         ];
     }

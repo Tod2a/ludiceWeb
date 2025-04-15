@@ -14,13 +14,16 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->text('description');
             $table->date('published_at');
             $table->string('name');
             $table->string('img_path');
-            $table->integer('numberofplayers');
+            $table->integer('min_players');
+            $table->integer('max_players');
+            $table->integer('average_duration');
             $table->integer('barcode')->nullable();
-            $table->integer('duration');
             $table->integer('suggestedage');
+            $table->boolean('is_expansion')->default(false);
         });
     }
 

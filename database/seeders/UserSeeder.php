@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
         $game = Game::first();
 
         if ($game) {
-            $regularUser->libraryGames()->attach($game->id, ['added_at' => now()]);
+            $regularUser->library()->attach($game->id, ['added_at' => now()]);
         } else {
             $this->command->warn('no games in database');
         }

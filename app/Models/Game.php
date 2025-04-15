@@ -18,6 +18,14 @@ class Game extends Model
     }
 
     /**
+     * Get the mechanics associated with the game.
+     */
+    public function mechanics()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    /**
      * Get the publishers associated with the game.
      */
     public function publishers()
