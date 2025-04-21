@@ -23,9 +23,11 @@ class GameController extends Controller
         return inertia('Games/index', ['publishers' => $publishers, 'categories' => $categories, 'creators' => $creators, 'user' => $user]);
     }
 
-    public function show()
+    public function show(int $id)
     {
-        return inertia('Games/show');
+        $game = Game::with(['categories', 'mechanics', 'publishers', 'creators'])->findOrFail($id);
+
+        return inertia('Games/show', ['game' => $game]);
     }
 
     public function search(Request $request)
