@@ -1,24 +1,24 @@
 <script setup>
 import ToastListItem from './ToastListItem.vue';
-import { router, usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import {ref} from "vue";
 
 const items = ref([]);
-
-const page = usePage();
 
 router.on('success', (event) => {
   const flash = event.detail.page.props.flash;
   if (flash.success) {
     items.value.unshift({
         key: Symbol(),
-        message: flash.success
+        message: flash.success,
+        type: 'success'
     });
   }
   if (flash.error) {
     items.value.unshift({
         key: Symbol(),
-        message: flash.success
+        message: flash.error,
+        type: 'error'
     });
   }
 });
@@ -40,6 +40,7 @@ function remove(index){
             v-for="(item, index) in items"
             :key="item.key"
             :message="item.message"
+            :type="item.type"
             @remove="remove(index)"/>
     </TransitionGroup>
 </template>
