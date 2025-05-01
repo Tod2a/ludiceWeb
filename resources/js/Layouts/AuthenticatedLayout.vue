@@ -7,12 +7,16 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import Footer from '@/Components/Footer.vue';
 import { Link } from '@inertiajs/vue3';
+import ToastList from '@/Components/ToastList.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
     <div class="bg-white-100 min-h-screen flex flex-col">
+
+        <ToastList />
+
         <!-- Header -->
         <nav class="bg-primary shadow-md border-b border-gray-100">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

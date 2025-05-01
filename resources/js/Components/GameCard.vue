@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, defineEmits } from 'vue'
 import { Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({});
+const emit = defineEmits(['removed']);
 
 const props = defineProps({
     game: Object,
@@ -26,6 +27,16 @@ onMounted(() => {
 onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside);
 });
+
+function handleDelete() {
+  try {
+    form.delete(route('library.destroy', { game: props.game.id }));
+
+    emit('removed');
+  } catch (error) {
+    console.error('Error removing game:', error);
+  }
+};
 </script>
 
 <template>
@@ -51,7 +62,7 @@ onBeforeUnmount(() => {
 
                             <template v-if="props.inLibrary">
                                 <template v-if="props.isLibrary">
-                                    <form @submit.prevent="form.delete(route('library.destroy', { game: props.game.id }))">
+                                    <form @submit.prevent="handleDelete">
                                         <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                                             Retirer de la ludothèque
                                         </button>
