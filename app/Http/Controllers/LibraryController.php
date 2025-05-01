@@ -34,12 +34,12 @@ class LibraryController extends Controller
         }
 
         if ($user->library()->where('game_id', $game)->exists()) {
-            return redirect()->route('library')->with('error', 'Game already in the library');
+            return redirect()->route('library')->with('error', 'Jeu déjà dans la ludothèque');
         }
 
         $user->library()->attach($game);
 
-        return redirect()->route('connected.homepage')->with('success', 'Game added to library');
+        return redirect()->route('connected.homepage')->with('success', 'Jeu ajouté dans la ludothèque');
     }
 
     public function destroy(int $game)
@@ -52,11 +52,11 @@ class LibraryController extends Controller
         }
 
         if (!$user->library()->where('game_id', $game)->exists()) {
-            return redirect()->route('library')->with('error', 'Game not found in the library');
+            return redirect()->route('library')->with('error', 'Jeu introuvable dans la ludothèque');
         }
 
         $user->library()->detach($game);
 
-        return redirect()->route('library')->with('success', 'Game removed from library')->with('reload', true);
+        return redirect()->route('library');
     }
 }

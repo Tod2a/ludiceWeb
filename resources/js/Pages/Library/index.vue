@@ -107,6 +107,7 @@ const clearInput = () => {
                         :game="game"
                         :isLibrary="true"
                         :inLibrary="containsGameById(game.id)"
+                        @removed="fetchGames(route('games.search'))"
                     />
                 </div>
 
