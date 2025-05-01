@@ -26,4 +26,18 @@ class LibraryController extends Controller
             'user' => $user,
         ]);
     }
+
+    public function store()
+    {
+        return response()->json([
+            'message' => "hello"
+        ]);
+    }
+
+    public function destroy()
+    {
+        return response()->json([
+            'message' => "hello"
+        ]);
+    }
 }
