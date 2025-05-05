@@ -16,10 +16,8 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div class="bg-white-100 min-h-screen flex flex-col">
 
-        <ToastList />
-
         <!-- Header -->
-        <nav class="bg-primary shadow-md border-b border-gray-100">
+        <nav class="fixed top-0 left-0 w-full z-50 bg-primary shadow-md border-b border-gray-100">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 justify-between">
                     <div class="flex items-center">
@@ -121,16 +119,11 @@ const showingNavigationDropdown = ref(false);
             </div>
         </nav>
 
-        <header v-if="$slots.header" class="py-4">
-            <div class="text-center text-lg font-semibold text-gray-700">
-                <slot name="header" />
-            </div>
-        </header>
-
-        <div class="flex">
+        <div class="flex mt-16">
+            <ToastList />
             <!-- Sidebar -->
             <aside :class="[
-                'fixed top-0 left-0 h-full bg-green-800 text-white transition-transform duration-300 z-40',
+                'fixed top-0 left-0 h-full bg-green-800 text-white transition-transform duration-300 z-40 mt-16',
                 isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'
             ]">
                 <div class="p-4">
@@ -149,15 +142,16 @@ const showingNavigationDropdown = ref(false);
                 'flex-1 transition-all duration-300',
                 isSidebarOpen ? 'ml-64' : 'ml-0'
             ]">
+                <header v-if="$slots.header" class="py-4">
+                    <div class="text-center text-lg font-semibold text-gray-700">
+                        <slot name="header" />
+                    </div>
+                </header>
                 <!-- Contenu de la page -->
                 <main class="p-6">
                     <slot />
                 </main>
             </div>
         </div>
-
-        <footer class="bg-primary py-4 text-center text-secondary">
-            <Footer />
-        </footer>
     </div>
 </template>
