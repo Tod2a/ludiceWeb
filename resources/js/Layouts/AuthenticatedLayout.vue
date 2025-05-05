@@ -9,6 +9,7 @@ import Footer from '@/Components/Footer.vue';
 import { Link } from '@inertiajs/vue3';
 import ToastList from '@/Components/ToastList.vue';
 
+const isSidebarOpen = ref(false);
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -27,6 +28,14 @@ const showingNavigationDropdown = ref(false);
                         <ApplicationLogo class="h-16 w-16 scale-75" />
                         </Link>
                     </div>
+
+                    <button @click="isSidebarOpen = !isSidebarOpen" class="text-white focus:outline-none">
+                        <!-- Icône du menu -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:space-x-4">
@@ -118,11 +127,34 @@ const showingNavigationDropdown = ref(false);
             </div>
         </header>
 
-        <main class="flex-grow">
-            <div class="container mx-auto p-6">
-                <slot />
+        <div class="flex">
+            <!-- Sidebar -->
+            <aside :class="[
+                'fixed top-0 left-0 h-full bg-green-800 text-white transition-transform duration-300 z-40',
+                isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'
+            ]">
+                <div class="p-4">
+                    <!-- Contenu de la sidebar -->
+                    <ul>
+                        <li class="mb-4"><a href="#" class="hover:text-yellow-300">Accueil</a></li>
+                        <li class="mb-4"><a href="#" class="hover:text-yellow-300">Votre Ludothèque</a></li>
+                        <li class="mb-4"><a href="#" class="hover:text-yellow-300">Profil</a></li>
+                        <li><a href="#" class="hover:text-yellow-300">Déconnexion</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Contenu principal -->
+            <div :class="[
+                'flex-1 transition-all duration-300',
+                isSidebarOpen ? 'ml-64' : 'ml-0'
+            ]">
+                <!-- Contenu de la page -->
+                <main class="p-6">
+                    <slot />
+                </main>
             </div>
-        </main>
+        </div>
 
         <footer class="bg-primary py-4 text-center text-secondary">
             <Footer />
