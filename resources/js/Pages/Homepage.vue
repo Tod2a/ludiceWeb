@@ -15,6 +15,7 @@ import { Head } from '@inertiajs/vue3';
             <p class="text-gray-700 leading-relaxed">
                 Ludice est une application mobile en cours de développement, conçue pour enrichir vos soirées jeux de société.
                 Ce projet, issu d’un travail de fin d’études, vise à devenir l’outil incontournable des passionnés de jeux.
+                TEST.
             </p>
             <p class="mt-4 text-gray-700 leading-relaxed">
                 Dès maintenant, créez votre compte et commencez à construire votre ludothèque en ligne. Vous serez ainsi prêt à
