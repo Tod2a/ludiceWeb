@@ -76,7 +76,19 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'role_id' => 'required|exists:roles,id',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        Gate::authorize('update', $user);
+
+        $user->role_id = $validated['role_id'];
+
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Rôle mis à jour avec succès.');
     }
 
     public function destroy(string $id)

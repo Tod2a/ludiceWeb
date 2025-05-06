@@ -44,12 +44,36 @@ const form = useForm({
     name: null
 })
 
-const confirmingUserDeletion = ref(false);
+const editForm = useForm({
+    id: null,
+    name: null,
+    role_id: null
+})
+
+const isDeleteModalVisible = ref(false);
+const isEditModalVisible = ref(false);
+
+const openEditModal = (id, name, roleId) => {
+    editForm.id = id;
+    editForm.name = name;
+    editForm.role_id = roleId;
+    isEditModalVisible.value = true;
+};
+
+const updateUserRole = () => {
+    editForm.patch(route('users.update', editForm.id), {
+        data: { role_id: editForm.role_id },
+        onSuccess: () => {
+            closeEditModal();
+            debouncedSearch();
+        },
+    });
+};
 
 const confirmUserDeletion = ($id, $name) => {
     form.id = $id;
     form.name = $name;
-    confirmingUserDeletion.value = true;
+    isDeleteModalVisible.value = true;
 };
 
 const deleteUser = () => {
@@ -59,8 +83,14 @@ const deleteUser = () => {
 };
 
 const closeModal = () => {
-    confirmingUserDeletion.value = false;
+    isDeleteModalVisible.value = false;
     form.reset();
+    debouncedSearch();
+};
+
+const closeEditModal = () => {
+    isEditModalVisible.value = false;
+    editForm.reset();
     debouncedSearch();
 };
 
@@ -113,9 +143,9 @@ const formattedCreatedAt = (user) => {
                             <td class="border px-4 py-2">{{ formattedCreatedAt(user) }}</td>
                             <td class="border px-4 py-2 space-x-4">
                                 <div class="flex space-x-4">
-                                    <Link :href="route('users.edit', user.id)">
-                                    <PencilIcon class="w-5 h-5 text-blue-500" />
-                                    </Link>
+                                    <Button @click="openEditModal(user.id, user.name, user.role.id)">
+                                        <PencilIcon class="w-5 h-5 text-blue-500" />
+                                    </Button>
                                     <Button :disabled="user.role.name === 'Master'"
                                         @click="confirmUserDeletion(user.id, user.name)">
                                         <TrashIcon class="w-5 h-5 text-red-400" />
@@ -138,28 +168,57 @@ const formattedCreatedAt = (user) => {
                 </table>
             </div>
 
-            <fwb-modal v-if="confirmingUserDeletion" @close="closeModal">
+            <fwb-modal size="md" position="top-center" v-if="isDeleteModalVisible" @close="closeModal">
                 <template #header>
                     <h2 class="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete the user {{ form.name }}?
+                        Êtes-vous sûr de vouloir supprimer l'utilisateur {{ form.name }} ?
                     </h2>
                 </template>
                 <template #body>
                     <p class="text-sm text-gray-500">
-                        This action cannot be undone.
+                        Cette action est irréversible.
                     </p>
                 </template>
                 <template #footer>
                     <button @click="closeModal"
                         class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5">
-                        Cancel
+                        Annuler
                     </button>
                     <button @click="deleteUser"
                         class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                        Delete
+                        Supprimer
                     </button>
                 </template>
             </fwb-modal>
+
+            <fwb-modal size="md" position="top-center" v-if="isEditModalVisible" @close="closeEditModal">
+                <template #header>
+                    <h2 class="text-lg font-medium text-gray-900">
+                        Modifier le rôle de l'utilisateur {{ editForm.name }}
+                    </h2>
+                </template>
+                <template #body>
+                    <p class="text-sm text-gray-500">
+                        Sélectionnez un nouveau rôle pour {{ editForm.name }} :
+                    </p>
+                    <select v-model="editForm.role_id" class="mt-2 w-full p-2 border rounded-md">
+                        <option v-for="role in roles" :key="role.id" :value="role.id">
+                            {{ role.name }}
+                        </option>
+                    </select>
+                </template>
+                <template #footer>
+                    <button @click="closeEditModal"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5">
+                        Annuler
+                    </button>
+                    <button @click="updateUserRole"
+                        class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                        Mettre à jour
+                    </button>
+                </template>
+            </fwb-modal>
+
         </div>
     </AuthenticatedLayout>
 </template>
