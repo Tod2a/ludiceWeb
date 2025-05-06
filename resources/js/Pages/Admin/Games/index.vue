@@ -5,7 +5,6 @@ import { FwbModal } from 'flowbite-vue';
 import { onMounted, ref } from 'vue';
 import { TrashIcon, PencilIcon } from '@heroicons/vue/24/outline';
 import NavLink from '@/Components/NavLink.vue';
-import { initFlowbite } from 'flowbite';
 
 const searchName = ref('');
 const games = ref([]);
@@ -89,8 +88,8 @@ const closeDeleteModal = () => {
                 <input type="text" v-model="searchName" @input="debouncedSearch" placeholder="Search by name" />
             </div>
 
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-left rtl:text-right text-gray-500 dark:text-primary">
+            <div class="relative overflow-x-auto max-w-full shadow-md sm:rounded-lg">
+                <table class="inline-block min-w-max w-full text-left text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="uppercase text-left">
                             <th class="px-4 py-2 border">nom</th>

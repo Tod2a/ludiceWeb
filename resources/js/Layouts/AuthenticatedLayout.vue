@@ -179,7 +179,7 @@ onClickOutside(sidebarRef, (event) => {
                     </div>
                 </header>
                 <!-- Contenu de la page -->
-                <main class="p-6">
+                <main class="p-6 w-screen">
                     <slot />
                 </main>
             </div>
