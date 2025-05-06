@@ -13,7 +13,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                 Dashboard
             </h2>
         </template>
-        <div class="bg-white shadow-md rounded-lg p-8 mx-60">
+        <div class="bg-white shadow-md rounded-lg p-8">
             <p class="text-gray-700 leading-relaxed">
                 Bienvenue sur votre dashboard. En tant qu’administrateur, votre rôle est de veiller à ce que la base de
                 données de Ludice reste à jour. Le système est encore en cours de développement, mais vous avez déjà
