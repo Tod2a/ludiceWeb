@@ -29,7 +29,7 @@ class UsersController extends Controller
             $users->where('email', 'like', '%' . $query . '%');
         }
 
-        $result = $users->paginate(12);
+        $result = $users->paginate(1);
 
         return response()->json($result);
     }
