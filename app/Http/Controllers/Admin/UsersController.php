@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UsersController extends Controller
 {
@@ -14,6 +15,8 @@ class UsersController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', User::class);
+
         $roles = Role::all();
 
         return inertia('Admin/Users/index', ['roles' => $roles]);
@@ -21,6 +24,8 @@ class UsersController extends Controller
 
     public function search(Request $request)
     {
+        Gate::authorize('viewAny', User::class);
+
         $query = $request->input('query');
 
         $users = User::with('role');
@@ -78,7 +83,9 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if ($user->role && $user->role->name === 'Master') {
+        Gate::authorize('delete', $user);
+
+        if ($user->role && $user->role->name === \App\Models\Role::MASTER) {
             return redirect()->back()->with('error', 'Impossible de supprimer un utilisateur avec le rôle Master.');
         }
 
