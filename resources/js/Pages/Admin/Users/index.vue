@@ -4,7 +4,6 @@ import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { FwbModal } from 'flowbite-vue';
 import { onMounted, ref } from 'vue';
 import { TrashIcon, PencilIcon } from '@heroicons/vue/24/outline';
-import NavLink from '@/Components/NavLink.vue';
 import { initFlowbite } from 'flowbite';
 
 const props = defineProps({
