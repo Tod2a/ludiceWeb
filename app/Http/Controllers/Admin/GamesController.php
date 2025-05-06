@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class GamesController extends Controller
@@ -13,7 +15,26 @@ class GamesController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Game::class);
+
         return Inertia('Admin/Games/index');
+    }
+
+    public function search(Request $request)
+    {
+        Gate::authorize('viewAny', Game::class);
+
+        $name = $request->input('name');
+
+        $games = Game::with('publishers');
+
+        if ($name) {
+            $games->where('name', 'like', '%' . $name . '%');
+        }
+
+        $result = $games->paginate(12);
+
+        return response()->json($result);
     }
 
     /**

@@ -160,7 +160,7 @@ const formattedCreatedAt = (user) => {
                                     Previous</button>
                                 Page {{ users.current_page }} of {{ users.last_page }}
                                 <button @click="fetchUsers(users.next_page_url)" v-if="users.next_page_url">Next
-                                    &gt;</button>>
+                                    &gt;</button>
                             </td>
                         </tr>
                     </tfoot>
