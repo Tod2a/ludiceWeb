@@ -26,7 +26,7 @@ class GamesController extends Controller
 
         $name = $request->input('name');
 
-        $games = Game::with('publishers');
+        $games = Game::with('publishers', 'creators');
 
         if ($name) {
             $games->where('name', 'like', '%' . $name . '%');

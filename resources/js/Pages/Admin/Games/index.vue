@@ -94,6 +94,8 @@ const closeDeleteModal = () => {
                         <tr class="uppercase text-left">
                             <th class="px-4 py-2 border">nom</th>
                             <th class="px-4 py-2 border">Date de publication</th>
+                            <th class="px-4 py-2 border">Maison d'édition</th>
+                            <th class="px-4 py-2 border">Créateurs</th>
                             <th class="px-4 py-2 border w-2">Joueurs min</th>
                             <th class="px-4 py-2 border w-2">Joueurs max</th>
                             <th class="px-4 py-2 border">Durée</th>
@@ -107,6 +109,13 @@ const closeDeleteModal = () => {
                             class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition">
                             <td class="border px-4 py-2"> {{ game.name }}</td>
                             <td class="border px-4 py-2"> {{ game.published_at }}</td>
+                            <td class="border px-4 py-2"> <span v-for="publisher in game.publishers"
+                                    :key="publisher.id">{{
+                                        publisher.name }}</span>
+                            </td>
+                            <td class="border px-4 py-2"> <span v-for="creator in game.creators" :key="creator.id">{{
+                                creator.firstname }} {{ creator.lastname }}</span>
+                            </td>
                             <td class="border px-4 py-2"> {{ game.min_players }}</td>
                             <td class="border px-4 py-2"> {{ game.max_players }}</td>
                             <td class="border px-4 py-2"> {{ game.average_duration }} min</td>
