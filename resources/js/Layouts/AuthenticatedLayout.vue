@@ -39,10 +39,10 @@ onClickOutside(sidebarRef, (event) => {
                         </svg>
                     </button>
 
-                    <div class="flex items-center space-x-2">
+                    <!-- <div class="flex items-center space-x-2">
                         <ApplicationLogo class="h-10 w-10" />
                         <span class="text-white text-xl font-semibold tracking-wide">Ludice</span>
-                    </div>
+                    </div> -->
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:space-x-4">
