@@ -95,12 +95,12 @@ const closeDeleteModal = () => {
                         <tr class="uppercase text-left">
                             <th class="px-4 py-2 border">nom</th>
                             <th class="px-4 py-2 border">Date de publication</th>
-                            <th class="px-4 py-2 border">Joueurs min</th>
-                            <th class="px-4 py-2 border">Joueurs max</th>
+                            <th class="px-4 py-2 border w-2">Joueurs min</th>
+                            <th class="px-4 py-2 border w-2">Joueurs max</th>
                             <th class="px-4 py-2 border">Durée</th>
                             <th class="px-4 py-2 border">Age</th>
                             <td class="px-4 py-2 border">EAN</td>
-                            <th class="px-4 py-2 border">actions</th>
+                            <th class="px-4 py-2 border w-2">actions</th>
                         </tr>
                     </thead>
                     <tbody>
