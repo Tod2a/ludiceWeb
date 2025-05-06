@@ -151,6 +151,10 @@ onClickOutside(sidebarRef, (event) => {
                                         v-if="$page.props.auth.user.role.name === 'Master'">
                                         <span class="ms-3">Utilisateurs</span>
                                     </a>
+                                    <a :href="route('games.index')"
+                                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
+                                        <span class="ms-3">Jeux</span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>

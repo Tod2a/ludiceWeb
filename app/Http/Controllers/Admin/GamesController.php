@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class GamesController extends Controller
 {
@@ -12,7 +13,7 @@ class GamesController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia('Admin/Games/index');
     }
 
     /**
