@@ -69,9 +69,9 @@ const updateUserRole = () => {
     });
 };
 
-const confirmUserDeletion = ($id, $name) => {
-    form.id = $id;
-    form.name = $name;
+const confirmUserDeletion = (id, name) => {
+    form.id = id;
+    form.name = name;
     isDeleteModalVisible.value = true;
 };
 

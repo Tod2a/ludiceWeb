@@ -70,7 +70,7 @@ class GamesController extends Controller
     {
         $game = Game::findOrFail($id);
 
-        Gate::authorize('update', Game::class);
+        Gate::authorize('update', $game);
 
         return Inertia('Admin/Games/edit', ['game' => $game]);
     }
@@ -88,6 +88,16 @@ class GamesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $game = Game::withCount('library')->findOrFail($id);
+
+        Gate::authorize('delete', $game);
+
+        if ($game->library_count > 0) {
+            return redirect()->back()->with('error', 'Impossible de supprimer un jeu qui se trouve dans une ludothèque.');
+        }
+
+        $game->delete();
+
+        return redirect()->back()->with('success', 'Jeu supprimé avec succès.');
     }
 }
