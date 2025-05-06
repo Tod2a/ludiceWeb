@@ -42,7 +42,9 @@ class GamesController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('create', Game::class);
+
+        return Inertia('Admin/Games/create');
     }
 
     /**
@@ -66,7 +68,11 @@ class GamesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $game = Game::findOrFail($id);
+
+        Gate::authorize('update', Game::class);
+
+        return Inertia('Admin/Games/edit', ['game' => $game]);
     }
 
     /**

@@ -47,6 +47,15 @@ onMounted(() => {
                 Gestion des jeux
             </h2>
         </template>
+        <div class="flex justify-center">
+            <div class="my-3">
+                <NavLink :href="route('games.create')" class="bg-gray-300 px-2 py-2 rounded-lg hover:bg-gray-400">
+                    Ajouter
+                    un
+                    nouveau jeu
+                </NavLink>
+            </div>
+        </div>
 
         <div class="bg-white shadow-md rounded-lg p-8">
             <div class="flex justify-center py-1">
@@ -54,7 +63,7 @@ onMounted(() => {
             </div>
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <table class="w-full text-left rtl:text-right text-gray-500 dark:text-primary">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="uppercase text-left">
                             <th class="px-4 py-2 border">nom</th>
@@ -67,9 +76,9 @@ onMounted(() => {
                             <td class="border px-4 py-2"> {{ game.name }}</td>
                             <td class="border px-4 py-2 space-x-4">
                                 <div class="flex space-x-4">
-                                    <!-- <Button @click="openEditModal(user.id, user.name, user.role.id)">
-                                        <PencilIcon class="w-5 h-5 text-blue-500" />
-                                    </Button> -->
+                                    <Link :href="route('games.edit', game.id)">
+                                    <PencilIcon class="w-5 h-5 text-blue-500" />
+                                    </Link>
                                     <!-- <Button :disabled="true" @click="confirmUserDeletion(user.id, user.name)">
                                         <TrashIcon class="w-5 h-5 text-red-400" />
                                     </Button> -->
