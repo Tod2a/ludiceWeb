@@ -86,13 +86,6 @@ const formattedCreatedAt = (user) => {
             </h2>
         </template>
 
-        <div class="flex justify-center">
-            <div class="my-3">
-                <NavLink :href="route('users.create')" class="bg-gray-300 px-2 py-2 rounded-lg hover:bg-gray-400">Nouvel
-                    utilisateur</NavLink>
-            </div>
-        </div>
-
         <div class="bg-white shadow-md rounded-lg p-8">
             <div class="flex justify-center py-1">
                 <input type="text" v-model="searchQuery" @input="debouncedSearch" placeholder="Search by email" />
@@ -123,7 +116,8 @@ const formattedCreatedAt = (user) => {
                                     <Link :href="route('users.edit', user.id)">
                                     <PencilIcon class="w-5 h-5 text-blue-500" />
                                     </Link>
-                                    <Button @click="confirmUserDeletion(user.id, user.name)">
+                                    <Button :disabled="user.role.name === 'Master'"
+                                        @click="confirmUserDeletion(user.id, user.name)">
                                         <TrashIcon class="w-5 h-5 text-red-400" />
                                     </Button>
                                 </div>
@@ -147,7 +141,7 @@ const formattedCreatedAt = (user) => {
             <fwb-modal v-if="confirmingUserDeletion" @close="closeModal">
                 <template #header>
                     <h2 class="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete this user?
+                        Are you sure you want to delete the user {{ form.name }}?
                     </h2>
                 </template>
                 <template #body>

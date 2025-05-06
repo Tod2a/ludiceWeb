@@ -27,7 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/admin/users/search', [UsersController::class, 'search'])->name('users.search');
-    Route::resource('/admin/users', UsersController::class);
+    Route::resource('/admin/users', UsersController::class)->except('create', 'show', 'store');
 
     Route::resource('/admin/games', GamesController::class);
 });

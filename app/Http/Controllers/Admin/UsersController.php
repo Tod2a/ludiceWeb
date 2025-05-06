@@ -29,7 +29,7 @@ class UsersController extends Controller
             $users->where('email', 'like', '%' . $query . '%');
         }
 
-        $result = $users->paginate(1);
+        $result = $users->paginate(12);
 
         return response()->json($result);
     }
@@ -74,11 +74,16 @@ class UsersController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if ($user->role && $user->role->name === 'Master') {
+            return redirect()->back()->with('error', 'Impossible de supprimer un utilisateur avec le rôle Master.');
+        }
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Utilisateur supprimé avec succès.');
     }
 }
