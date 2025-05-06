@@ -94,6 +94,12 @@ const closeDeleteModal = () => {
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="uppercase text-left">
                             <th class="px-4 py-2 border">nom</th>
+                            <th class="px-4 py-2 border">Date de publication</th>
+                            <th class="px-4 py-2 border">Joueurs min</th>
+                            <th class="px-4 py-2 border">Joueurs max</th>
+                            <th class="px-4 py-2 border">Durée</th>
+                            <th class="px-4 py-2 border">Age</th>
+                            <td class="px-4 py-2 border">EAN</td>
                             <th class="px-4 py-2 border">actions</th>
                         </tr>
                     </thead>
@@ -101,6 +107,12 @@ const closeDeleteModal = () => {
                         <tr v-for="game in games.data" :key="game.id"
                             class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition">
                             <td class="border px-4 py-2"> {{ game.name }}</td>
+                            <td class="border px-4 py-2"> {{ game.published_at }}</td>
+                            <td class="border px-4 py-2"> {{ game.min_players }}</td>
+                            <td class="border px-4 py-2"> {{ game.max_players }}</td>
+                            <td class="border px-4 py-2"> {{ game.average_duration }} min</td>
+                            <td class="border px-4 py-2"> {{ game.suggestedage }}</td>
+                            <td class="border px-4 py-2"> {{ game.EAN }}</td>
                             <td class="border px-4 py-2 space-x-4">
                                 <div class="flex space-x-4">
                                     <Link :href="route('games.edit', game.id)">

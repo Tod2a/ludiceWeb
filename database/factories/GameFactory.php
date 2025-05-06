@@ -21,7 +21,7 @@ class GameFactory extends Factory
             'published_at' => fake()->date(),
             'description' => fake()->text(200),
             'img_path' => "/storage/images/test.jpg",
-            'barcode' => fake()->unique()->numberBetween(1000, 9999),
+            'EAN' => fake()->unique()->numberBetween(1000, 9999),
             'min_players' => fake()->numberBetween(1, 5),
             'max_players' => fake()->numberBetween(5, 10),
             'average_duration' => fake()->numberBetween(15, 180),
