@@ -88,8 +88,8 @@ const closeDeleteModal = () => {
                 <input type="text" v-model="searchName" @input="debouncedSearch" placeholder="Search by name" />
             </div>
 
-            <div class="relative overflow-x-auto max-w-full shadow-md sm:rounded-lg">
-                <table class="inline-block min-w-max w-full text-left text-gray-500">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-left rtl:text-right text-gray-500 dark:text-primary">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="uppercase text-left">
                             <th class="px-4 py-2 border">nom</th>
