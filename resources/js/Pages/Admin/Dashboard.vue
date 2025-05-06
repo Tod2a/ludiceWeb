@@ -4,9 +4,10 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 </script>
 
 <template>
+
     <Head title="Admin Dashboard" />
 
     <AuthenticatedLayout>
-        <p>Welcome to your dashboard</p>
+        <p>Welcome tthe admin dashboard</p>
     </AuthenticatedLayout>
 </template>

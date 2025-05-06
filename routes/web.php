@@ -4,6 +4,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DashboardController;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Application;
@@ -19,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/library', [LibraryController::class, 'index'])->name('library');
     Route::post('/library/{game}', [LibraryController::class, 'store'])->name('library.store');
     Route::delete('/library/{game}', [LibraryController::class, 'destroy'])->name('library.destroy');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 Route::middleware('auth')->group(function () {
