@@ -20,6 +20,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@vueuse/core": "^13.1.0",
         "flowbite": "^3.1.2"
     }
 }

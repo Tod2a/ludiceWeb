@@ -5,12 +5,21 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import Footer from '@/Components/Footer.vue';
+import { onClickOutside } from '@vueuse/core';
 import { Link } from '@inertiajs/vue3';
 import ToastList from '@/Components/ToastList.vue';
 
 const isSidebarOpen = ref(false);
 const showingNavigationDropdown = ref(false);
+
+const sidebarRef = ref(null);
+const toggleButtonRef = ref(null);
+
+onClickOutside(sidebarRef, (event) => {
+    if (!toggleButtonRef.value.contains(event.target)) {
+        isSidebarOpen.value = false;
+    }
+});
 </script>
 
 <template>
@@ -27,7 +36,8 @@ const showingNavigationDropdown = ref(false);
                         </Link>
                     </div>
 
-                    <button @click="isSidebarOpen = !isSidebarOpen" class="text-white focus:outline-none">
+                    <button ref="toggleButtonRef" @click="isSidebarOpen = !isSidebarOpen"
+                        class="text-white focus:outline-none">
                         <!-- Icône du menu -->
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -122,7 +132,7 @@ const showingNavigationDropdown = ref(false);
         <div class="flex mt-16">
             <ToastList />
             <!-- Sidebar -->
-            <aside :class="[
+            <aside ref="sidebarRef" :class="[
                 'fixed top-0 left-0 h-full bg-green-800 text-white transition-transform duration-300 z-40 mt-16',
                 isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'
             ]">
