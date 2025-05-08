@@ -16,11 +16,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Deployer CLI
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install Composer dependencies
         run: |
-          curl -LO https://deployer.org/deployer.phar
-          mv deployer.phar /usr/local/bin/dep
-          chmod +x /usr/local/bin/dep
+          composer require deployer/deployer deployer/contrib --dev
+          composer install --no-interaction --prefer-dist
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo -e "Host *\n    StrictHostKeyChecking no" > ~/.ssh/config
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa ~/.ssh/config
 
       - name: Deploy
-        run: dep deploy test
+        run: vendor/bin/dep deploy test
