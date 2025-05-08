@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Creator;
 use App\Models\Game;
+use App\Models\Mechanic;
+use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -44,7 +48,12 @@ class GamesController extends Controller
     {
         Gate::authorize('create', Game::class);
 
-        return Inertia('Admin/Games/create');
+        $publishers = Publisher::all();
+        $creators = Creator::all();
+        $categories = Category::all();
+        $mechanics = Mechanic::all();
+
+        return Inertia('Admin/Games/create', ['publishers' => $publishers, 'creators' => $creators, 'categories' => $categories, 'mechanics' => $mechanics]);
     }
 
     /**
