@@ -16,9 +16,11 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('tst.ludice.app')
+host('test')
     ->set('remote_user', 'ludice')
-    ->set('deploy_path', '/data/ludice/app');
+    ->set('deploy_path', '/data/ludice/app')
+    ->set('hostname', 'tst.ludice.app')
+    ->set('branch', 'staging');
 
 // Tasks
 
