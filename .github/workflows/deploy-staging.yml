@@ -23,7 +23,6 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer require deployer/deployer deployer/contrib --dev
           composer install --no-interaction --prefer-dist
 
       - name: Setup SSH
