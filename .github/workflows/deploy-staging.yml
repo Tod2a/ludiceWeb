@@ -16,15 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: setup php
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-
-      - name: Deployer
+      - name: Install Deployer CLI
         run: |
-          mkdir -p ~/.ssh && echo -e "Host *\n    StrictHostKeyChecking no" > ~/.ssh/config
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/config ~/.ssh/id_rsa
-          curl -LO https://github.com/deployphp/deployer/releases/download/v7.3.3/deployer.phar
-          php ./deployer.phar deploy test --revision=${GITHUB_SHA} -o ssh_multiplexing=false -o forward_agent=true
+          curl -LO https://deployer.org/deployer.phar
+          mv deployer.phar /usr/local/bin/dep
+          chmod +x /usr/local/bin/dep
+
+      - name: Deploy
+        run: dep deploy test
