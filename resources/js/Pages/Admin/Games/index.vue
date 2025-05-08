@@ -78,29 +78,30 @@ const clearInput = () => {
                 Gestion des jeux
             </h2>
         </template>
-        <div class="flex justify-center">
-            <div class="my-3">
-                <NavLink :href="route('games.create')" class="bg-gray-300 px-2 py-2 rounded-lg hover:bg-gray-400">
-                    Ajouter
-                    un
-                    nouveau jeu
+        <div class="px-8">
+
+            <div class="flex items-center justify-between gap-4 mb-1">
+                <div class="relative w-full max-w-md">
+                    <input type="text" v-model="searchName" @input="debouncedSearch" placeholder="Recherchez par nom"
+                        class="border rounded p-2 w-full pr-10" />
+                    <button v-if="searchName" @click="clearInput"
+                        class="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <NavLink :href="route('games.create')"
+                    class="p-2 bg-gray-300 rounded-lg hover:bg-gray-400 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
                 </NavLink>
             </div>
-        </div>
-
-        <div class="relative w-full max-w-md mx-auto">
-            <input type="text" v-model="searchName" @input="debouncedSearch" placeholder="Recherchez par nom"
-                class="border rounded p-2 w-full pr-10 my-5" />
-            <button v-if="searchName" @click="clearInput"
-                class="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-
-        <div class="bg-white shadow-md rounded-lg p-8">
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-left rtl:text-right text-gray-500 dark:text-primary">
