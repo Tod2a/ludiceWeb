@@ -59,6 +59,11 @@ const closeDeleteModal = () => {
     debouncedSearch();
 }
 
+const clearInput = () => {
+    searchName.value = '';
+    debouncedSearch();
+};
+
 </script>
 
 
@@ -83,10 +88,19 @@ const closeDeleteModal = () => {
             </div>
         </div>
 
+        <div class="relative w-full max-w-md mx-auto">
+            <input type="text" v-model="searchName" @input="debouncedSearch" placeholder="Recherchez par nom"
+                class="border rounded p-2 w-full pr-10 my-5" />
+            <button v-if="searchName" @click="clearInput"
+                class="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
         <div class="bg-white shadow-md rounded-lg p-8">
-            <div class="flex justify-center py-1">
-                <input type="text" v-model="searchName" @input="debouncedSearch" placeholder="Search by name" />
-            </div>
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-left rtl:text-right text-gray-500 dark:text-primary">
