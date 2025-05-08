@@ -27,5 +27,6 @@ jobs:
       - name: Deploy
         uses: deployphp/action@v1
         with:
-          private-key: ${{ secrets.DEPLOY_SSH_KEY }}
           dep: deploy test
+          private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          deployer-version: '7.3.3'
