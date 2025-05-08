@@ -24,9 +24,9 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="bg-white shadow-md rounded-lg p-6 mx-auto max-w-sm mt-12">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Pseudo" />
 
                 <TextInput
                     id="name"
@@ -57,7 +57,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Mot de passe" />
 
                 <TextInput
                     id="password"
@@ -74,7 +74,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password_confirmation"
-                    value="Confirm Password"
+                    value="Confirmez le mot de passe"
                 />
 
                 <TextInput
@@ -97,7 +97,7 @@ const submit = () => {
                     :href="route('login')"
                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Already registered?
+                    Déjà inscrit?
                 </Link>
 
                 <PrimaryButton
@@ -105,7 +105,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Register
+                    Inscription
                 </PrimaryButton>
             </div>
         </form>

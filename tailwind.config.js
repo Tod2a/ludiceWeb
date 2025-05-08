@@ -12,8 +12,35 @@ export default {
 
     theme: {
         extend: {
+            scale: {
+                '25': "0.25",
+            },
+            colors: {
+                primary: "#161622",
+                secondary: "#ffeec6",
+                green: {
+                    DEFAULT: "#caf8c5",
+                    100: "#4dca5e",
+                    200: "#0d6938",
+                },
+                gray: {
+                    100: "#CDCDE0",
+                },
+                white: {
+                    DEFAULT: "#FFFFFF",
+                    100: "#fafaf0 ",
+                }
+            },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                pthin: ["Poppins-Thin", "sans-serif"],
+                pextralight: ["Poppins-ExtraLight", "sans-serif"],
+                plight: ["Poppins-Light", "sans-serif"],
+                pregular: ["Poppins-Regular", "sans-serif"],
+                pmedium: ["Poppins-Medium", "sans-serif"],
+                psemibold: ["Poppins-SemiBold", "sans-serif"],
+                pbold: ["Poppins-Bold", "sans-serif"],
+                pextrabold: ["Poppins-ExtraBold", "sans-serif"],
+                pblack: ["Poppins-Black", "sans-serif"],
             },
         },
     },
