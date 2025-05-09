@@ -17,6 +17,7 @@ export default {
                 '25': "0.25",
             },
             colors: {
+                offwhite: '#fdf6ee',
                 primary: "#161622",
                 secondary: "#ffeec6",
                 green: {
