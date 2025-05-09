@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreGameRequest;
 use App\Models\Category;
 use App\Models\Creator;
 use App\Models\Game;
@@ -59,9 +60,11 @@ class GamesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGameRequest $request)
     {
-        //
+        Gate::authorize('create', Game::class);
+
+        $validated = $request->validated();
     }
 
     /**

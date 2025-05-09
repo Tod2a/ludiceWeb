@@ -103,7 +103,7 @@ const clearInput = () => {
                 </NavLink>
             </div>
 
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
                 <table class="w-full text-left rtl:text-right text-gray-500 dark:text-primary">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="uppercase text-left">
@@ -121,7 +121,7 @@ const clearInput = () => {
                     </thead>
                     <tbody>
                         <tr v-for="game in games.data" :key="game.id"
-                            class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition">
+                            class="odd:bg-white even:bg-gray-100 hover:bg-gray-200 transition">
                             <td class="border px-4 py-2"> {{ game.name }}</td>
                             <td class="border px-4 py-2"> {{ game.published_at }}</td>
                             <td class="border px-4 py-2"> <span v-for="publisher in game.publishers"
@@ -152,7 +152,7 @@ const clearInput = () => {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="px-6">
+                            <td colspan="4" class="px-6 py-4">
                                 <button @click="fetchGames(games.prev_page_url)" v-if="games.prev_page_url">&lt;
                                     Previous</button>
                                 Page {{ games.current_page }} of {{ games.last_page }}
