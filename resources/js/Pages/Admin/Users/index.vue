@@ -134,7 +134,7 @@ const formattedCreatedAt = (user) => {
                     </thead>
                     <tbody>
                         <tr v-for="user in users.data" :key="user.id"
-                            class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition">
+                            class="odd:bg-white even:bg-gray-100 hover:bg-gray-200 transition">
                             <td class="border px-4 py-2"> {{ user.name }}</td>
                             <td class="border px-4 py-2"> {{ user.email }}</td>
                             <td class="border px-4 py-2">{{ formattedEmailVerifiedAt(user) }}</td>

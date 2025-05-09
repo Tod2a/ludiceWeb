@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreGameRequest;
 use App\Models\Category;
 use App\Models\Creator;
 use App\Models\Game;
@@ -59,9 +60,43 @@ class GamesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGameRequest $request)
     {
-        //
+        Gate::authorize('create', Game::class);
+
+        $validated = $request->validated();
+
+        $game = Game::make();
+        $game->name = $validated['name'];
+        $game->published_at = $validated['published_at'];
+        $game->description = $validated['description'];
+        $game->min_players = $validated['min_players'];
+        $game->max_players = $validated['max_players'];
+        $game->average_duration = $validated['average_duration'];
+        $game->EAN = $validated['EAN'];
+        $game->suggestedage = $validated['suggestedage'];
+        $game->is_expansion = $validated['is_expansion'];
+
+        $path = $request->file('imgurl')->store('images/games', 'public');
+        $game->img_path = 'storage/' . $path;
+
+        $game->save();
+
+        foreach ($validated['publishers'] as $publisher) {
+            $game->publishers()->sync([$publisher], false);
+        }
+
+        foreach ($validated['creators'] as $creator) {
+            $game->creators()->sync([$creator], false);
+        }
+
+        foreach ($validated['mechanics'] as $mechanic) {
+            $game->mechanics()->sync([$mechanic], false);
+        }
+
+        foreach ($validated['categories'] as $category) {
+            $game->categories()->sync([$category], false);
+        }
     }
 
     /**
