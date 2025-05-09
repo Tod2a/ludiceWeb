@@ -8,6 +8,8 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import BaseInput from '@/Components/BaseInput.vue';
 import { ref } from 'vue';
 
+const imgInput = ref(null);
+
 const props = defineProps({
     publishers: Array,
     creators: Array,
@@ -32,6 +34,18 @@ const form = useForm({
     categories: [],
 })
 
+const submitForm = () => {
+    form.post(route('games.store'), {
+        forceFormData: true,
+        onSuccess: () => {
+            form.reset();
+            if (imgInput.value) {
+                imgInput.value.value = null;
+            }
+        },
+    });
+};
+
 </script>
 
 <template>
@@ -49,18 +63,24 @@ const form = useForm({
             <div class="my-3">
                 <NavLink :href="route('games.index')">Back
                 </NavLink>
+                <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
+                    leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
+
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+                </Transition>
             </div>
         </div>
 
         <div class="flex justify-center">
             <div class="bg-white shadow-md rounded-lg p-8 w-1/2">
-                <form @submit.prevent="form.post(route('games.store'), { forceFormData: true })" class="flex flex-col">
+                <form @submit.prevent="submitForm" class="flex flex-col">
 
-                    <BaseInput id="name" v-model="form.name" label="Nom" placeholder="Entrez le nom du jeu"
-                        :error="form.errors.name">Nom</BaseInput>
+                    <BaseInput id="name" v-model="form.name" placeholder="Entrez le nom du jeu"
+                        :error="form.errors.name" required="true">Nom
+                    </BaseInput>
 
-                    <div>
-                        <label for="published_at">Date de publication :</label>
+                    <div class="mb-4">
+                        <label for="published_at">Date de publication <span class="text-red-500">*</span></label>
                         <div class="relative mt-1">
                             <input id="published_at" type="date" v-model="form.published_at"
                                 class="block w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-blue-500 focus:border-blue-500" />
@@ -69,46 +89,29 @@ const form = useForm({
                         </div>
                     </div>
 
-                    <div>
-                        <label for="min_players">Joueurs minimum <span class="text-red-500">*</span> : </label>
-                        <input class="input-style" id="min_players" type="number" v-model="form.min_players" step="1"
-                            max="150">
-                        <div v-if="form.errors.min_players" class="text-red-500 text-sm">{{ form.errors.min_players }}
-                        </div>
-                    </div>
+                    <BaseInput id="min_players" v-model="form.min_players"
+                        placeholder="Entrez le nombre de joueurs minimum" :error="form.errors.min_players" type="number"
+                        required="true">Joueurs
+                        minimum</BaseInput>
 
-                    <div>
-                        <label for="max_players">Joueurs maximum <span class="text-red-500">*</span> : </label>
-                        <input class="input-style" id="max_players" type="number" v-model="form.max_players" step="1"
-                            max="150">
-                        <div v-if="form.errors.max_players" class="text-red-500 text-sm">{{ form.errors.max_players }}
-                        </div>
-                    </div>
+                    <BaseInput id="max_players" v-model="form.max_players"
+                        placeholder="Entrez le nombre de joueurs maximum" :error="form.errors.max_players" type="number"
+                        required="true">Joueurs
+                        maximum</BaseInput>
 
-                    <div>
-                        <label for="average_duration">Durée moyenne <span class="text-red-500">*</span> : </label>
-                        <input class="input-style" id="average_duration" type="number" v-model="form.average_duration"
-                            step="1" max="150">
-                        <div v-if="form.errors.average_duration" class="text-red-500 text-sm">{{
-                            form.errors.average_duration }}</div>
-                    </div>
+                    <BaseInput id="average_duration" v-model="form.average_duration"
+                        placeholder="Entrez la durée moyenne" :error="form.errors.average_duration" type="number"
+                        required="true">Durée
+                        moyenne</BaseInput>
 
-                    <div>
-                        <label for="EAN">EAN <span class="text-red-500">*</span> : </label>
-                        <input class="input-style" id="EAN" type="number" v-model="form.EAN" step="1" max="150">
-                        <div v-if="form.errors.EAN" class="text-red-500 text-sm">{{ form.errors.EAN }}</div>
-                    </div>
+                    <BaseInput id="EAN" v-model="form.EAN" placeholder="Entrez le numéro EAN (code à barres)"
+                        :error="form.errors.EAN" type="number">EAN</BaseInput>
 
-                    <div>
-                        <label for="suggestedage">Âge suggéré <span class="text-red-500">*</span> : </label>
-                        <input class="input-style" id="suggestedage" type="number" v-model="form.suggestedage" step="1"
-                            max="150">
-                        <div v-if="form.errors.suggestedage" class="text-red-500 text-sm">{{ form.errors.suggestedage }}
-                        </div>
-                    </div>
+                    <BaseInput id="suggestedage" v-model="form.suggestedage" placeholder="Entrez l'âge suggéré'"
+                        :error="form.errors.suggestedage" type="number" required="true">Âge suggéré</BaseInput>
 
-                    <div>
-                        <label for="publishers">Éditeurs <span class="text-red-500">*</span> : </label>
+                    <div class="mb-4">
+                        <label for="publishers">Éditeurs <span class="text-red-500">*</span> </label>
                         <Multiselect v-model="form.publishers" id="publishers"
                             :options="props.publishers.map(p => ({ value: p.id, label: p.name }))" mode="multiple"
                             label="label" valueProp="value" placeholder="Sélectionner un ou plusieurs éditeurs" />
@@ -116,8 +119,8 @@ const form = useForm({
                         </div>
                     </div>
 
-                    <div>
-                        <label for="creators">Créateurs <span class="text-red-500">*</span> : </label>
+                    <div class="mb-4">
+                        <label for="creators">Créateurs <span class="text-red-500">*</span> </label>
                         <Multiselect v-model="form.creators" id="creators" :options="props.creators.map(c => ({
                             value: c.id,
                             label: `${c.firstname} ${c.lastname}`
@@ -126,8 +129,8 @@ const form = useForm({
                         <div v-if="form.errors.creators" class="text-red-500 text-sm">{{ form.errors.creators }}</div>
                     </div>
 
-                    <div>
-                        <label for="categories">Catégories <span class="text-red-500">*</span> : </label>
+                    <div class="mb-4">
+                        <label for="categories">Catégories <span class="text-red-500">*</span> </label>
                         <Multiselect v-model="form.categories" id="categories"
                             :options="props.categories.map(c => ({ value: c.id, label: c.name }))" mode="multiple"
                             label="label" valueProp="value" placeholder="Sélectionner une ou plusieurs catégories" />
@@ -135,25 +138,27 @@ const form = useForm({
                         </div>
                     </div>
 
-                    <div>
-                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span> : </label>
+                    <div class="mb-4">
+                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span> </label>
                         <Multiselect v-model="form.mechanics" id="mechanics"
                             :options="props.mechanics.map(m => ({ value: m.id, label: m.name }))" mode="multiple"
                             label="label" valueProp="value" placeholder="Sélectionner une ou plusieurs mécaniques" />
                         <div v-if="form.errors.mechanics" class="text-red-500 text-sm">{{ form.errors.mechanics }}</div>
                     </div>
 
-                    <div>
-                        <label for="description">Description <span class="text-red-500">*</span> : </label>
-                        <textarea class="input-style" id="description" v-model="form.description" />
+                    <div class="mb-4">
+                        <label for="description">Description <span class="text-red-500">*</span> </label>
+                        <textarea
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            id="description" v-model="form.description" />
                         <div v-if="form.errors.description" class="text-red-500 text-sm">{{ form.errors.description }}
                         </div>
                     </div>
 
-                    <div class="flex justify-between">
+                    <div class="flex justify-between mb-4">
                         <div class="flex flex-col">
-                            <label for="imgurl">Image de couverture <span class="text-red-500">*</span> :</label>
-                            <input id="imgurl" type="file" @input="form.imgurl = $event.target.files[0]">
+                            <label for="imgurl">Image de couverture <span class="text-red-500">*</span></label>
+                            <input id="imgurl" type="file" @input="form.imgurl = $event.target.files[0]" ref="imgInput">
                             <div v-if="form.errors.imgurl" class="text-red-500 text-sm">{{ form.errors.imgurl }}</div>
                         </div>
 
@@ -168,12 +173,6 @@ const form = useForm({
 
                     <div class="flex items-center gap-4 mt-1">
                         <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
-
-                        <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
-                            leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-
-                            <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
-                        </Transition>
                     </div>
                 </form>
             </div>

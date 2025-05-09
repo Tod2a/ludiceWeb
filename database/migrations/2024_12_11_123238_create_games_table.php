@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('min_players');
             $table->integer('max_players');
             $table->integer('average_duration');
-            $table->integer('EAN')->nullable();
+            $table->bigInteger('EAN')->nullable();
             $table->integer('suggestedage');
             $table->boolean('is_expansion')->default(false);
         });

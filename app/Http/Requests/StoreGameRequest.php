@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class StoreGameRequest extends FormRequest
 {
@@ -37,5 +38,18 @@ class StoreGameRequest extends FormRequest
             'mechanics' => 'required|array|min:1',
             'categories' => 'required|array|min:1',
         ];
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function ($validator) {
+            $min = $this->input('min_players');
+            $max = $this->input('max_players');
+
+            if (!is_null($min) && !is_null($max) && $min > $max) {
+                $validator->errors()->add('min_players', 'Le nombre minimum de joueurs doit être inférieur ou égal au nombre maximum.');
+                $validator->errors()->add('max_players', 'Le nombre maximum de joueurs doit être supérieur ou égal au nombre minimum.');
+            }
+        });
     }
 }

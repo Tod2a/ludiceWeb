@@ -5,13 +5,14 @@ defineProps({
     type: { type: String, default: 'text' },
     placeholder: { type: String, default: '' },
     error: { type: String, default: '' },
+    required: { type: Boolean, default: false },
 });
 </script>
 
 <template>
     <div class="mb-4">
         <label :for="id" class="block text-sm font-medium text-gray-700">
-            <slot></slot>
+            <slot></slot> <span v-if="required" class="text-red-500">*</span>
         </label>
         <input v-bind="$attrs" :id="id" :type="type" :value="modelValue" :placeholder="placeholder"
             @input="$emit('update:modelValue', $event.target.value)"
