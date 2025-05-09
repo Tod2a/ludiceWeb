@@ -78,7 +78,7 @@ class GamesController extends Controller
         $game->is_expansion = $validated['is_expansion'];
 
         $path = $request->file('imgurl')->store('images/games', 'public');
-        $game->img_path = 'storage/' . $path;
+        $game->img_path = '/storage/' . $path;
 
         $game->save();
 
