@@ -25,12 +25,9 @@ jobs:
         run: |
           composer install --no-interaction --prefer-dist
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo -e "Host *\n    StrictHostKeyChecking no" > ~/.ssh/config
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa ~/.ssh/config
-
       - name: Deploy
-        run: vendor/bin/dep deploy prod
+        uses: deployphp/action@v1
+        with:
+          dep: deploy prod
+          private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          deployer-version: '7.3.3'
