@@ -56,7 +56,7 @@ class GameController extends Controller
         }
 
         if ($query) {
-            $games->where('name', 'like', '%' . $query . '%');
+            $games->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($query) . '%']);
         }
 
         if ($category) {
