@@ -126,7 +126,7 @@ onClickOutside(sidebarRef, (event) => {
                         <li>
                             <a :href="route('connected.homepage')"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
-                                <span class="ms-3">Acceuil</span>
+                                <span class="ms-3">Accueil</span>
                             </a>
                         </li>
                         <li v-show="$page.props.auth.user.role.name && $page.props.auth.user.role.name !== 'User'">
