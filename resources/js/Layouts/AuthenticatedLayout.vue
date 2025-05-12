@@ -15,15 +15,24 @@ const isDropdownAdminOpen = ref(false);
 const sidebarRef = ref(null);
 const toggleButtonRef = ref(null);
 
+const mobileProfileMenu = ref(null);
+const closeMobileMenuButton = ref(null);
+
 onClickOutside(sidebarRef, (event) => {
     if (!toggleButtonRef.value.contains(event.target)) {
         isSidebarOpen.value = false;
     }
 });
+
+onClickOutside(mobileProfileMenu, (event) => {
+    if (!closeMobileMenuButton.value.contains(event.target)) {
+        showingNavigationDropdown.value = false;
+    }
+});
 </script>
 
 <template>
-    <div class="bg-white-100 dark:bg-white-100 min-h-screen flex flex-col">
+    <div class="bg-white-100 dark:bg-white-100 min-h-screen flex flex-col overflow-x-hidden">
 
         <!-- Header -->
         <nav class="fixed top-0 left-0 w-full z-50 bg-primary shadow-md border-b border-gray-100">
@@ -74,6 +83,7 @@ onClickOutside(sidebarRef, (event) => {
                     <!-- Hamburger Menu -->
                     <div class="-me-2 flex items-center sm:hidden">
                         <button @click="showingNavigationDropdown = !showingNavigationDropdown"
+                            ref="closeMobileMenuButton"
                             class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-200 hover:text-gray-500 focus:outline-none">
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -92,12 +102,13 @@ onClickOutside(sidebarRef, (event) => {
             </div>
 
             <!-- Responsive Navigation Menu -->
-            <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="sm:hidden">
+            <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="sm:hidden"
+                ref="mobileProfileMenu">
 
                 <!-- Responsive Settings Options -->
                 <div class="border-t border-gray-200 pb-1 pt-4">
                     <div class="px-4">
-                        <div class="text-base font-medium text-gray-800">{{ $page.props.auth.user.name }}</div>
+                        <div class="text-base font-medium text-gray-400">{{ $page.props.auth.user.name }}</div>
                     </div>
 
                     <div class="mt-3 space-y-1">
