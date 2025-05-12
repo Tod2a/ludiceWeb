@@ -114,12 +114,11 @@ const formattedCreatedAt = (user) => {
                 Gestion utilisateurs
             </h2>
         </template>
+        <div class="flex justify-between py-1">
+            <input type="text" v-model="searchQuery" @input="debouncedSearch" placeholder="Search by email" />
+        </div>
 
-        <div class="bg-white shadow-md rounded-lg p-8">
-            <div class="flex justify-center py-1">
-                <input type="text" v-model="searchQuery" @input="debouncedSearch" placeholder="Search by email" />
-            </div>
-
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-left rtl:text-right text-gray-500 dark:text-primary">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -155,7 +154,7 @@ const formattedCreatedAt = (user) => {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="px-6">
+                            <td colspan="4" class="px-6 py-4">
                                 <button @click="fetchUsers(users.prev_page_url)" v-if="users.prev_page_url">&lt;
                                     Previous</button>
                                 Page {{ users.current_page }} of {{ users.last_page }}
