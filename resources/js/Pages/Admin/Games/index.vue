@@ -141,11 +141,11 @@ const clearInput = () => {
                                     <Link :href="route('games.edit', game.id)">
                                     <PencilIcon class="w-5 h-5 text-blue-500" />
                                     </Link>
-                                    <Button :disabled="user.role.name !== 'Master'"
+                                    <button :disabled="user.role.name !== 'Master'"
                                         @click="openDeleteModal(game.id, game.name)">
                                         <TrashIcon class="w-5 h-5"
                                             :class="user.role.name !== 'Master' ? 'text-gray-400' : 'text-red-400'" />
-                                    </Button>
+                                    </button>
                                 </div>
                             </td>
                         </tr>

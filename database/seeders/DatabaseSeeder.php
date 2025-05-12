@@ -52,10 +52,10 @@ class DatabaseSeeder extends Seeder
         //     }
         // );
 
-        // $this->call([
-        //     RoleSeeder::class,
-        //     UserSeeder::class
-        // ]);
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class
+        ]);
 
         // Guest::factory(5)->create();
         // Section::factory(20)->create();

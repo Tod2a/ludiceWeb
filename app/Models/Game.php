@@ -22,7 +22,7 @@ class Game extends Model
      */
     public function mechanics()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Mechanic::class);
     }
 
     /**

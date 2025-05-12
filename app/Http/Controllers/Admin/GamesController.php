@@ -82,21 +82,17 @@ class GamesController extends Controller
 
         $game->save();
 
-        foreach ($validated['publishers'] as $publisher) {
-            $game->publishers()->sync([$publisher], false);
-        }
+        $publisherIds = collect($validated['publishers'])->pluck('id')->toArray();
+        $game->publishers()->sync($publisherIds);
 
-        foreach ($validated['creators'] as $creator) {
-            $game->creators()->sync([$creator], false);
-        }
+        $creatorIds = collect($validated['creators'])->pluck('id')->toArray();
+        $game->creators()->sync($creatorIds);
 
-        foreach ($validated['mechanics'] as $mechanic) {
-            $game->mechanics()->sync([$mechanic], false);
-        }
+        $mechanicIds = collect($validated['mechanics'])->pluck('id')->toArray();
+        $game->mechanics()->sync($mechanicIds);
 
-        foreach ($validated['categories'] as $category) {
-            $game->categories()->sync([$category], false);
-        }
+        $categoryIds = collect($validated['categories'])->pluck('id')->toArray();
+        $game->categories()->sync($categoryIds);
     }
 
     /**
