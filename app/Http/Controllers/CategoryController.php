@@ -11,10 +11,10 @@ class CategoryController extends Controller
     {
         $name = $request->input('name');
 
-        $categories = Category::all();
+        $categories = Category::query();
 
         if ($name) {
-            $categories->where('name', 'like', '%' . $name . '%');
+            $categories->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($name) . '%']);
         }
 
         $result = $categories->paginate(10);

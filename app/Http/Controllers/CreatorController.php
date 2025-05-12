@@ -11,12 +11,12 @@ class CreatorController extends Controller
     {
         $name = $request->input('name');
 
-        $creators = Creator::all();
+        $creators = Creator::query();
 
         if ($name) {
             $creators = $creators->where(function ($query) use ($name) {
-                $query->where('firstname', 'like', '%' . $name . '%')
-                    ->orWhere('lastname', 'like', '%' . $name . '%');
+                $query->whereRaw('LOWER(firstname) LIKE ?', ['%' . strtolower($name) . '%'])
+                    ->orWhereRaw('LOWER(lastname) LIKE ?', ['%' . strtolower($name) . '%']);
             });
         }
 

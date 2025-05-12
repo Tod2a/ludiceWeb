@@ -11,10 +11,10 @@ class MechanicController extends Controller
     {
         $name = $request->input('name');
 
-        $mechanics = Mechanic::all();
+        $mechanics = Mechanic::query();
 
         if ($name) {
-            $mechanics->where('name', 'like', '%' . $name . '%');
+            $mechanics->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($name) . '%']);
         }
 
         $result = $mechanics->paginate(10);
