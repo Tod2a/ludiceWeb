@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGameRequest;
+use App\Http\Requests\UpdateGameRequest;
 use App\Models\Category;
 use App\Models\Creator;
 use App\Models\Game;
@@ -49,12 +50,7 @@ class GamesController extends Controller
     {
         Gate::authorize('create', Game::class);
 
-        $publishers = Publisher::all();
-        $creators = Creator::all();
-        $categories = Category::all();
-        $mechanics = Mechanic::all();
-
-        return Inertia('Admin/Games/create', ['publishers' => $publishers, 'creators' => $creators, 'categories' => $categories, 'mechanics' => $mechanics]);
+        return Inertia('Admin/Games/create');
     }
 
     /**
@@ -108,7 +104,7 @@ class GamesController extends Controller
      */
     public function edit(string $id)
     {
-        $game = Game::findOrFail($id);
+        $game = Game::with('creators', 'publishers', 'mechanics', 'categories')->findOrFail($id);
 
         Gate::authorize('update', $game);
 
@@ -118,9 +114,44 @@ class GamesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateGameRequest $request, string $id)
     {
-        //
+        $game = Game::with('creators', 'publishers', 'mechanics', 'categories')->findOrFail($id);
+
+        Gate::authorize('update', $game);
+
+        $validated = $request->validated();
+
+        $game->name = $validated['name'];
+        $game->published_at = $validated['published_at'];
+        $game->description = $validated['description'];
+        $game->min_players = $validated['min_players'];
+        $game->max_players = $validated['max_players'];
+        $game->average_duration = $validated['average_duration'];
+        $game->EAN = $validated['EAN'];
+        $game->suggestedage = $validated['suggestedage'];
+        $game->is_expansion = $validated['is_expansion'];
+
+        if ($validated['imgurl']) {
+            $path = $request->file('imgurl')->store('images/games', 'public');
+            $game->img_path = '/storage/' . $path;
+        }
+
+        $game->save();
+
+        $publisherIds = collect($validated['publishers'])->pluck('id')->toArray();
+        $game->publishers()->sync($publisherIds);
+
+        $creatorIds = collect($validated['creators'])->pluck('id')->toArray();
+        $game->creators()->sync($creatorIds);
+
+        $mechanicIds = collect($validated['mechanics'])->pluck('id')->toArray();
+        $game->mechanics()->sync($mechanicIds);
+
+        $categoryIds = collect($validated['categories'])->pluck('id')->toArray();
+        $game->categories()->sync($categoryIds);
+
+        return redirect()->route('games.edit', $game->id);
     }
 
     /**

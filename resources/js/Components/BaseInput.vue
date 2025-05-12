@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
     id: { type: String, required: true },
-    modelValue: { type: [String, null], required: true },
+    modelValue: { type: [String, Number, null], required: true },
     type: { type: String, default: 'text' },
     placeholder: { type: String, default: '' },
     error: { type: String, default: '' },
