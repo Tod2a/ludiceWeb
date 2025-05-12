@@ -35,7 +35,7 @@ class GamesController extends Controller
         $games = Game::with('publishers', 'creators');
 
         if ($name) {
-            $games->where('name', 'like', '%' . $name . '%');
+            $games->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($name) . '%']);
         }
 
         $result = $games->paginate(12);
