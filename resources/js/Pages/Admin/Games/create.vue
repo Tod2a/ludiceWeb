@@ -8,6 +8,9 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import BaseInput from '@/Components/BaseInput.vue';
 import { ref } from 'vue';
 import PublisherAutocomplete from '@/Components/Autocompletes/PublisherAutocomplete.vue';
+import MechanicAutocomplete from '@/Components/Autocompletes/MechanicAutocomplete.vue';
+import CreatorAutocomplete from '@/Components/Autocompletes/CreatorAutocomplete.vue';
+import CategoryAutocomplete from '@/Components/Autocompletes/CategoryAutocomplete.vue';
 
 const imgInput = ref(null);
 
@@ -53,9 +56,39 @@ const addPublisher = (publisher) => {
     }
 };
 
+const addMechanic = (mechanic) => {
+    if (!form.mechanics.some(m => m.id === mechanic.id)) {
+        form.mechanics.push(mechanic);
+    }
+};
+
+const addCreator = (creator) => {
+    if (!form.creators.some(c => c.id === creator.id)) {
+        form.creators.push(creator);
+    }
+}
+
+const addCategory = (category) => {
+    if (!form.categories.some(c => c.id === category.id)) {
+        form.categories.push(category);
+    }
+}
+
 const removePublisher = (id) => {
     form.publishers = form.publishers.filter(p => p.id !== id);
 };
+
+const removeMechanic = (id) => {
+    form.mechanics = form.mechanics.filter(m => m.id !== id);
+};
+
+const removeCreator = (id) => {
+    form.creators = form.creators.filter(c => c.id !== id);
+}
+
+const removeCategory = (id) => {
+    form.categories = form.categories.filter(c => c.id !== id);
+}
 
 </script>
 
@@ -144,29 +177,64 @@ const removePublisher = (id) => {
 
                     <div class="mb-4">
                         <label for="creators">Créateurs <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.creators" id="creators" :options="props.creators.map(c => ({
-                            value: c.id,
-                            label: `${c.firstname} ${c.lastname}`
-                        }))" mode="multiple" label="label" valueProp="value"
-                            placeholder="Sélectionner un ou plusieurs créateurs" />
+                        <CreatorAutocomplete @add-creator="addCreator" />
                         <div v-if="form.errors.creators" class="text-red-500 text-sm">{{ form.errors.creators }}</div>
+                    </div>
+
+                    <div v-if="form.creators.length > 0" class="mb-4">
+                        <label>Créateurs sélectionnés:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="creator in form.creators" :key="creator.id"
+                                class="flex items-center justify-between">
+                                <span>{{ creator.firstname }} {{ creator.lastname }}</span>
+                                <button @click="removeCreator(creator.id)" class="text-red-500 hover:text-red-700 ml-2"
+                                    aria-label="Supprimer le créateur">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="mb-4">
                         <label for="categories">Catégories <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.categories" id="categories"
-                            :options="props.categories.map(c => ({ value: c.id, label: c.name }))" mode="multiple"
-                            label="label" valueProp="value" placeholder="Sélectionner une ou plusieurs catégories" />
+                        <CategoryAutocomplete @add-category="addCategory" />
                         <div v-if="form.errors.categories" class="text-red-500 text-sm">{{ form.errors.categories }}
                         </div>
                     </div>
 
+                    <div v-if="form.categories.length > 0" class="mb-4">
+                        <label>Categories sélectionnées:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="category in form.categories" :key="category.id"
+                                class="flex items-center justify-between">
+                                {{ category.name }}
+                                <button @click="removeCategory(category.id)"
+                                    class="text-red-500 hover:text-red-700 ml-2" aria-label="Supprimer la catégorie">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div class="mb-4">
-                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.mechanics" id="mechanics"
-                            :options="props.mechanics.map(m => ({ value: m.id, label: m.name }))" mode="multiple"
-                            label="label" valueProp="value" placeholder="Sélectionner une ou plusieurs mécaniques" />
-                        <div v-if="form.errors.mechanics" class="text-red-500 text-sm">{{ form.errors.mechanics }}</div>
+                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span></label>
+                        <MechanicAutocomplete @add-mechanic="addMechanic" />
+                        <div v-if="form.errors.mechanics" class="text-red-500 text-sm">{{ form.errors.mechanics }}
+                        </div>
+                    </div>
+
+                    <div v-if="form.mechanics.length > 0" class="mb-4">
+                        <label>Mécaniques sélectionnées:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="mechanic in form.mechanics" :key="mechanic.id"
+                                class="flex items-center justify-between">
+                                {{ mechanic.name }}
+                                <button @click="removeMechanic(mechanic.id)"
+                                    class="text-red-500 hover:text-red-700 ml-2" aria-label="Supprimer la mécanique">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="mb-4">
