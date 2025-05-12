@@ -49,12 +49,7 @@ class GamesController extends Controller
     {
         Gate::authorize('create', Game::class);
 
-        $publishers = Publisher::all();
-        $creators = Creator::all();
-        $categories = Category::all();
-        $mechanics = Mechanic::all();
-
-        return Inertia('Admin/Games/create', ['publishers' => $publishers, 'creators' => $creators, 'categories' => $categories, 'mechanics' => $mechanics]);
+        return Inertia('Admin/Games/create');
     }
 
     /**

@@ -2,24 +2,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import NavLink from '@/Components/NavLink.vue';
-import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import BaseInput from '@/Components/BaseInput.vue';
 import { ref } from 'vue';
-import PublisherAutocomplete from '@/Components/Autocompletes/PublisherAutocomplete.vue';
-import MechanicAutocomplete from '@/Components/Autocompletes/MechanicAutocomplete.vue';
-import CreatorAutocomplete from '@/Components/Autocompletes/CreatorAutocomplete.vue';
-import CategoryAutocomplete from '@/Components/Autocompletes/CategoryAutocomplete.vue';
+import { PublisherAutocomplete, MechanicAutocomplete, CreatorAutocomplete, CategoryAutocomplete } from '@/Components/Autocompletes';
+import BaseCreatingModal from '@/Components/BaseCreatingModal.vue';
 
 const imgInput = ref(null);
-
-const props = defineProps({
-    publishers: Array,
-    creators: Array,
-    mechanics: Array,
-    categories: Array,
-})
+const NewMechanicModal = ref(false);
 
 const form = useForm({
     name: null,
@@ -217,7 +208,10 @@ const removeCategory = (id) => {
                     </div>
 
                     <div class="mb-4">
-                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span></label>
+                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span>
+                            <button @click.prevent="NewMechanicModal = true" class="mx-2 text-blue-500">
+                                Ajouter une mécanique
+                            </button></label>
                         <MechanicAutocomplete @add-mechanic="addMechanic" />
                         <div v-if="form.errors.mechanics" class="text-red-500 text-sm">{{ form.errors.mechanics }}
                         </div>
@@ -236,6 +230,9 @@ const removeCategory = (id) => {
                             </li>
                         </ul>
                     </div>
+
+                    <BaseCreatingModal :show="NewMechanicModal" title="Ajouter une mécanique" itemType="mécanique"
+                        routeName="mechanic.store" @close="NewMechanicModal = false" />
 
                     <div class="mb-4">
                         <label for="description">Description <span class="text-red-500">*</span> </label>

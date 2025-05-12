@@ -6,6 +6,7 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GamesController;
+use App\Http\Controllers\Admin\MechanicController as AdminMechanicController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CreatorController;
@@ -40,6 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/admin/games/search', [GamesController::class, 'search'])->name('admin.games.search');
     Route::resource('/admin/games', GamesController::class)->except('show');
+
+    Route::post('/admin/mechanic', [AdminMechanicController::class, 'store'])->name('mechanic.store');
 });
 
 Route::middleware('auth')->group(function () {
