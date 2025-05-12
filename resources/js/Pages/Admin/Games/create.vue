@@ -7,6 +7,7 @@ import '@vueform/multiselect/themes/default.css'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import BaseInput from '@/Components/BaseInput.vue';
 import { ref } from 'vue';
+import PublisherAutocomplete from '@/Components/Autocompletes/PublisherAutocomplete.vue';
 
 const imgInput = ref(null);
 
@@ -46,6 +47,16 @@ const submitForm = () => {
     });
 };
 
+const addPublisher = (publisher) => {
+    if (!form.publishers.some(p => p.id === publisher.id)) {
+        form.publishers.push(publisher);
+    }
+};
+
+const removePublisher = (id) => {
+    form.publishers = form.publishers.filter(p => p.id !== id);
+};
+
 </script>
 
 <template>
@@ -76,7 +87,7 @@ const submitForm = () => {
                 <form @submit.prevent="submitForm" class="flex flex-col">
 
                     <BaseInput id="name" v-model="form.name" placeholder="Entrez le nom du jeu"
-                        :error="form.errors.name" required="true">Nom
+                        :error="form.errors.name" :required="true">Nom
                     </BaseInput>
 
                     <div class="mb-4">
@@ -91,32 +102,44 @@ const submitForm = () => {
 
                     <BaseInput id="min_players" v-model="form.min_players"
                         placeholder="Entrez le nombre de joueurs minimum" :error="form.errors.min_players" type="number"
-                        required="true">Joueurs
+                        :required="true">Joueurs
                         minimum</BaseInput>
 
                     <BaseInput id="max_players" v-model="form.max_players"
                         placeholder="Entrez le nombre de joueurs maximum" :error="form.errors.max_players" type="number"
-                        required="true">Joueurs
+                        :required="true">Joueurs
                         maximum</BaseInput>
 
                     <BaseInput id="average_duration" v-model="form.average_duration"
                         placeholder="Entrez la durée moyenne" :error="form.errors.average_duration" type="number"
-                        required="true">Durée
+                        :required="true">Durée
                         moyenne</BaseInput>
 
                     <BaseInput id="EAN" v-model="form.EAN" placeholder="Entrez le numéro EAN (code à barres)"
                         :error="form.errors.EAN" type="number">EAN</BaseInput>
 
                     <BaseInput id="suggestedage" v-model="form.suggestedage" placeholder="Entrez l'âge suggéré'"
-                        :error="form.errors.suggestedage" type="number" required="true">Âge suggéré</BaseInput>
+                        :error="form.errors.suggestedage" type="number" :required="true">Âge suggéré</BaseInput>
 
                     <div class="mb-4">
-                        <label for="publishers">Éditeurs <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.publishers" id="publishers"
-                            :options="props.publishers.map(p => ({ value: p.id, label: p.name }))" mode="multiple"
-                            label="label" valueProp="value" placeholder="Sélectionner un ou plusieurs éditeurs" />
+                        <label for="publishers">Éditeurs <span class="text-red-500">*</span></label>
+                        <PublisherAutocomplete @add-publisher="addPublisher" />
                         <div v-if="form.errors.publishers" class="text-red-500 text-sm">{{ form.errors.publishers }}
                         </div>
+                    </div>
+
+                    <div v-if="form.publishers.length > 0" class="mb-4">
+                        <label>Éditeurs sélectionnés:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="publisher in form.publishers" :key="publisher.id"
+                                class="flex items-center justify-between">
+                                {{ publisher.name }}
+                                <button @click="removePublisher(publisher.id)"
+                                    class="text-red-500 hover:text-red-700 ml-2" aria-label="Supprimer l'éditeur">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="mb-4">

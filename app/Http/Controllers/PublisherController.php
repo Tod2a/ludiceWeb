@@ -11,13 +11,13 @@ class PublisherController extends Controller
     {
         $name = $request->input('name');
 
-        $publishers = Publisher::all();
+        $query = Publisher::query();
 
         if ($name) {
-            $publishers->where('name', 'like', '%' . $name . '%');
+            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($name) . '%']);
         }
 
-        $result = $publishers->paginate(10);
+        $result = $query->paginate(10);
 
         return response()->json($result);
     }
