@@ -7,6 +7,10 @@ import '@vueform/multiselect/themes/default.css'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import BaseInput from '@/Components/BaseInput.vue';
 import { ref } from 'vue';
+import PublisherAutocomplete from '@/Components/Autocompletes/PublisherAutocomplete.vue';
+import MechanicAutocomplete from '@/Components/Autocompletes/MechanicAutocomplete.vue';
+import CreatorAutocomplete from '@/Components/Autocompletes/CreatorAutocomplete.vue';
+import CategoryAutocomplete from '@/Components/Autocompletes/CategoryAutocomplete.vue';
 
 const imgInput = ref(null);
 
@@ -46,6 +50,46 @@ const submitForm = () => {
     });
 };
 
+const addPublisher = (publisher) => {
+    if (!form.publishers.some(p => p.id === publisher.id)) {
+        form.publishers.push(publisher);
+    }
+};
+
+const addMechanic = (mechanic) => {
+    if (!form.mechanics.some(m => m.id === mechanic.id)) {
+        form.mechanics.push(mechanic);
+    }
+};
+
+const addCreator = (creator) => {
+    if (!form.creators.some(c => c.id === creator.id)) {
+        form.creators.push(creator);
+    }
+}
+
+const addCategory = (category) => {
+    if (!form.categories.some(c => c.id === category.id)) {
+        form.categories.push(category);
+    }
+}
+
+const removePublisher = (id) => {
+    form.publishers = form.publishers.filter(p => p.id !== id);
+};
+
+const removeMechanic = (id) => {
+    form.mechanics = form.mechanics.filter(m => m.id !== id);
+};
+
+const removeCreator = (id) => {
+    form.creators = form.creators.filter(c => c.id !== id);
+}
+
+const removeCategory = (id) => {
+    form.categories = form.categories.filter(c => c.id !== id);
+}
+
 </script>
 
 <template>
@@ -76,7 +120,7 @@ const submitForm = () => {
                 <form @submit.prevent="submitForm" class="flex flex-col">
 
                     <BaseInput id="name" v-model="form.name" placeholder="Entrez le nom du jeu"
-                        :error="form.errors.name" required="true">Nom
+                        :error="form.errors.name" :required="true">Nom
                     </BaseInput>
 
                     <div class="mb-4">
@@ -91,59 +135,106 @@ const submitForm = () => {
 
                     <BaseInput id="min_players" v-model="form.min_players"
                         placeholder="Entrez le nombre de joueurs minimum" :error="form.errors.min_players" type="number"
-                        required="true">Joueurs
+                        :required="true">Joueurs
                         minimum</BaseInput>
 
                     <BaseInput id="max_players" v-model="form.max_players"
                         placeholder="Entrez le nombre de joueurs maximum" :error="form.errors.max_players" type="number"
-                        required="true">Joueurs
+                        :required="true">Joueurs
                         maximum</BaseInput>
 
                     <BaseInput id="average_duration" v-model="form.average_duration"
                         placeholder="Entrez la durée moyenne" :error="form.errors.average_duration" type="number"
-                        required="true">Durée
+                        :required="true">Durée
                         moyenne</BaseInput>
 
                     <BaseInput id="EAN" v-model="form.EAN" placeholder="Entrez le numéro EAN (code à barres)"
                         :error="form.errors.EAN" type="number">EAN</BaseInput>
 
                     <BaseInput id="suggestedage" v-model="form.suggestedage" placeholder="Entrez l'âge suggéré'"
-                        :error="form.errors.suggestedage" type="number" required="true">Âge suggéré</BaseInput>
+                        :error="form.errors.suggestedage" type="number" :required="true">Âge suggéré</BaseInput>
 
                     <div class="mb-4">
-                        <label for="publishers">Éditeurs <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.publishers" id="publishers"
-                            :options="props.publishers.map(p => ({ value: p.id, label: p.name }))" mode="multiple"
-                            label="label" valueProp="value" placeholder="Sélectionner un ou plusieurs éditeurs" />
+                        <label for="publishers">Éditeurs <span class="text-red-500">*</span></label>
+                        <PublisherAutocomplete @add-publisher="addPublisher" />
                         <div v-if="form.errors.publishers" class="text-red-500 text-sm">{{ form.errors.publishers }}
                         </div>
                     </div>
 
+                    <div v-if="form.publishers.length > 0" class="mb-4">
+                        <label>Éditeurs sélectionnés:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="publisher in form.publishers" :key="publisher.id"
+                                class="flex items-center justify-between">
+                                {{ publisher.name }}
+                                <button @click="removePublisher(publisher.id)"
+                                    class="text-red-500 hover:text-red-700 ml-2" aria-label="Supprimer l'éditeur">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div class="mb-4">
                         <label for="creators">Créateurs <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.creators" id="creators" :options="props.creators.map(c => ({
-                            value: c.id,
-                            label: `${c.firstname} ${c.lastname}`
-                        }))" mode="multiple" label="label" valueProp="value"
-                            placeholder="Sélectionner un ou plusieurs créateurs" />
+                        <CreatorAutocomplete @add-creator="addCreator" />
                         <div v-if="form.errors.creators" class="text-red-500 text-sm">{{ form.errors.creators }}</div>
+                    </div>
+
+                    <div v-if="form.creators.length > 0" class="mb-4">
+                        <label>Créateurs sélectionnés:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="creator in form.creators" :key="creator.id"
+                                class="flex items-center justify-between">
+                                <span>{{ creator.firstname }} {{ creator.lastname }}</span>
+                                <button @click="removeCreator(creator.id)" class="text-red-500 hover:text-red-700 ml-2"
+                                    aria-label="Supprimer le créateur">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="mb-4">
                         <label for="categories">Catégories <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.categories" id="categories"
-                            :options="props.categories.map(c => ({ value: c.id, label: c.name }))" mode="multiple"
-                            label="label" valueProp="value" placeholder="Sélectionner une ou plusieurs catégories" />
+                        <CategoryAutocomplete @add-category="addCategory" />
                         <div v-if="form.errors.categories" class="text-red-500 text-sm">{{ form.errors.categories }}
                         </div>
                     </div>
 
+                    <div v-if="form.categories.length > 0" class="mb-4">
+                        <label>Categories sélectionnées:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="category in form.categories" :key="category.id"
+                                class="flex items-center justify-between">
+                                {{ category.name }}
+                                <button @click="removeCategory(category.id)"
+                                    class="text-red-500 hover:text-red-700 ml-2" aria-label="Supprimer la catégorie">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div class="mb-4">
-                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span> </label>
-                        <Multiselect v-model="form.mechanics" id="mechanics"
-                            :options="props.mechanics.map(m => ({ value: m.id, label: m.name }))" mode="multiple"
-                            label="label" valueProp="value" placeholder="Sélectionner une ou plusieurs mécaniques" />
-                        <div v-if="form.errors.mechanics" class="text-red-500 text-sm">{{ form.errors.mechanics }}</div>
+                        <label for="mechanics">Mécaniques <span class="text-red-500">*</span></label>
+                        <MechanicAutocomplete @add-mechanic="addMechanic" />
+                        <div v-if="form.errors.mechanics" class="text-red-500 text-sm">{{ form.errors.mechanics }}
+                        </div>
+                    </div>
+
+                    <div v-if="form.mechanics.length > 0" class="mb-4">
+                        <label>Mécaniques sélectionnées:</label>
+                        <ul class="list-disc list-inside">
+                            <li v-for="mechanic in form.mechanics" :key="mechanic.id"
+                                class="flex items-center justify-between">
+                                {{ mechanic.name }}
+                                <button @click="removeMechanic(mechanic.id)"
+                                    class="text-red-500 hover:text-red-700 ml-2" aria-label="Supprimer la mécanique">
+                                    &times;
+                                </button>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="mb-4">

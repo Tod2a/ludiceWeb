@@ -7,6 +7,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GamesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CreatorController;
+use App\Http\Controllers\MechanicController;
+use App\Http\Controllers\PublisherController;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Application;
@@ -22,6 +26,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/library', [LibraryController::class, 'index'])->name('library');
     Route::post('/library/{game}', [LibraryController::class, 'store'])->name('library.store');
     Route::delete('/library/{game}', [LibraryController::class, 'destroy'])->name('library.destroy');
+
+    Route::get('/creators/search', [CreatorController::class, 'search'])->name('creator.search');
+    Route::get('/categories/search', [CategoryController::class, 'search'])->name('category.search');
+    Route::get('/publishers/search', [PublisherController::class, 'search'])->name('publisher.search');
+    Route::get('/mechanics/search', [MechanicController::class, 'search'])->name('mechanic.search');
 
     //Admin routes
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
