@@ -21,9 +21,9 @@ class MechanicController extends Controller
 
         try {
             $mechanic->save();
-            return redirect()->back()->with('success', 'Mechanic created successfully!');
+            return redirect()->back()->with('success', 'Mecanique créée avec succès!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to create mechanic.');
+            return redirect()->back()->with('error', 'Erreur lors de la création de la mécanique.');
         }
     }
 }

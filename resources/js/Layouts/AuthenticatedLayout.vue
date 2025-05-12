@@ -23,7 +23,7 @@ onClickOutside(sidebarRef, (event) => {
 </script>
 
 <template>
-    <div class="bg-offwhite min-h-screen flex flex-col">
+    <div class="bg-white-100 dark:bg-white-100 min-h-screen flex flex-col">
 
         <!-- Header -->
         <nav class="fixed top-0 left-0 w-full z-50 bg-primary shadow-md border-b border-gray-100">

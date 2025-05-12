@@ -1,58 +1,53 @@
 <script setup>
 import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import SecondaryButton from './SecondaryButton.vue';
 import PrimaryButton from './PrimaryButton.vue';
 
 const props = defineProps({
     show: Boolean,
-    title: String,
-    placeholder: String,
-    routeName: String,
 });
+
+const loading = ref(false);
 
 const emits = defineEmits(['close']);
 
-const name = ref('');
-const error = ref(null);
-const loading = ref(false);
+const form = useForm({
+    firstname: null,
+    lastname: null,
+})
 
 const close = () => {
-    name.value = '';
-    error.value = null;
+    form.reset();
     emits('close');
-};
+}
 
 const submit = () => {
-    if (!name.value.trim()) {
-        error.value = `Le nom est requis.`;
-        return;
-    }
-
     loading.value = true;
-    router.post(route(props.routeName), { name: name.value }, {
+    form.post(route('creator.store'), {
         onSuccess: () => {
             close();
-        },
-        onError: (errors) => {
-            error.value = errors.name || 'Erreur inconnue.';
         },
         onFinish: () => {
             loading.value = false;
         }
     });
-};
+}
 </script>
 
 <template>
     <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h2 class="text-lg font-semibold mb-4">{{ title }}</h2>
+            <h2 class="text-lg font-semibold mb-4">Création d'un nouveau créateur</h2>
 
-            <input type="text" v-model="name" class="w-full border border-gray-300 rounded px-3 py-2 mb-4"
-                :placeholder="`${placeholder}`" />
+            <input type="text" v-model="form.firstname" class="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+                placeholder="Prénom" />
 
-            <div v-if="error" class="text-red-500 text-sm mb-2">{{ error }}</div>
+            <input type="text" v-model="form.lastname" class="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+                placeholder="Nom" />
+
+            <div v-if="form.errors.firstname" class="text-red-500 text-sm mb-2">{{ form.errors.firstname }}</div>
+            <div v-if="form.errors.lastname" class="text-red-500 text-sm mb-2">{{ form.errors.lastname }}</div>
 
             <div class="flex justify-end gap-2">
                 <SecondaryButton @click="close" class="px-4 py-2 text-gray-600 hover:text-black">Fermer

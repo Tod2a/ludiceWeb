@@ -8,9 +8,13 @@ import BaseInput from '@/Components/BaseInput.vue';
 import { ref } from 'vue';
 import { PublisherAutocomplete, MechanicAutocomplete, CreatorAutocomplete, CategoryAutocomplete } from '@/Components/Autocompletes';
 import BaseCreatingModal from '@/Components/BaseCreatingModal.vue';
+import NewCreatorModal from '@/Components/NewCreatorModal.vue';
 
 const imgInput = ref(null);
 const NewMechanicModal = ref(false);
+const NewPublisherModal = ref(false);
+const NewCategoryModal = ref(false);
+const NewCreatorModalVisible = ref(false);
 
 const form = useForm({
     name: null,
@@ -107,7 +111,7 @@ const removeCategory = (id) => {
         </div>
 
         <div class="flex justify-center">
-            <div class="bg-white shadow-md rounded-lg p-8 w-1/2">
+            <div class="bg-white shadow-md rounded-lg p-8 w-1/2 max-w-full">
                 <form @submit.prevent="submitForm" class="flex flex-col">
 
                     <BaseInput id="name" v-model="form.name" placeholder="Entrez le nom du jeu"
@@ -146,7 +150,10 @@ const removeCategory = (id) => {
                         :error="form.errors.suggestedage" type="number" :required="true">Âge suggéré</BaseInput>
 
                     <div class="mb-4">
-                        <label for="publishers">Éditeurs <span class="text-red-500">*</span></label>
+                        <label for="publishers">Éditeurs <span class="text-red-500">*</span>
+                            <button @click.prevent="NewPublisherModal = true" class="mx-2 text-blue-500">
+                                Créer un nouvel éditeur
+                            </button></label>
                         <PublisherAutocomplete @add-publisher="addPublisher" />
                         <div v-if="form.errors.publishers" class="text-red-500 text-sm">{{ form.errors.publishers }}
                         </div>
@@ -166,8 +173,14 @@ const removeCategory = (id) => {
                         </ul>
                     </div>
 
+                    <BaseCreatingModal :show="NewPublisherModal" title="Créer un éditeur" placeholder="nom de l'éditeur"
+                        routeName="publisher.store" @close="NewPublisherModal = false" />
+
                     <div class="mb-4">
-                        <label for="creators">Créateurs <span class="text-red-500">*</span> </label>
+                        <label for="creators">Créateurs <span class="text-red-500">*</span>
+                            <button @click.prevent="NewCreatorModalVisible = true" class="mx-2 text-blue-500">
+                                Créer un nouveau créateur
+                            </button></label>
                         <CreatorAutocomplete @add-creator="addCreator" />
                         <div v-if="form.errors.creators" class="text-red-500 text-sm">{{ form.errors.creators }}</div>
                     </div>
@@ -186,8 +199,13 @@ const removeCategory = (id) => {
                         </ul>
                     </div>
 
+                    <NewCreatorModal :show="NewCreatorModalVisible" @close="NewCreatorModalVisible = false" />
+
                     <div class="mb-4">
-                        <label for="categories">Catégories <span class="text-red-500">*</span> </label>
+                        <label for="categories">Catégories <span class="text-red-500">*</span>
+                            <button @click.prevent="NewCategoryModal = true" class="mx-2 text-blue-500">
+                                Créer une nouvelle catégorie
+                            </button></label>
                         <CategoryAutocomplete @add-category="addCategory" />
                         <div v-if="form.errors.categories" class="text-red-500 text-sm">{{ form.errors.categories }}
                         </div>
@@ -207,10 +225,14 @@ const removeCategory = (id) => {
                         </ul>
                     </div>
 
+                    <BaseCreatingModal :show="NewCategoryModal" title="Créer une catégorie"
+                        placeholder="nom de la catégorie" routeName="category.store"
+                        @close="NewCategoryModal = false" />
+
                     <div class="mb-4">
                         <label for="mechanics">Mécaniques <span class="text-red-500">*</span>
                             <button @click.prevent="NewMechanicModal = true" class="mx-2 text-blue-500">
-                                Ajouter une mécanique
+                                Créer une nouvelle mécanique
                             </button></label>
                         <MechanicAutocomplete @add-mechanic="addMechanic" />
                         <div v-if="form.errors.mechanics" class="text-red-500 text-sm">{{ form.errors.mechanics }}
@@ -231,8 +253,9 @@ const removeCategory = (id) => {
                         </ul>
                     </div>
 
-                    <BaseCreatingModal :show="NewMechanicModal" title="Ajouter une mécanique" itemType="mécanique"
-                        routeName="mechanic.store" @close="NewMechanicModal = false" />
+                    <BaseCreatingModal :show="NewMechanicModal" title="Créer une mécanique"
+                        placeholder="nom de la mécanique" routeName="mechanic.store"
+                        @close="NewMechanicModal = false" />
 
                     <div class="mb-4">
                         <label for="description">Description <span class="text-red-500">*</span> </label>
