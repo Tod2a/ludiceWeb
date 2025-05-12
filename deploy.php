@@ -9,6 +9,7 @@ require 'contrib/npm.php';
 
 set('repository', 'git@github.com:Tod2a/ludiceWeb.git');
 set('ssh_multiplexing', false);
+set('keep_releases', 5);
 
 add('shared_files', []);
 add('shared_dirs', []);
@@ -21,6 +22,12 @@ host('test')
     ->set('deploy_path', '/data/ludice/app')
     ->set('hostname', 'tst.ludice.app')
     ->set('branch', 'staging');
+
+host('prod')
+    ->set('remote_user', 'ludice')
+    ->set('deploy_path', '/data/ludice/app')
+    ->set('hostname', 'ludice.app')
+    ->set('branch', 'master');
 
 // Tasks
 
