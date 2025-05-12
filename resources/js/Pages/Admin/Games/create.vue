@@ -100,7 +100,7 @@ const removeCategory = (id) => {
         </template>
         <div class="flex justify-center">
             <div class="my-3">
-                <NavLink :href="route('games.index')">Back
+                <NavLink :href="route('games.index')">Retour
                 </NavLink>
                 <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                     leave-active-class="transition ease-in-out" leave-to-class="opacity-0">

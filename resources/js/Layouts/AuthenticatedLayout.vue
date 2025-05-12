@@ -136,14 +136,14 @@ onClickOutside(mobileProfileMenu, (event) => {
                     <ul class="space-y-2 font-medium">
                         <li>
                             <a :href="route('connected.homepage')"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
+                                class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
                                 <span class="ms-3">Accueil</span>
                             </a>
                         </li>
                         <li v-show="$page.props.auth.user.role.name && $page.props.auth.user.role.name !== 'User'">
 
                             <button @click="isDropdownAdminOpen = !isDropdownAdminOpen" type="button"
-                                class="flex items-center w-full p-2 text-base text-green-200 transition duration-75 rounded-lg group hover:bg-green-200 dark:text-white dark:hover:text-primary dark:hover:bg-green-200">
+                                class="flex items-center w-full text-white p-2 text-base transition duration-75 rounded-lg group hover:bg-green-200 dark:text-white dark:hover:text-primary dark:hover:bg-green-200">
                                 <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Admin</span>
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 10 6">
@@ -154,16 +154,16 @@ onClickOutside(mobileProfileMenu, (event) => {
                             <ul v-show="isDropdownAdminOpen" class="py-2 space-y-2">
                                 <li>
                                     <a :href="route('admin.dashboard')"
-                                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
+                                        class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
                                         <span class="ms-3">Dashboard</span>
                                     </a>
                                     <a :href="route('users.index')"
-                                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group"
+                                        class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group"
                                         v-if="$page.props.auth.user.role.name === 'Master'">
                                         <span class="ms-3">Utilisateurs</span>
                                     </a>
                                     <a :href="route('games.index')"
-                                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
+                                        class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
                                         <span class="ms-3">Jeux</span>
                                     </a>
                                 </li>
@@ -171,7 +171,7 @@ onClickOutside(mobileProfileMenu, (event) => {
                         </li>
                         <li>
                             <a :href="route('library')"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
+                                class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
                                 <span class="ms-3">Ludothèque</span>
                             </a>
                         </li>
