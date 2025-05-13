@@ -33,5 +33,5 @@ Route::middleware('auth:sanctum')->prefix('score')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('template')->group(function () {
-    Route::get('/', [TemplateController::class, 'index']);
+    Route::get('/{game}', [TemplateController::class, 'index']);
 });
