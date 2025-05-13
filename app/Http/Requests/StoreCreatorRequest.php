@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCreatorRequest extends FormRequest
 {
@@ -23,8 +24,20 @@ class StoreCreatorRequest extends FormRequest
     {
         return [
             'firstname' => 'required|max:100',
-            'lastname' => 'required|max:100',
-            'firstname,lastname' => 'unique:creators,firstname,lastnames',
+            'lastname' => [
+                'required',
+                'max:100',
+                Rule::unique('creators')->where(function ($query) {
+                    return $query->where('firstname', $this->input('firstname'));
+                }),
+            ],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'lastname.unique' => 'Un créateur avec ce prénom et ce nom existe déjà.',
         ];
     }
 }

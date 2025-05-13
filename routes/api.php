@@ -12,8 +12,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->prefix('library')->group(function () {
     Route::get('/', [LibraryController::class, 'index']);
-    Route::post('/', [LibraryController::class, 'store']);
-    Route::delete('/', [LibraryController::class, 'destroy']);
+    Route::post('/{game}', [LibraryController::class, 'store']);
+    Route::delete('/{game}', [LibraryController::class, 'destroy']);
 });
 
 Route::middleware('auth:sanctum')->prefix('game')->group(function () {
