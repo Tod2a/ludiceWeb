@@ -15,13 +15,9 @@ class LibraryController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $userId = Auth::user()->id;
 
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
-
-        $user = User::with('library')->find($user->id);
+        $user = User::with('library')->find($userId);
 
         return response()->json([
             'user' => $user,
@@ -32,10 +28,6 @@ class LibraryController extends Controller
     {
         $id = Auth::user()->id;
         $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
 
         if ($user->library()->where('game_id', $game)->exists()) {
             return response()->json(['message' => 'Game already in library'], 400);
@@ -56,10 +48,6 @@ class LibraryController extends Controller
     {
         $id = Auth::user()->id;
         $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
 
         if (!$user->library()->where('game_id', $game)->exists()) {
             return response()->json(['message' => 'Game not in library'], 400);
