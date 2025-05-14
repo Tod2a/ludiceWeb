@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->prefix('guest')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('score')->group(function () {
     Route::get('/{game?}', [ScoreController::class, 'index']);
-    Route::post('/', [ScoreController::class, 'strore']);
+    Route::post('/', [ScoreController::class, 'store']);
 });
 
 Route::middleware('auth:sanctum')->prefix('template')->group(function () {
