@@ -43,10 +43,42 @@ class ScoreController extends Controller
             'sections.*.scores.*.score' => 'nullable|numeric',
         ]);
 
+        foreach ($request->sections as $section) {
+            $hasUser = false;
+
+            foreach ($section['scores'] as $score) {
+                if (isset($score['user_id']) && $score['user_id'] === $user->id) {
+                    $hasUser = true;
+                    break;
+                }
+            }
+
+            if (!$hasUser) {
+                return response()->json([
+                    'message' => 'Each section must include a score for the authenticated user.'
+                ], 422);
+            }
+        }
+
+        $referenceIds = collect($request->sections[0]['scores'])->map(function ($score) {
+            return isset($score['user_id']) ? 'user_' . $score['user_id'] : 'guest_' . $score['guest_id'];
+        })->sort()->values()->toArray();
+
+        foreach ($request->sections as $index => $section) {
+            $currentIds = collect($section['scores'])->map(function ($score) {
+                return isset($score['user_id']) ? 'user_' . $score['user_id'] : 'guest_' . $score['guest_id'];
+            })->sort()->values()->toArray();
+
+            if ($referenceIds !== $currentIds) {
+                return response()->json([
+                    'message' => "Inconsistent score entries at section index $index. All sections must have scores for the same players."
+                ], 422);
+            }
+        }
+
         DB::beginTransaction();
 
         try {
-            // Création de la feuille de score
             $scoreSheet = new ScoreSheet();
             $scoreSheet->game_id = $request->game_id;
             $scoreSheet->save();
