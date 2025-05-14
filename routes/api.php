@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\api\GameController;
 use App\Http\Controllers\api\GuestController;
 use App\Http\Controllers\api\LibraryController;
+use App\Http\Controllers\Api\MechanicController;
 use App\Http\Controllers\api\ScoreController;
 use App\Http\Controllers\api\TemplateController;
 
@@ -32,6 +34,8 @@ Route::middleware('auth:sanctum')->prefix('score')->group(function () {
     Route::post('/', [ScoreController::class, 'store']);
 });
 
-Route::middleware('auth:sanctum')->prefix('template')->group(function () {
-    Route::get('/{game}', [TemplateController::class, 'index']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/template/{game}', [TemplateController::class, 'index']);
+    Route::get('/category', [CategoryController::class, 'index']);
+    Route::get('/mechanic', [MechanicController::class, 'index']);
 });
