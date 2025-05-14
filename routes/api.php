@@ -21,7 +21,6 @@ Route::middleware('auth:sanctum')->prefix('library')->group(function () {
 Route::middleware('auth:sanctum')->prefix('game')->group(function () {
     Route::get('/', [GameController::class, 'index']);
     Route::get('/random', [GameController::class, 'random']);
-    Route::get('/filters', [GameController::class, 'filters']);
 });
 
 Route::middleware('auth:sanctum')->prefix('guest')->group(function () {
