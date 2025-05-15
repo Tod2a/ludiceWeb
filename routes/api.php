@@ -1,14 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\api\GameController;
-use App\Http\Controllers\api\GuestController;
-use App\Http\Controllers\api\LibraryController;
+use App\Http\Controllers\Api\GameController;
+use App\Http\Controllers\Api\GuestController;
+use App\Http\Controllers\Api\LibraryController;
 use App\Http\Controllers\Api\MechanicController;
-use App\Http\Controllers\api\ScoreController;
-use App\Http\Controllers\api\TemplateController;
+use App\Http\Controllers\Api\ScoreController;
+use App\Http\Controllers\Api\TemplateController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
