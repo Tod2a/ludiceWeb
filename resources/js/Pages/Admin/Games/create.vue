@@ -173,6 +173,7 @@ const removeCategory = (id) => {
                         </ul>
                     </div>
 
+
                     <BaseCreatingModal :show="NewPublisherModal" title="Créer un éditeur" placeholder="nom de l'éditeur"
                         routeName="publisher.store" @close="NewPublisherModal = false" />
 
@@ -181,6 +182,7 @@ const removeCategory = (id) => {
                             <button @click.prevent="NewCreatorModalVisible = true" class="mx-2 text-blue-500">
                                 Créer un nouveau créateur
                             </button></label>
+
                         <CreatorAutocomplete @add-creator="addCreator" />
                         <div v-if="form.errors.creators" class="text-red-500 text-sm">{{ form.errors.creators }}</div>
                     </div>
@@ -206,6 +208,7 @@ const removeCategory = (id) => {
                             <button @click.prevent="NewCategoryModal = true" class="mx-2 text-blue-500">
                                 Créer une nouvelle catégorie
                             </button></label>
+                            
                         <CategoryAutocomplete @add-category="addCategory" />
                         <div v-if="form.errors.categories" class="text-red-500 text-sm">{{ form.errors.categories }}
                         </div>
