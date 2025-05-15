@@ -57,6 +57,13 @@ return [
             'throw' => false,
         ],
 
+        'local-backup' => [
+            'driver' => 'local',
+            'root' => env('LUDICE_BACKUP_PATH', '/data/ludice/backups'),
+            'serve' => true,
+            'throw' => false,
+        ],
+
     ],
 
     /*
