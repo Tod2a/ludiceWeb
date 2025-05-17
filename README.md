@@ -1,4 +1,7 @@
-![Ludice Logo](https://ludice.app/logo.png)
+<p align="center">
+  <img src="https://ludice.app/logo.png" width="200" alt="Ludice Logo">
+</p>
+
 
 <p align="center">
   <strong>LudiceWEB</strong> – A companion app for board game enthusiasts.
