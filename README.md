@@ -113,3 +113,30 @@ php artisan serve
 The API documentation is auto-generated using Dedoc/Scramble and accessible at:
 ```
 https://your-domain.com/docs
+
+---
+
+## 📱 Mobile App
+
+The mobile app connects to the same API and is maintained in a separate repo: `ludiceApp`.
+You can preview it using Expo Go.
+
+---
+
+## 📄 License
+
+This project is open-sourced under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+## 🙏 Acknowledgements
+
+Special thanks to:
+- My mentors and reviewers
+- The Laravel and React Native communities
+- All beta testers for their feedback
+- The board gaming community for the inspiration ❤️
+
+---
+
+> LudiceWEB is developed with passion for the gaming community – because game nights deserve great tools. 🎲
