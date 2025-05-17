@@ -1,0 +1,4 @@
+bgg-api
+requests
+googletrans
+
