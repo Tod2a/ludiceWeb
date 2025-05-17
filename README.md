@@ -113,7 +113,7 @@ php artisan serve
 The API documentation is auto-generated using Dedoc/Scramble and accessible at:
 ```
 https://your-domain.com/docs
-
+```
 ---
 
 ## 📱 Mobile App
