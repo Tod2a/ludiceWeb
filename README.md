@@ -80,7 +80,7 @@ This web app is the backend and admin interface of a broader Ludice ecosystem th
 
 1. Clone the repo:
 ```bash
-git clone https://github.com/YourUsername/ludiceWEB.git
+git clone https://github.com/Tod2a/ludiceWeb.git
 cd ludiceWEB
 ```
 
