@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->prefix('library')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('game')->group(function () {
     Route::get('/', [GameController::class, 'index']);
+    Route::get('/{id}', [GameController::class, 'show']);
     Route::get('/random', [GameController::class, 'random']);
 });
 
