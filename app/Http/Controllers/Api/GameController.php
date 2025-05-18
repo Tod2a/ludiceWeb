@@ -56,6 +56,13 @@ class GameController extends Controller
         return response()->json($result);
     }
 
+    public function show(int $id)
+    {
+        $game = Game::with(['categories', 'mechanics', 'publishers', 'creators'])->findOrFail($id);
+
+        return response()->json($game);
+    }
+
     public function random(Request $request)
     {
         $userId = Auth::user()->id;
