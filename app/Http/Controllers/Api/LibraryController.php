@@ -13,14 +13,29 @@ use App\Models\User;
 
 class LibraryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $request->validate([
+            'query' => 'nullable|string',
+        ]);
+
+        $query = $request->input('query');
+
         $userId = Auth::user()->id;
 
-        $user = User::with('library')->find($userId);
+        $games = User::findOrFail($userId)->library();
+
+        if ($query) {
+            $games->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($query) . '%']);
+        }
+
+        $count = $games->count();
+
+        $result = $games->paginate(12);
 
         return response()->json([
-            'user' => $user,
+            'libray' => $result,
+            'count' => $count,
         ]);
     }
 
