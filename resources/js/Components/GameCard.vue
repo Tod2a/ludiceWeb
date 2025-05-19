@@ -96,9 +96,9 @@ function handleDelete() {
             </div>
         </div>
 
-        <div class="w-full aspect-square">
+        <div class="relative w-full pb-[100%]">
             <img :src="props.game.img_path" :alt="'Image ' + props.game.name"
-                class="w-full h-full object-contain rounded-lg" />
+                class="absolute inset-0 w-full h-full object-contain rounded-lg" />
         </div>
     </div>
 </template>
