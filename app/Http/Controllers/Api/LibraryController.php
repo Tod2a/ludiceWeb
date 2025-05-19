@@ -34,7 +34,7 @@ class LibraryController extends Controller
         $result = $games->paginate(12);
 
         return response()->json([
-            'libray' => $result,
+            'library' => $result,
             'count' => $count,
         ]);
     }
