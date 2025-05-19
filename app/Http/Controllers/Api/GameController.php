@@ -63,6 +63,24 @@ class GameController extends Controller
         return response()->json($game);
     }
 
+    /**
+     * Get a random game from the authenticated user's library filtered by optional criteria.
+     *
+     * This method retrieves all games from the user's library along with their mechanics and categories,
+     * then filters them based on the request parameters such as number of players, duration, age, mechanics, and categories.
+     * Finally, it returns one random game from the filtered collection.
+     *
+     * @param \Illuminate\Http\Request $request The HTTP request containing optional filtering parameters:
+     *      - players (int): Filter games that support this number of players.
+     *      - duration (int): Filter games with an average duration less than or equal to this value (in minutes).
+     *      - age (int): Filter games suitable for this minimum suggested age.
+     *      - mechanics (array|int): Filter games that have at least one of the specified mechanic IDs.
+     *      - categories (array|int): Filter games that have at least one of the specified category IDs.
+     *
+     * @return \Illuminate\Http\JsonResponse JSON response containing either:
+     *      - The randomly selected game matching the filters (key: 'game')
+     *      - A 404 JSON error message if no game matches the criteria.
+     */
     public function random(Request $request)
     {
         $userId = Auth::user()->id;
