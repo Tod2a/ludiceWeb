@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreGuestRequest;
 use App\Models\Guest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,11 +30,9 @@ class GuestController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreGuestRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|max:100',
-        ]);
+        $validated = $request->validated();
 
         $guest = new Guest();
         $guest->name = $validated['name'];
