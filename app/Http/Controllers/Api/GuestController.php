@@ -42,6 +42,6 @@ class GuestController extends Controller
 
         $guest->save();
 
-        return response()->json(['message' => 'Invité créé avec succès.'], 200);
+        return response()->json(['message' => 'Invité créé avec succès.', 'guest' => $guest], 200);
     }
 }
