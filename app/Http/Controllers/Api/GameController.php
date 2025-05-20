@@ -83,46 +83,46 @@ class GameController extends Controller
      */
     public function random(Request $request)
     {
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
+        $userId = Auth::id();
+        $user = User::findOrFail($userId);
 
-        $gamesQuery = $user->library()->with(['mechanics', 'categories'])->get();
+        $gamesQuery = $user->library()->with(['mechanics', 'categories']);
 
-        // Filters
-        $filteredGames = $gamesQuery->filter(function ($game) use ($request) {
+        if ($request->has('players')) {
+            $players = (int) $request->players;
+            $gamesQuery->where('min_players', '<=', $players)
+                ->where('max_players', '>=', $players);
+        }
 
-            if ($request->has('players') && ($game->min_players > $request->players || $game->max_players < $request->players)) {
-                return false;
-            }
+        if ($request->has('duration')) {
+            $duration = (int) $request->duration;
+            $gamesQuery->where('average_duration', '<=', $duration);
+        }
 
-            if ($request->has('duration') && $game->average_duration > $request->duration) {
-                return false;
-            }
+        if ($request->has('age')) {
+            $age = (int) $request->age;
+            $gamesQuery->where('suggestedage', '<=', $age);
+        }
 
-            if ($request->has('age') && $game->suggestedage < $request->age) {
-                return false;
-            }
+        if ($request->has('mechanics')) {
+            $mechanicIds = is_array($request->mechanics) ? $request->mechanics : [$request->mechanics];
+            $gamesQuery->whereHas('mechanics', function ($query) use ($mechanicIds) {
+                $query->whereIn('mechanics.id', $mechanicIds);
+            });
+        }
 
-            if ($request->has('mechanics')) {
-                $mechanicIds = is_array($request->mechanics) ? $request->mechanics : [$request->mechanics];
-                if (!$game->mechanics->pluck('id')->intersect($mechanicIds)->count()) {
-                    return false;
-                }
-            }
+        if ($request->has('categories')) {
+            $categoryIds = is_array($request->categories) ? $request->categories : [$request->categories];
+            $gamesQuery->whereHas('categories', function ($query) use ($categoryIds) {
+                $query->whereIn('categories.id', $categoryIds);
+            });
+        }
 
-            if ($request->has('categories')) {
-                $categoryIds = is_array($request->categories) ? $request->categories : [$request->categories];
-                if (!$game->categories->pluck('id')->intersect($categoryIds)->count()) {
-                    return false;
-                }
-            }
-
-            return true;
-        });
+        $filteredGames = $gamesQuery->get();
 
         if ($filteredGames->isEmpty()) {
             return response()->json([
-                'message' => 'No game found matching the criteria.'
+                'message' => 'Aucun jeu ne correspond aux critères.'
             ], 404);
         }
 
