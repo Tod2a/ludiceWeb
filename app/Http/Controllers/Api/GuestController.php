@@ -10,15 +10,24 @@ use Illuminate\Support\Facades\Auth;
 
 class GuestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $name = $request->input('name');
         $userId = Auth::user()->id;
-        $user = User::with('guests')->find($userId);
+
+        $guestsQuery = User::find($userId)->guests();
+
+        if ($name) {
+            $guestsQuery->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($name) . '%']);
+        }
+
+        $guests = $guestsQuery->get();
 
         return response()->json([
-            'guests' => $user->guests,
+            'guests' => $guests,
         ]);
     }
+
 
     public function store(Request $request)
     {
