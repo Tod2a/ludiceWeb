@@ -14,6 +14,7 @@ class Section extends Model
         'guest_id',
         'user_id',
         'score',
+        'name',
     ];
 
     /**

@@ -24,6 +24,7 @@ class StoreScoreSheetRequest extends FormRequest
         return [
             'game_id' => 'required|exists:games,id',
             'sections' => 'required|array|min:1',
+            'sections.*.name' => ['required', 'string', 'max:255'],
             'sections.*.scores' => 'required|array|min:1',
             'sections.*.scores.*.score' => 'nullable|numeric',
             'sections.*.scores.*.user_id' => 'nullable|exists:users,id',
