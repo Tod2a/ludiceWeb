@@ -43,7 +43,7 @@ class ScoreController extends Controller
         $user = Auth::user();
 
         $scoreSheet = ScoreSheet::with([
-            'game:id,name',
+            'game:id,name,img_path',
             'sections' => function ($query) {
                 $query->with(['guest:id,name', 'user:id,name']);
             }
