@@ -31,7 +31,9 @@ class ScoreController extends Controller
             $scoreSheets = $scoreSheets->where('game_id', $game);
         }
 
-        return response()->json($scoreSheets->get());
+        $response = $scoreSheets->paginate(12);
+
+        return response()->json($response);
     }
 
     /**
@@ -84,6 +86,7 @@ class ScoreController extends Controller
                     $section = new Section();
                     $section->score_sheet_id = $scoreSheet->id;
                     $section->score = $scoreData->score ?? 0;
+                    $section->name = $sectionData->name ?? 'Unnamed Section';
 
                     if (isset($scoreData->user_id)) {
                         $section->user_id = $scoreData->user_id;
