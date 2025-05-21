@@ -31,9 +31,34 @@ class ScoreController extends Controller
             $scoreSheets = $scoreSheets->where('game_id', $game);
         }
 
-        $response = $scoreSheets->paginate(12);
+        $response = $scoreSheets
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
 
         return response()->json($response);
+    }
+
+    public function show(int $id)
+    {
+        $user = Auth::user();
+
+        $scoreSheet = ScoreSheet::with([
+            'game:id,name',
+            'sections' => function ($query) {
+                $query->with(['guest:id,name', 'user:id,name']);
+            }
+        ])
+            ->whereHas('sections', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->where('id', $id)
+            ->first();
+
+        if (!$scoreSheet) {
+            return response()->json(['message' => 'Score sheet not found'], 404);
+        }
+
+        return response()->json($scoreSheet);
     }
 
     /**
