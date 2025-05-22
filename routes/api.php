@@ -20,8 +20,8 @@ Route::middleware('auth:sanctum')->prefix('library')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('game')->group(function () {
     Route::get('/', [GameController::class, 'index']);
-    Route::get('/{id}', [GameController::class, 'show']);
     Route::get('/random', [GameController::class, 'random']);
+    Route::get('/{id}', [GameController::class, 'show']);
 });
 
 Route::middleware('auth:sanctum')->prefix('guest')->group(function () {
@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->prefix('guest')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('score')->group(function () {
     Route::get('/{game?}', [ScoreController::class, 'index']);
+    Route::get('/detail/{id}', [ScoreController::class, 'show']);
     Route::post('/', [ScoreController::class, 'store']);
 });
 

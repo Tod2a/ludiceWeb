@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-class StoreScoreSheetRequest extends FormRequest
+class StoreGuestRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +24,13 @@ class StoreScoreSheetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'game_id' => 'required|exists:games,id',
-            'sections' => 'required|array|min:1',
-            'sections.*.name' => ['required', 'string', 'max:255'],
-            'sections.*.scores' => 'required|array|min:1',
-            'sections.*.scores.*.score' => 'nullable|numeric',
-            'sections.*.scores.*.user_id' => 'nullable|exists:users,id',
-            'sections.*.scores.*.guest_id' => 'nullable|exists:guests,id',
+            'name' => [
+                'required',
+                'max:100',
+                Rule::unique('guests')->where(function ($query) {
+                    return $query->where('user_id', Auth::id());
+                }),
+            ],
         ];
     }
 }

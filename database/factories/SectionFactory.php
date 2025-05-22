@@ -28,6 +28,7 @@ class SectionFactory extends Factory
             'guest_id' => $guestId,
             'user_id' => $userId,
             'score' => $this->faker->numberBetween(1, 100),
+            'name' => $this->faker->word(),
         ];
     }
 }

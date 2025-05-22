@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreGuestRequest;
 use App\Models\Guest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,21 +11,28 @@ use Illuminate\Support\Facades\Auth;
 
 class GuestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $name = $request->input('name');
         $userId = Auth::user()->id;
-        $user = User::with('guests')->find($userId);
+
+        $guestsQuery = User::find($userId)->guests();
+
+        if ($name) {
+            $guestsQuery->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($name) . '%']);
+        }
+
+        $guests = $guestsQuery->get();
 
         return response()->json([
-            'guests' => $user->guests,
+            'guests' => $guests,
         ]);
     }
 
-    public function store(Request $request)
+
+    public function store(StoreGuestRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|max:100',
-        ]);
+        $validated = $request->validated();
 
         $guest = new Guest();
         $guest->name = $validated['name'];
@@ -33,6 +41,6 @@ class GuestController extends Controller
 
         $guest->save();
 
-        return response()->json(['message' => 'Invité créé avec succès.'], 200);
+        return response()->json(['message' => 'Invité créé avec succès.', 'guest' => $guest], 200);
     }
 }
