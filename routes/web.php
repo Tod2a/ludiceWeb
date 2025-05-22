@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\MechanicController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\PublisherController;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Verified;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
+Route::get('/privacy-policy', [PrivacyController::class, 'index'])->name('privacy');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/homepage', [GameController::class, 'index'])->name('connected.homepage');
