@@ -20,22 +20,39 @@ class UserSeeder extends Seeder
             'role_id' => 1,
         ]);
 
-        $adminUser = User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'role_id' => 2,
-        ]);
+        $adminUsers = [
+            User::factory()->create([
+                'name' => 'Admin User',
+                'email' => 'admin@example.com',
+                'role_id' => 2,
+            ]),
+            User::factory()->create([
+                'name' => 'Admin2 User',
+                'email' => 'admin2@example.com',
+                'role_id' => 2,
+            ]),
+            User::factory()->create([
+                'name' => 'Admin3 User',
+                'email' => 'admin3@example.com',
+                'role_id' => 2,
+            ]),
+        ];
 
-        $regularUser = User::factory()->create([
-            'name' => 'User',
-            'email' => 'user@example.com',
-            'role_id' => 3,
-        ]);
+        $regularUsers = [];
+        for ($i = 1; $i <= 9; $i++) {
+            $regularUsers[] = User::factory()->create([
+                'name' => 'User' . $i,
+                'email' => 'user' . $i . '@example.com',
+                'role_id' => 3,
+            ]);
+        }
 
         $game = Game::first();
 
         if ($game) {
-            $regularUser->library()->attach($game->id, ['added_at' => now()]);
+            foreach ($regularUsers as $user) {
+                $user->library()->attach($game->id, ['added_at' => now()]);
+            }
         } else {
             $this->command->warn('no games in database');
         }
