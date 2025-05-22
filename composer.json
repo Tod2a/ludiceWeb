@@ -1,9 +1,22 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "todaa/ludice",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Application de gestion de ludothèque et accompagnement ludique.",
+    "keywords": [
+        "ludothèque",
+        "jeux de société",
+        "laravel",
+        "ludice"
+    ],
+    "authors": [
+        {
+            "name": "TodAa"
+        }
+    ],
+    "support": {
+        "email": "support@ludice.app"
+    },
     "license": "MIT",
     "require": {
         "php": "^8.2",
