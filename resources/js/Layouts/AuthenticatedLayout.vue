@@ -112,9 +112,9 @@ onClickOutside(mobileProfileMenu, (event) => {
                     </div>
 
                     <div class="mt-3 space-y-1">
-                        <ResponsiveNavLink :href="route('profile.edit')">Profile</ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('profile.edit')">Profil</ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                            Log Out
+                            Déconnexion
                         </ResponsiveNavLink>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\MechanicController;
 use App\Http\Controllers\Api\ScoreController;
 use App\Http\Controllers\Api\TemplateController;
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 
 Route::middleware('auth:sanctum')->prefix('library')->group(function () {
     Route::get('/', [LibraryController::class, 'index']);
