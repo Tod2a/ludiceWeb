@@ -5,7 +5,26 @@ import { Head } from '@inertiajs/vue3';
 
 <template>
 
-    <Head title="Bienvenue" />
+    <Head title="Bienvenue">
+        <meta name="description"
+            content="Ludice est une application mobile pour enrichir vos soirées jeux de société : tirages aléatoires, scores, avis et plus." />
+
+        <!-- Open Graph pour Facebook, LinkedIn, etc. -->
+        <meta property="og:title" content="Ludice - L'application pour votre ludothèque" />
+        <meta property="og:description"
+            content="Trouvez le jeu idéal, gérez votre ludothèque, et partagez vos scores entre amis avec Ludice." />
+        <meta property="og:url" content="https://ludice.app" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://ludice.app/logo.png" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ludice - L'application pour vos votre ludothèque" />
+        <meta name="twitter:description"
+            content="Trouvez le jeu idéal, gérez votre ludothèque, et partagez vos scores entre amis avec Ludice." />
+        <meta name="twitter:image" content="https://ludice.app/logo.png" />
+
+    </Head>
     <GuestLayout>
         <template #header>
             <h2 class="text-2xl font-semibold">
