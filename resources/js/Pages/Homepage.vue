@@ -28,12 +28,12 @@ import { Head } from '@inertiajs/vue3';
     <GuestLayout>
         <template #header>
             <h1 class="text-3xl font-extrabold tracking-tight">
-                Ludice - Votre Application Mobile pour Gérer et Profiter de Votre Ludothèque et de vos jeux de société
+                Ludice - Votre Application Mobile pour Gérer et Profiter de Votre Ludothèque et de Vos Jeux de Société
             </h1>
         </template>
 
         <div
-            class="flex flex-col md:flex-row max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden mt-8 p-6 space-y-6 md:space-y-0 md:space-x-8 mb-4">
+            class="flex flex-col md:flex-row max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden mt-8 p-6 space-y-6 md:space-y-0 md:space-x-8 mb-8">
             <div class="flex-1 flex flex-col justify-center">
                 <h3 class="text-2xl font-semibold text-gray-800 mb-4">Une expérience Mobile</h3>
                 <p class="text-gray-700 mb-4 leading-relaxed">
@@ -43,10 +43,10 @@ import { Head } from '@inertiajs/vue3';
                 <p class="text-gray-700 mb-4 leading-relaxed">
                     Cette interface simple, rapide et intuitive vous permettra d’accéder facilement à votre compte
                     Ludice
-                    et de profiter pleinement de toutes les fonctionnalités à venir.
+                    et de profiter pleinement de toutes les fonctionnalités.
                 </p>
                 <p class="text-gray-700 mb-4 leading-relaxed">
-                    Téléchargez notre application sur le Play Store et entamez la révolution dans la gestion de vos
+                    Téléchargez notre application sur le Play Store et révolutionnez vos
                     soirées ludiques dès maintenant !
                 </p>
                 <p class="text-gray-600 italic">
@@ -92,7 +92,7 @@ import { Head } from '@inertiajs/vue3';
                 <p class="text-gray-700 mb-4 leading-relaxed">
                     Enregistrez vos scores, choisissez le jeu idéal pour votre soirée, désignez le premier joueur,
                     consultez
-                    l’historique de vos parties, gérez votre ludothèque, et accédez aux détails complets de chaque jeu…
+                    l’historique de vos parties, gérez votre ludothèque et accédez aux détails complets de chaque jeu.
                     Notre
                     application mobile Ludice est conçue pour répondre aux besoins des passionnés de jeux de société.
                 </p>

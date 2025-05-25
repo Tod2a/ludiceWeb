@@ -30,7 +30,7 @@ export default {
                 },
                 white: {
                     DEFAULT: "#FFFFFF",
-                    100: "#fafaf0 ",
+                    100: "#fafaf0",
                 }
             },
             fontFamily: {
