@@ -58,7 +58,18 @@ class GameController extends Controller
 
     public function show(int $id)
     {
+        $userId = Auth::id();
+
         $game = Game::with(['categories', 'mechanics', 'publishers', 'creators'])->findOrFail($id);
+
+        $inLibrary = false;
+
+        if ($userId) {
+            $user = User::findOrFail($userId);
+            $inLibrary = $user->library()->where('game_id', $id)->exists();
+        }
+
+        $game->in_library = $inLibrary;
 
         return response()->json($game);
     }
