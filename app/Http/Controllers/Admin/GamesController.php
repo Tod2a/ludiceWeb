@@ -30,6 +30,10 @@ class GamesController extends Controller
     {
         Gate::authorize('viewAny', Game::class);
 
+        $request->validate([
+            'name' => 'nullable|string|max:100',
+        ]);
+
         $name = $request->input('name');
 
         $games = Game::with('publishers', 'creators');
