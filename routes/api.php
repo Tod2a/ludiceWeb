@@ -10,9 +10,9 @@ use App\Http\Controllers\Api\MechanicController;
 use App\Http\Controllers\Api\ScoreController;
 use App\Http\Controllers\Api\TemplateController;
 
-Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
+Route::post('/login', [AuthController::class, 'login'])->middleware(['throttle:10,1', 'log.write']);
 
-Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:60,1', 'log.write'])->group(function () {
     Route::prefix('library')->group(function () {
         Route::get('/', [LibraryController::class, 'index']);
         Route::post('/{game}', [LibraryController::class, 'store']);
