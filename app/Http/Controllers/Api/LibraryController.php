@@ -45,13 +45,13 @@ class LibraryController extends Controller
         $user = User::find($id);
 
         if ($user->library()->where('game_id', $game)->exists()) {
-            return response()->json(['message' => 'Game already in library'], 400);
+            return response()->json(['message' => 'Ce jeu se trouve déjà dans votre ludothèque.'], 400);
         }
 
         $gameModel = Game::find($game);
 
         if (!$gameModel) {
-            return response()->json(['message' => 'Game not found.'], 404);
+            return response()->json(['message' => 'Jeu non trouvé.'], 404);
         }
 
         $user->library()->attach($game);
@@ -65,13 +65,13 @@ class LibraryController extends Controller
         $user = User::find($id);
 
         if (!$user->library()->where('game_id', $game)->exists()) {
-            return response()->json(['message' => 'Game not in library'], 400);
+            return response()->json(['message' => 'Ce jeu ne se trouve pas dans votre ludothèque.'], 400);
         }
 
         $gameModel = Game::find($game);
 
         if (!$gameModel) {
-            return response()->json(['message' => 'Game not found.'], 404);
+            return response()->json(['message' => 'Jeu non trouvé.'], 404);
         }
 
         $user->library()->detach($game);
