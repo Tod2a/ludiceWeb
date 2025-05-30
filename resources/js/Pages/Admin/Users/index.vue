@@ -168,12 +168,12 @@ const formattedCreatedAt = (user) => {
 
             <fwb-modal size="md" position="top-center" v-if="isDeleteModalVisible" @close="closeModal">
                 <template #header>
-                    <h2 class="text-lg font-medium text-gray-900">
+                    <h2 class="text-lg font-medium text-gray-200">
                         Êtes-vous sûr de vouloir supprimer l'utilisateur {{ form.name }} ?
                     </h2>
                 </template>
                 <template #body>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-100">
                         Cette action est irréversible.
                     </p>
                 </template>
@@ -191,12 +191,12 @@ const formattedCreatedAt = (user) => {
 
             <fwb-modal size="md" position="top-center" v-if="isEditModalVisible" @close="closeEditModal">
                 <template #header>
-                    <h2 class="text-lg font-medium text-gray-900">
+                    <h2 class="text-lg font-medium text-gray-200">
                         Modifier le rôle de l'utilisateur {{ editForm.name }}
                     </h2>
                 </template>
                 <template #body>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-100">
                         Sélectionnez un nouveau rôle pour {{ editForm.name }} :
                     </p>
                     <select v-model="editForm.role_id" class="mt-2 w-full p-2 border rounded-md">
@@ -211,7 +211,7 @@ const formattedCreatedAt = (user) => {
                         Annuler
                     </button>
                     <button @click="updateUserRole"
-                        class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                        class="text-white bg-green-800 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
                         Mettre à jour
                     </button>
                 </template>
