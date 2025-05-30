@@ -26,6 +26,10 @@ class UsersController extends Controller
     {
         Gate::authorize('viewAny', User::class);
 
+        $request->validate([
+            'query' => 'nullable|string|min:2|max:100',
+        ]);
+
         $query = $request->input('query');
 
         $users = User::with('role');

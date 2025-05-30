@@ -47,12 +47,12 @@ This web app is the backend and admin interface of a broader Ludice ecosystem th
 - Spatie Permissions
 - Dedoc/Scramble (for API documentation)
 
-### Frontend (Admin Panel)
+### Frontend 
 - Vue.js with Inertia.js
 - Tailwind CSS
 - Laravel Vite
 
-### Mobile App
+### Mobile App (separate repo)
 - React Native
 - Expo Go
 - NativeWind
@@ -60,7 +60,7 @@ This web app is the backend and admin interface of a broader Ludice ecosystem th
 ### DevOps
 - GitHub Actions (CI/CD)
 - Deployer
-- Ansible
+- Ansible (separate repo)
 - Hosted on OpenStack (Linux server)
 - 3-2-1 backup strategy in place
 

@@ -9,6 +9,10 @@ class PublisherController extends Controller
 {
     public function search(Request $request)
     {
+        $request->validate([
+            'name' => 'nullable|string|max:100',
+        ]);
+
         $name = $request->input('name');
 
         $query = Publisher::query();
