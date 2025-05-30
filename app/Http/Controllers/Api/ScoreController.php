@@ -56,7 +56,7 @@ class ScoreController extends Controller
             ->first();
 
         if (!$scoreSheet) {
-            return response()->json(['message' => 'Score sheet not found'], 404);
+            return response()->json(['message' => 'Feuille de score non trouvée.'], 404);
         }
 
         return response()->json($scoreSheet);
