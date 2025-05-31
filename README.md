@@ -146,12 +146,6 @@ You can preview it using Expo Go.
 
 ---
 
-## 📄 License
-
-This project is open-sourced under the [MIT license](https://opensource.org/licenses/MIT).
-
----
-
 ## 🙏 Acknowledgements
 
 Special thanks to:
