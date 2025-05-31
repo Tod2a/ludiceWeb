@@ -166,10 +166,10 @@ const clearInput = () => {
 
             <FwbModal size="md" position="top-center" v-if="isDeleteModalVisible" @close="closeDeleteModal">
                 <template #header>
-                    <h2>Êtes-vous sûr de vouloir supprimer le jeu {{ form.name }}</h2>
+                    <h2 class="text-gray-200">Êtes-vous sûr de vouloir supprimer le jeu {{ form.name }}</h2>
                 </template>
                 <template #body>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-100">
                         Cette action est irréversible.
                     </p>
                 </template>

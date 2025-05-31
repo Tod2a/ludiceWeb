@@ -20,7 +20,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 403);
+            return response()->json(['message' => 'Oups ! Ces identifiants ne sont pas reconnus.'], 403);
         }
 
         $token = $user->createToken('mobile-token')->plainTextToken;

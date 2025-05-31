@@ -10,6 +10,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ScoreController extends Controller
 {
@@ -55,7 +56,7 @@ class ScoreController extends Controller
             ->first();
 
         if (!$scoreSheet) {
-            return response()->json(['message' => 'Score sheet not found'], 404);
+            return response()->json(['message' => 'Feuille de score non trouvée.'], 404);
         }
 
         return response()->json($scoreSheet);
@@ -133,9 +134,9 @@ class ScoreController extends Controller
             ], 201);
         } catch (\Throwable $e) {
             DB::rollBack();
+            Log::error('Erreur scoreSheet', ['exception' => $e]);
             return response()->json([
-                'message' => 'Une erreur est survenue lors de l\'enregistrement.',
-                'error' => $e->getMessage()
+                'message' => 'Une erreur est survenue lors de l\'enregistrement.'
             ], 500);
         }
     }

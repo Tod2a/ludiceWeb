@@ -44,15 +44,15 @@ This web app is the backend and admin interface of a broader Ludice ecosystem th
 - Laravel Breeze (Authentication)
 - Inertia.js (Frontend communication)
 - PostgreSQL
-- Spatie Permissions
+- Spatie Laravel Backup – Automated backup scheduling
 - Dedoc/Scramble (for API documentation)
 
-### Frontend (Admin Panel)
+### Frontend 
 - Vue.js with Inertia.js
 - Tailwind CSS
 - Laravel Vite
 
-### Mobile App
+### Mobile App (separate repo)
 - React Native
 - Expo Go
 - NativeWind
@@ -60,7 +60,7 @@ This web app is the backend and admin interface of a broader Ludice ecosystem th
 ### DevOps
 - GitHub Actions (CI/CD)
 - Deployer
-- Ansible
+- Ansible (separate repo)
 - Hosted on OpenStack (Linux server)
 - 3-2-1 backup strategy in place
 
@@ -68,11 +68,15 @@ This web app is the backend and admin interface of a broader Ludice ecosystem th
 
 ## 📂 Project Structure
 
-- `/app` – Laravel application logic (controllers, models, policies, etc.)
-- `/resources/js` – Inertia.js pages and components
-- `/routes` – Web and API routes
-- `/database` – Migrations, factories, and seeders
-- `/public/docs` – API documentation generated with Dedoc/Scramble
+- `/app` – Core Laravel application logic (models, controllers, policies, services, etc.)
+- `/config` – Configuration files for the application and services
+- `/database` – Database migrations, model factories, and seeders
+- `/lang` – Localization files for translations
+- `/public` – Publicly accessible assets (CSS, JS, images) and generated API documentation available at `/docs`
+- `/resources/js` – Frontend Inertia.js pages and Vue/React components
+- `/routes` – Web and API route definitions (`web.php`, `api.php`, etc.)
+- `/storage` – Application storage for logs, cached files, and user uploads
+- `/tests` – Automated tests (feature, unit, browser tests)
 
 ---
 
