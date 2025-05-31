@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use App\Models\PatchNote;
 use App\Models\User;
 use App\Services\AnalyticsService;
 use Carbon\Carbon;
@@ -21,6 +22,8 @@ class DashboardController extends Controller
 
         $verifiedUsers = User::whereNotNull('email_verified_at')->count();
 
+        $patchNotes = PatchNote::latest()->with(['user'])->get();
+
         $thisWeekStart = Carbon::now()->startOfWeek()->toDateString();
         $thisMonthStart = Carbon::now()->startOfMonth()->toDateString();
         $today = Carbon::now()->toDateString();
@@ -36,6 +39,7 @@ class DashboardController extends Controller
             'selectedGameMonth' => $analytics->getEventCount('selected_game', $thisMonthStart, $today),
             'totalGames' => $totalGames,
             'verifiedUsers' => $verifiedUsers,
+            'patchNotes' => $patchNotes,
         ]);
     }
 }

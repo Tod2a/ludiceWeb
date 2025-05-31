@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GamesController;
 use App\Http\Controllers\Admin\MechanicController as AdminMechanicController;
+use App\Http\Controllers\Admin\PatchNoteController;
 use App\Http\Controllers\Admin\PublisherController as AdminPublisherController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\CategoryController;
@@ -51,6 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/category', [AdminCategoryController::class, 'store'])->name('category.store');
     Route::post('/admin/creator', [AdminCreatorController::class, 'store'])->name('creator.store');
     Route::post('/admin/publisher', [AdminPublisherController::class, 'store'])->name('publisher.store');
+
+    Route::post('/admin/patch-notes', [PatchNoteController::class, 'store'])->name('admin.patchnotes.store');
 });
 
 Route::middleware('auth')->group(function () {
