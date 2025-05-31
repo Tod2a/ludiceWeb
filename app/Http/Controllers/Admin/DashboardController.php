@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
         $verifiedUsers = User::whereNotNull('email_verified_at')->count();
 
-        $patchNotes = PatchNote::latest()->with(['user'])->get();
+        $patchNotes = PatchNote::latest()->with(['user'])->paginate(10);
 
         $thisWeekStart = Carbon::now()->startOfWeek()->toDateString();
         $thisMonthStart = Carbon::now()->startOfMonth()->toDateString();

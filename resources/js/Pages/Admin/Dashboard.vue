@@ -3,6 +3,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { FwbModal } from 'flowbite-vue';
 import { ref } from 'vue';
+import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps({
     appStartWeek: Number,
@@ -11,7 +12,7 @@ const props = defineProps({
     selectedGameMonth: Number,
     totalGames: Number,
     verifiedUsers: Number,
-    patchNotes: Array,
+    patchNotes: Object,
 })
 
 const form = useForm({
@@ -91,8 +92,9 @@ const closePatchModal = () => {
         </div>
 
         <div class="bg-gray-100 p-4 mt-4 rounded shadow">
+
             <div class="flex flex-row justify-between">
-                <h3 class="text-3xl">Notes de patch</h3>
+                <h3 class="text-3xl">Actualités & mises à jour</h3>
 
                 <button v-if="$page.props.auth.user.role.name === 'Master'" @click="isPatchModalVisible = true"
                     class="text-white bg-green-700 hover:bg-green-600 rounded-full w-8 h-8 flex items-center justify-center text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -100,7 +102,8 @@ const closePatchModal = () => {
                     +
                 </button>
             </div>
-            <div v-for="note in patchNotes" :key="note.id" class="mt-4 bg-white p-4 rounded shadow">
+
+            <div v-for="note in patchNotes.data" :key="note.id" class="mt-4 bg-white p-4 rounded shadow">
                 <h4 class="text-lg font-semibold">{{ note.title }}</h4>
                 <p class="text-gray-700">{{ note.description }}</p>
                 <p class="text-sm text-gray-400">
@@ -108,6 +111,9 @@ const closePatchModal = () => {
                     }}
                 </p>
             </div>
+
+            <Pagination :links="patchNotes.links" />
+
         </div>
 
     </AuthenticatedLayout>
