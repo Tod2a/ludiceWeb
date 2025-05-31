@@ -112,6 +112,25 @@ php artisan serve
 
 ---
 
+## 🔐 Google Analytics
+
+The admin dashboard includes usage statistics (like app starts and game selections) powered by Google Analytics 4.  
+To enable this feature locally, you need to provide a credentials file:
+
+```
+
+storage/app/analytics/credentials.json
+
+```
+
+Without this file:
+- The **Analytics section** of the dashboard will not work locally.
+- The **rest of the application** will still function as expected.
+
+> If you're only developing features unrelated to the dashboard, you can ignore this file.
+
+---
+
 ## 📖 API Documentation
 
 The API documentation is auto-generated using Dedoc/Scramble and accessible at:
