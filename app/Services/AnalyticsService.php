@@ -22,9 +22,15 @@ class AnalyticsService
     public function __construct()
     {
         $this->propertyId = config('services.analytics.property_id');
+        $credentialsPath = storage_path('app/analytics/credentials.json');
+
+        if (!file_exists($credentialsPath)) {
+            $this->client = null;
+            return;
+        }
 
         $this->client = new ClientBetaAnalyticsDataClient([
-            'credentials' => storage_path('app/analytics/credentials.json'),
+            'credentials' => $credentialsPath,
         ]);
     }
 
