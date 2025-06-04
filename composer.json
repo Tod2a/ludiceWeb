@@ -21,6 +21,8 @@
     "require": {
         "php": "^8.2",
         "dedoc/scramble": "^0.12.19",
+        "google/analytics-data": "^0.22.2",
+        "google/apiclient": "^2.18",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel-lang/lang": "^15.11",
         "laravel/framework": "^11.31",

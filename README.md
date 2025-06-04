@@ -112,6 +112,25 @@ php artisan serve
 
 ---
 
+## 🔐 Google Analytics
+
+The admin dashboard includes usage statistics (like app starts and game selections) powered by Google Analytics 4.  
+To enable this feature locally, you need to provide a credentials file:
+
+```
+
+storage/app/analytics/credentials.json
+
+```
+
+Without this file:
+- The **Analytics section** of the dashboard will not work locally.
+- The **rest of the application** will still function as expected.
+
+> If you're only developing features unrelated to the dashboard, you can ignore this file.
+
+---
+
 ## 📖 API Documentation
 
 The API documentation is auto-generated using Dedoc/Scramble and accessible at:
@@ -124,12 +143,6 @@ https://your-domain.com/docs
 
 The mobile app connects to the same API and is maintained in a separate repo: `ludiceApp`.
 You can preview it using Expo Go.
-
----
-
-## 📄 License
-
-This project is open-sourced under the [MIT license](https://opensource.org/licenses/MIT).
 
 ---
 
