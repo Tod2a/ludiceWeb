@@ -1,7 +1,13 @@
 <script setup>
 import { router } from '@inertiajs/vue3';
 
-const props = defineProps({ links: Array });
+const props = defineProps({
+    links: Array,
+    currentPage: Number,
+    lastPage: Number,
+    prevPageUrl: String,
+    nextPageUrl: String,
+});
 
 const changePage = (url) => {
     router.visit(url, {
@@ -13,11 +19,17 @@ const changePage = (url) => {
 </script>
 
 <template>
-    <div v-if="links.length > 1" class="mt-4 flex justify-center space-x-2">
-        <template v-for="(link, key) in links" :key="key">
-            <span v-if="!link.url" class="px-4 py-2 bg-gray-200 rounded text-gray-500" v-html="link.label" />
-            <button v-else @click="changePage(link.url)" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                :class="{ 'bg-green-600 text-white': link.active }" v-html="link.label" />
-        </template>
+    <div v-if="lastPage > 1" class="mt-4 text-left">
+        <button v-if="prevPageUrl" @click="changePage(prevPageUrl)" class="text-sm mr-2">
+            &lt; Previous
+        </button>
+
+        <span class="text-sm">
+            Page {{ currentPage }} of {{ lastPage }}
+        </span>
+
+        <button v-if="nextPageUrl" @click="changePage(nextPageUrl)" class="text-sm ml-2">
+            Next &gt;
+        </button>
     </div>
 </template>
