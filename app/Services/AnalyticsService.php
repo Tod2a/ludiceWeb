@@ -36,6 +36,10 @@ class AnalyticsService
 
     public function getEventCount(string $eventName, string $startDate, string $endDate): int
     {
+        if (!$this->client) {
+            return 0;
+        }
+
         $request = new RunReportRequest([
             'property' => 'properties/' . $this->propertyId,
             'dimensions' => [
@@ -61,9 +65,13 @@ class AnalyticsService
             ]),
         ]);
 
-        $response = $this->client->runReport($request);
-
-        $row = $response->getRows()[0] ?? null;
-        return $row ? (int) $row->getMetricValues()[0]->getValue() : 0;
+        try {
+            $response = $this->client->runReport($request);
+            $row = $response->getRows()[0] ?? null;
+            return $row ? (int) $row->getMetricValues()[0]->getValue() : 0;
+        } catch (Exception $e) {
+            Log::error('Analytics error: ' . $e->getMessage());
+            return 0;
+        }
     }
 }

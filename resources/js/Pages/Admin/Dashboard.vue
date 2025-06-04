@@ -47,7 +47,7 @@ const closePatchModal = () => {
             </h2>
         </template>
 
-        <div class="space-y-8">
+        <div class="space-y-8 mx-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="bg-white shadow rounded-lg p-6 flex flex-col justify-center items-center">
                     <h3 class="text-lg font-medium text-gray-700 mb-2">Nombre total d'inscrits</h3>
@@ -91,7 +91,7 @@ const closePatchModal = () => {
 
         </div>
 
-        <div class="bg-gray-100 p-4 mt-4 rounded shadow">
+        <div class="bg-gray-100 p-4 mt-4 rounded shadow mx-8">
 
             <div class="flex flex-row justify-between">
                 <h3 class="text-3xl">Actualités & mises à jour</h3>
@@ -112,7 +112,9 @@ const closePatchModal = () => {
                 </p>
             </div>
 
-            <Pagination :links="patchNotes.links" />
+            <Pagination :links="patchNotes.links" :currentPage="patchNotes.current_page"
+                :lastPage="patchNotes.last_page" :prevPageUrl="patchNotes.prev_page_url"
+                :nextPageUrl="patchNotes.next_page_url" />
 
         </div>
 
