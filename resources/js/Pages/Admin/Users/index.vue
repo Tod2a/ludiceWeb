@@ -146,7 +146,8 @@ const formattedCreatedAt = (user) => {
                                     </Button>
                                     <Button :disabled="user.role.name === 'Master'"
                                         @click="confirmUserDeletion(user.id, user.name)">
-                                        <TrashIcon class="w-5 h-5 text-red-400" />
+                                        <TrashIcon class="w-5 h-5"
+                                            :class="user.role.name === 'Master' ? 'text-gray-400' : 'text-red-400'" />
                                     </Button>
                                 </div>
                             </td>
