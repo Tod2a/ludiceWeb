@@ -34,6 +34,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:users,name',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'policy_accepted' => ['accepted'],
             'password' => [
                 'required',
                 'string',
@@ -45,12 +46,15 @@ class RegisteredUserController extends Controller
                     ->symbols()
                     ->uncompromised(),
             ],
+        ], [
+            'policy_accepted.accepted' => 'Tu dois accepter la politique de confidentialité pour continuer.',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'policy_accepted' => $request->boolean('policy_accepted'),
         ]);
 
         event(new Registered($user));

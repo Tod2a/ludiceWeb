@@ -12,7 +12,7 @@ use Google\Analytics\Data\V1beta\FilterExpression;
 use Google\Analytics\Data\V1beta\Filter;
 use Google\Analytics\Data\V1beta\Filter\StringFilter;
 use Google\Analytics\Data\V1beta\Filter\StringFilter\MatchType;
-
+use Illuminate\Support\Facades\Log;
 
 class AnalyticsService
 {
@@ -69,7 +69,7 @@ class AnalyticsService
             $response = $this->client->runReport($request);
             $row = $response->getRows()[0] ?? null;
             return $row ? (int) $row->getMetricValues()[0]->getValue() : 0;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Analytics error: ' . $e->getMessage());
             return 0;
         }

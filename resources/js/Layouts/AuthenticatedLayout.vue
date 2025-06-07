@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { onClickOutside } from '@vueuse/core';
-import { Link } from '@inertiajs/vue3';
+import { FwbModal } from 'flowbite-vue';
 import ToastList from '@/Components/ToastList.vue';
+import { usePage, router } from '@inertiajs/vue3';
+import Footer from '@/Components/Footer.vue';
 
 const isSidebarOpen = ref(false);
 const showingNavigationDropdown = ref(false);
@@ -17,6 +19,21 @@ const toggleButtonRef = ref(null);
 
 const mobileProfileMenu = ref(null);
 const closeMobileMenuButton = ref(null);
+
+const showModal = computed(() => {
+    const page = usePage();
+    const user = page.props.auth.user;
+    const url = page.url.toLowerCase();
+
+    return user && !user.policy_accepted && !url.includes('privacy-policy');
+});
+function acceptPolicy() {
+    router.put(route('user.accept-policy'))
+}
+
+function refusePolicy() {
+    router.post(route('logout'));
+}
 
 onClickOutside(sidebarRef, (event) => {
     if (!toggleButtonRef.value.contains(event.target)) {
@@ -121,7 +138,7 @@ onClickOutside(mobileProfileMenu, (event) => {
             </div>
         </nav>
 
-        <div class="flex mt-16">
+        <div class="flex mt-16 flex-1">
 
             <ToastList />
 
@@ -181,7 +198,7 @@ onClickOutside(mobileProfileMenu, (event) => {
 
             <!-- Contenu principal -->
             <div :class="[
-                'flex-1 transition-all duration-300',
+                'flex-1 transition-all duration-300 flex flex-col',
                 isSidebarOpen ? 'ml-64' : 'ml-0'
             ]">
                 <header v-if="$slots.header" class="py-4">
@@ -189,10 +206,40 @@ onClickOutside(mobileProfileMenu, (event) => {
                         <slot name="header" />
                     </div>
                 </header>
-                <!-- Contenu de la page -->
-                <main class="p-6 w-screen">
+
+
+                <main class="p-6 w-screen flex-1 overflow-auto">
                     <slot />
                 </main>
+
+                <Footer />
+
+
+                <fwb-modal size="md" position="top-center" v-if="showModal">
+                    <template #header>
+                        <h2 class="text-lg font-medium text-gray-200">
+                            Mise à jour de la Politique de confidentialité
+                        </h2>
+                    </template>
+                    <template #body>
+                        <p class="text-sm text-gray-100">
+                            Vous devez accepter la <a href="/privacy-policy" target="_blank"
+                                class="text-green-600 hover:underline transition duration-150 ease-in-out">
+                                politique de confidentialité
+                            </a> pour pouvoir continuer.
+                        </p>
+                    </template>
+                    <template #footer>
+                        <button @click="refusePolicy"
+                            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                            Refuser
+                        </button>
+                        <button @click="acceptPolicy"
+                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5">
+                            Accepter
+                        </button>
+                    </template>
+                </fwb-modal>
             </div>
         </div>
     </div>
