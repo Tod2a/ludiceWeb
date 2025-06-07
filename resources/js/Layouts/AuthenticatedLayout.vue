@@ -7,7 +7,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { onClickOutside } from '@vueuse/core';
 import { FwbModal } from 'flowbite-vue';
 import ToastList from '@/Components/ToastList.vue';
-import { usePage, router } from '@inertiajs/vue3'
+import { usePage, router } from '@inertiajs/vue3';
+import Footer from '@/Components/Footer.vue';
 
 const isSidebarOpen = ref(false);
 const showingNavigationDropdown = ref(false);
@@ -20,9 +21,12 @@ const mobileProfileMenu = ref(null);
 const closeMobileMenuButton = ref(null);
 
 const showModal = computed(() => {
-    return usePage().props.auth.user && !usePage().props.auth.user.policy_accepted
-})
+    const page = usePage();
+    const user = page.props.auth.user;
+    const url = page.url.toLowerCase();
 
+    return user && !user.policy_accepted && !url.includes('privacy-policy');
+});
 function acceptPolicy() {
     router.put(route('user.accept-policy'))
 }
@@ -134,7 +138,7 @@ onClickOutside(mobileProfileMenu, (event) => {
             </div>
         </nav>
 
-        <div class="flex mt-16">
+        <div class="flex mt-16 flex-1">
 
             <ToastList />
 
@@ -194,7 +198,7 @@ onClickOutside(mobileProfileMenu, (event) => {
 
             <!-- Contenu principal -->
             <div :class="[
-                'flex-1 transition-all duration-300',
+                'flex-1 transition-all duration-300 flex flex-col',
                 isSidebarOpen ? 'ml-64' : 'ml-0'
             ]">
                 <header v-if="$slots.header" class="py-4">
@@ -202,10 +206,14 @@ onClickOutside(mobileProfileMenu, (event) => {
                         <slot name="header" />
                     </div>
                 </header>
-                <!-- Contenu de la page -->
-                <main class="p-6 w-screen">
+
+
+                <main class="p-6 w-screen flex-1 overflow-auto">
                     <slot />
                 </main>
+
+                <Footer />
+
 
                 <fwb-modal size="md" position="top-center" v-if="showModal">
                     <template #header>
