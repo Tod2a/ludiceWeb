@@ -10,10 +10,6 @@ class PrivacyController extends Controller
 {
     public function index()
     {
-        if (Auth::check()) {
-            return redirect()->route('connected.homepage');
-        }
-
         return Inertia::render('Privacy');
     }
 }

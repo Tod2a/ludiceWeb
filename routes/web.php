@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MechanicController as AdminMechanicController;
 use App\Http\Controllers\Admin\PatchNoteController;
 use App\Http\Controllers\Admin\PublisherController as AdminPublisherController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Auth\PolicyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\MechanicController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\PublisherController;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -60,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('user/accept-policy', [PolicyController::class, 'update'])->name('user.accept-policy');
 });
 
 require __DIR__ . '/auth.php';

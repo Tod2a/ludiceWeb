@@ -1,12 +1,18 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const user = page.props.auth.user;
+
+const Layout = user ? AuthenticatedLayout : GuestLayout;
 </script>
 
 <template>
 
     <Head title="Confidentialité" />
-    <GuestLayout>
+    <component :is="Layout">
         <template #header>
             <h2 class="text-2xl font-semibold">
                 Politique de Confidentialité
@@ -102,5 +108,5 @@ import { Head } from '@inertiajs/vue3';
                 </p>
             </section>
         </div>
-    </GuestLayout>
+    </component>
 </template>
