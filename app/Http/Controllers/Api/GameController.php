@@ -74,6 +74,15 @@ class GameController extends Controller
         return response()->json($game);
     }
 
+    public function searchByEAN(int $ean)
+    {
+        $game = Game::where('EAN', $ean)->first();
+
+        return response()->json([
+            'id' => $game ? $game->id : -1
+        ]);
+    }
+
     /**
      * Get a random game from the authenticated user's library filtered by optional criteria.
      *
