@@ -23,6 +23,7 @@ Route::middleware(['auth:sanctum', 'throttle:60,1', 'log.write'])->group(functio
         Route::get('/', [GameController::class, 'index']);
         Route::get('/random', [GameController::class, 'random']);
         Route::get('/{id}', [GameController::class, 'show']);
+        Route::get('/ean/{ean}', [GameController::class, 'searchByEAN']);
     });
 
     Route::prefix('guest')->group(function () {
