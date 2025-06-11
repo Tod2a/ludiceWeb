@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
@@ -9,6 +8,8 @@ import { FwbModal } from 'flowbite-vue';
 import ToastList from '@/Components/ToastList.vue';
 import { usePage, router } from '@inertiajs/vue3';
 import Footer from '@/Components/Footer.vue';
+import { Link } from '@inertiajs/vue3';
+import PolicyModal from '@/Components/PolicyModal.vue';
 
 const isSidebarOpen = ref(false);
 const showingNavigationDropdown = ref(false);
@@ -54,7 +55,7 @@ onClickOutside(mobileProfileMenu, (event) => {
         <!-- Header -->
         <nav class="fixed top-0 left-0 w-full z-50 bg-primary shadow-md border-b border-gray-100">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 justify-between">
+                <div class="relative flex h-16 justify-between">
 
                     <button ref="toggleButtonRef" @click="isSidebarOpen = !isSidebarOpen"
                         class="text-white focus:outline-none">
@@ -65,10 +66,12 @@ onClickOutside(mobileProfileMenu, (event) => {
                         </svg>
                     </button>
 
-                    <!-- <div class="flex items-center space-x-2">
-                        <ApplicationLogo class="h-10 w-10" />
-                        <span class="text-white text-xl font-semibold tracking-wide">Ludice</span>
-                    </div> -->
+                    <div class="absolute left-1/2 top-0 h-16 flex items-center transform -translate-x-1/2">
+                        <Link :href="route('connected.homepage')" class="flex items-center">
+                        <img src="/storage/images/ludice.png" alt="Ludice"
+                            class="h-10 md:h-12 lg:h-14 object-contain transition-transform duration-200 hover:scale-105" />
+                        </Link>
+                    </div>
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:space-x-4">
@@ -214,32 +217,7 @@ onClickOutside(mobileProfileMenu, (event) => {
 
                 <Footer />
 
-
-                <fwb-modal size="md" position="top-center" v-if="showModal">
-                    <template #header>
-                        <h2 class="text-lg font-medium text-gray-200">
-                            Mise à jour de la Politique de confidentialité
-                        </h2>
-                    </template>
-                    <template #body>
-                        <p class="text-sm text-gray-100">
-                            Vous devez accepter la <a href="/privacy-policy" target="_blank"
-                                class="text-green-600 hover:underline transition duration-150 ease-in-out">
-                                politique de confidentialité
-                            </a> pour pouvoir continuer.
-                        </p>
-                    </template>
-                    <template #footer>
-                        <button @click="refusePolicy"
-                            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                            Refuser
-                        </button>
-                        <button @click="acceptPolicy"
-                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5">
-                            Accepter
-                        </button>
-                    </template>
-                </fwb-modal>
+                <PolicyModal :show="showModal" @accept="acceptPolicy" @refuse="refusePolicy" />
             </div>
         </div>
     </div>
