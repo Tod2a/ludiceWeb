@@ -18,6 +18,7 @@ use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\MechanicController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\WishlistController;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Application;
@@ -32,9 +33,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/homepage', [GameController::class, 'index'])->name('connected.homepage');
     Route::get('/game/{gameId}', [GameController::class, 'show'])->name('games.details');
     Route::get('/homepage/search', [GameController::class, 'search'])->name('games.search');
+
     Route::get('/library', [LibraryController::class, 'index'])->name('library');
     Route::post('/library/{game}', [LibraryController::class, 'store'])->name('library.store');
     Route::delete('/library/{game}', [LibraryController::class, 'destroy'])->name('library.destroy');
+
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
+    Route::get('/wishlist/search', [WishlistController::class, 'search'])->name('wishlist.search');
 
     Route::get('/creators/search', [CreatorController::class, 'search'])->name('creator.search');
     Route::get('/categories/search', [CategoryController::class, 'search'])->name('category.search');
