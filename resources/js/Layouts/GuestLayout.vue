@@ -20,11 +20,17 @@ const showingNavigationDropdown = ref(false);
         <!-- Header -->
         <nav class="bg-primary shadow-md border-b border-gray-100">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 justify-between">
+                <div class="relative flex h-16 justify-between">
                     <div class="flex items-center">
                         <!-- Logo -->
-                        <Link href="/">
                         <ApplicationLogo class="h-16 w-16 scale-75" />
+
+                    </div>
+
+                    <div class="absolute left-1/2 top-0 h-16 flex items-center transform -translate-x-1/2">
+                        <Link :href="route('homepage')" class="flex items-center">
+                        <img src="/storage/images/ludice.png" alt="Ludice"
+                            class="h-10 md:h-12 lg:h-14 object-contain transition-transform duration-200 hover:scale-105" />
                         </Link>
                     </div>
 
