@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
@@ -9,6 +8,7 @@ import { FwbModal } from 'flowbite-vue';
 import ToastList from '@/Components/ToastList.vue';
 import { usePage, router } from '@inertiajs/vue3';
 import Footer from '@/Components/Footer.vue';
+import { Link } from '@inertiajs/vue3';
 
 const isSidebarOpen = ref(false);
 const showingNavigationDropdown = ref(false);
@@ -54,7 +54,7 @@ onClickOutside(mobileProfileMenu, (event) => {
         <!-- Header -->
         <nav class="fixed top-0 left-0 w-full z-50 bg-primary shadow-md border-b border-gray-100">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 justify-between">
+                <div class="relative flex h-16 justify-between">
 
                     <button ref="toggleButtonRef" @click="isSidebarOpen = !isSidebarOpen"
                         class="text-white focus:outline-none">
@@ -65,10 +65,12 @@ onClickOutside(mobileProfileMenu, (event) => {
                         </svg>
                     </button>
 
-                    <!-- <div class="flex items-center space-x-2">
-                        <ApplicationLogo class="h-10 w-10" />
-                        <span class="text-white text-xl font-semibold tracking-wide">Ludice</span>
-                    </div> -->
+                    <div class="absolute left-1/2 top-0 h-16 flex items-center transform -translate-x-1/2">
+                        <Link :href="route('connected.homepage')" class="flex items-center">
+                        <img src="/storage/images/ludice.png" alt="Ludice"
+                            class="h-10 md:h-12 lg:h-14 object-contain transition-transform duration-200 hover:scale-105" />
+                        </Link>
+                    </div>
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:space-x-4">

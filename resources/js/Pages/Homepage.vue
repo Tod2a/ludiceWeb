@@ -113,7 +113,7 @@ import { Head } from '@inertiajs/vue3';
         </div>
 
         <div class="mt-6 flex justify-center">
-            <img src="/logo2.png" alt="Logo" class="h-20 w-auto" />
+            <img src="/logo.png" alt="Logo" class="h-20 w-auto" />
         </div>
     </GuestLayout>
 </template>
