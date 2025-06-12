@@ -5,16 +5,10 @@ import { onMounted, ref } from 'vue';
 import GameCard from '@/Components/GameCard.vue';
 
 const props = defineProps({
-    publishers: Array,
-    categories: Array,
-    creators: Array,
     user: Object,
 });
 
 const searchQuery = ref('');
-const publisherQuery = ref('');
-const categoryQuery = ref('');
-const creatorQuery = ref('');
 const userId = ref(props.user.id);
 const games = ref([]);
 const isLoading = ref(true);
@@ -24,9 +18,6 @@ const fetchGames = async (url) => {
         const response = await axios.get(url, {
             params: {
                 query: searchQuery.value,
-                category: categoryQuery.value,
-                publisher: publisherQuery.value,
-                creator: creatorQuery.value,
                 userId: userId.value,
             }
         });
@@ -42,18 +33,18 @@ const debouncedSearch = (() => {
         clearTimeout(timerId);
 
         timerId = setTimeout(() => {
-            fetchGames(route('games.search'));
+            fetchGames(route('wishlist.search'));
         }, 300);
     };
 })();
 
 onMounted(async () => {
-    await fetchGames(route('games.search'));
+    await fetchGames(route('wishlist.search'));
     isLoading.value = false;
 });
 
 const containsGameById = (id) => {
-    return props.user.library.some((game) => game.id === id);
+    return props.user.wishlist.some((game) => game.id === id);
 };
 
 const clearInput = () => {
@@ -64,12 +55,12 @@ const clearInput = () => {
 
 <template>
 
-    <Head title="Votre ludothèque" />
+    <Head title="Votre Wishlist" />
 
     <authenticated-layout>
         <template #header>
             <h2 class="text-2xl font-semibold">
-                Votre Ludothèque
+                Votre Liste de souhaits
             </h2>
         </template>
 
@@ -96,9 +87,9 @@ const clearInput = () => {
 
                 <!-- Game Cards -->
                 <div v-else class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <GameCard v-for="game in games.data" :key="game.id" :game="game" :isLibrary="true"
-                        :isWithList="false" :inLibrary="containsGameById(game.id)" :inWishList="false"
-                        @reload="fetchGames(route('games.search'))" />
+                    <GameCard v-for="game in games.data" :key="game.id" :game="game" :isLibrary="false"
+                        :isWishList="true" :inLibrary="false" :inWishList="containsGameById(game.id)"
+                        @reload="fetchGames(route('wishlist.search'))" />
                 </div>
 
                 <!-- Pagination -->

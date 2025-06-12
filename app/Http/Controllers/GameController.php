@@ -18,7 +18,7 @@ class GameController extends Controller
         $creators = Creator::all();
         $categories = Category::all();
         $id = Auth::user()->id;
-        $user = User::with('library')->find($id);
+        $user = User::with(['library', 'wishlist'])->find($id);
 
         return inertia('Games/index', ['publishers' => $publishers, 'categories' => $categories, 'creators' => $creators, 'user' => $user]);
     }
@@ -47,7 +47,7 @@ class GameController extends Controller
         $user = $request->input('userId');
 
         if ($user) {
-            $games = Game::with(['categories', 'publishers', 'creators', 'library'])
+            $games = Game::with(['categories', 'publishers', 'creators', 'library', 'wishlist'])
                 ->whereHas('library', function ($query) use ($user) {
                     $query->where('users.id', $user);
                 });

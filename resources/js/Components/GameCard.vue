@@ -3,12 +3,14 @@ import { ref, onMounted, onBeforeUnmount, defineEmits } from 'vue'
 import { Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({});
-const emit = defineEmits(['removed']);
+const emit = defineEmits(['reload']);
 
 const props = defineProps({
     game: Object,
     isLibrary: Boolean,
-    inLibrary: Boolean
+    inLibrary: Boolean,
+    isWishList: Boolean,
+    inWishList: Boolean,
 });
 
 const menuOpen = ref(false);
@@ -28,11 +30,41 @@ onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside);
 });
 
-function handleDelete() {
+function handleAddLibrary() {
+    try {
+        form.post(route('library.store', { game: props.game.id }));
+
+        emit('reload');
+    } catch (error) {
+        console.error('Error adding in library:', error);
+    }
+};
+
+function handleAddWishlist() {
+    try {
+        form.post(route('wishlist.store', { game: props.game.id }));
+
+        emit('reload');
+    } catch (error) {
+        console.error('Error adding in wishlist:', error);
+    }
+};
+
+function handleRemoveLibrary() {
     try {
         form.delete(route('library.destroy', { game: props.game.id }));
 
-        emit('removed');
+        emit('reload');
+    } catch (error) {
+        console.error('Error removing game:', error);
+    }
+};
+
+function handleRemoveWishlist() {
+    try {
+        form.delete(route('wishlist.destroy', { game: props.game.id }));
+
+        emit('reload');
     } catch (error) {
         console.error('Error removing game:', error);
     }
@@ -63,7 +95,7 @@ function handleDelete() {
 
                         <template v-if="props.inLibrary">
                             <template v-if="props.isLibrary">
-                                <form @submit.prevent="handleDelete">
+                                <form @submit.prevent="handleRemoveLibrary">
                                     <button type="submit"
                                         class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                                         Retirer de la ludothèque
@@ -78,10 +110,36 @@ function handleDelete() {
                         </template>
 
                         <template v-else>
-                            <form @submit.prevent="form.post(route('library.store', { game: props.game.id }))">
+                            <form @submit.prevent="handleAddLibrary">
                                 <button type="submit"
                                     class="block w-full text-left px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100">
                                     Ajouter à la ludothèque
+                                </button>
+                            </form>
+                        </template>
+
+                        <template v-if="props.inWishList">
+                            <template v-if="props.isWishList">
+                                <form @submit.prevent="handleRemoveWishlist">
+                                    <button type="submit"
+                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                        Retirer de la liste de souhaits
+                                    </button>
+                                </form>
+                            </template>
+
+                            <template v-else>
+                                <button disabled class="block w-full text-left px-4 py-2 text-sm text-gray-400">
+                                    Déjà dans la liste de souhaits
+                                </button>
+                            </template>
+                        </template>
+
+                        <template v-else>
+                            <form @submit.prevent="handleAddWishlist">
+                                <button type="submit"
+                                    class="block w-full text-left px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100">
+                                    Ajouter à la liste de souhaits
                                 </button>
                             </form>
                         </template>
