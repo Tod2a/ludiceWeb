@@ -37,9 +37,13 @@ class LibraryController extends Controller
             return redirect()->route('library')->with('error', 'Jeu déjà dans la ludothèque');
         }
 
+        if ($user->wishlist()->where('game_id', $game)->exists()) {
+            $user->wishlist()->detach($game);
+        }
+
         $user->library()->attach($game);
 
-        return redirect()->route('connected.homepage')->with('success', 'Jeu ajouté dans la ludothèque');
+        return redirect()->back()->with('success', 'Jeu ajouté dans la ludothèque');
     }
 
     public function destroy(int $game)
