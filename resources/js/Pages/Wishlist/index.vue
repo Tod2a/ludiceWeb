@@ -44,7 +44,7 @@ onMounted(async () => {
 });
 
 const containsGameById = (id) => {
-    return props.user.library.some((game) => game.id === id);
+    return props.user.wishlist.some((game) => game.id === id);
 };
 
 const clearInput = () => {
@@ -87,8 +87,9 @@ const clearInput = () => {
 
                 <!-- Game Cards -->
                 <div v-else class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <GameCard v-for="game in games.data" :key="game.id" :game="game" :isLibrary="true"
-                        :inLibrary="containsGameById(game.id)" @removed="fetchGames(route('games.search'))" />
+                    <GameCard v-for="game in games.data" :key="game.id" :game="game" :isLibrary="false"
+                        :isWishList="true" :inLibrary="false" :inWishList="containsGameById(game.id)"
+                        @reload="fetchGames(route('wishlist.search'))" />
                 </div>
 
                 <!-- Pagination -->

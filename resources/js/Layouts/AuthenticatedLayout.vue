@@ -194,6 +194,10 @@ onClickOutside(mobileProfileMenu, (event) => {
                                 class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
                                 <span class="ms-3">Ludothèque</span>
                             </a>
+                            <a :href="route('wishlist')"
+                                class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-green-200 dark:hover:text-primary dark:hover:bg-green-200 group">
+                                <span class="ms-3">Liste de souhaits</span>
+                            </a>
                         </li>
                     </ul>
                 </div>

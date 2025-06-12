@@ -54,6 +54,10 @@ const containsGameById = (id) => {
     return props.user.library.some((game) => game.id === id);
 };
 
+const containsWishlistGameById = (id) => {
+    return props.user.wishlist.some((game) => game.id === id);
+};
+
 const clearInput = () => {
     searchQuery.value = '';
     debouncedSearch();
@@ -87,7 +91,8 @@ const clearInput = () => {
                 <!-- Game Cards -->
                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     <GameCard v-for="game in games.data" :key="game.id" :game="game" :isLibrary="false"
-                        :inLibrary="containsGameById(game.id)" />
+                        :isWishList="false" :inLibrary="containsGameById(game.id)"
+                        :inWishList="containsWishlistGameById(game.id)" />
                 </div>
 
                 <!-- Pagination -->

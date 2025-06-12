@@ -40,6 +40,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
     Route::get('/wishlist/search', [WishlistController::class, 'search'])->name('wishlist.search');
+    Route::post('/wishlist/{game}', [WishlistController::class, 'store'])->name('wishlist.store');
+    Route::delete('/wishlist/{game}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     Route::get('/creators/search', [CreatorController::class, 'search'])->name('creator.search');
     Route::get('/categories/search', [CategoryController::class, 'search'])->name('category.search');
