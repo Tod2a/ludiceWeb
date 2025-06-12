@@ -33,7 +33,18 @@ This web app is the backend and admin interface of a broader Ludice ecosystem th
 
 ## 💻 Feature to develop
 
-- ⭐ Rate and comment on games
+- ⭐ Rate and comment on games  
+- 📈 Increase code coverage to 100%
+
+<p align="center">
+  <a href="https://codecov.io/gh/Tod2a/ludiceWeb/branch/develop">
+    <img 
+      src="https://codecov.io/gh/Tod2a/ludiceWeb/branch/develop/graph/badge.svg?token=YJ2ZXB9WUC" 
+      alt="Codecov coverage badge" 
+      style="width: 150px; height: auto;"
+    />
+  </a>
+</p>
 
 ---
 
