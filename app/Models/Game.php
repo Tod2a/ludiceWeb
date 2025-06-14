@@ -54,6 +54,11 @@ class Game extends Model
         return $this->belongsToMany(User::class, 'library');
     }
 
+    public function wishlist()
+    {
+        return $this->belongsToMany(User::class, 'wishlist');
+    }
+
     public function scoreSheets()
     {
         return $this->hasMany(ScoreSheet::class);
